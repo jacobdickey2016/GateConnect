@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#c2eafd"
+    android:paddingBottom="@dimen/activity_vertical_margin"
+    android:paddingLeft="@dimen/activity_horizontal_margin"
+    android:paddingRight="@dimen/activity_horizontal_margin"
+    android:paddingTop="@dimen/activity_vertical_margin"
+    tools:context="com.example.android.gateconnect.MainScreen">
+
+
+    <!--Background Cloud Image-->
+    <!--<ImageView
+        android:id="@+id/cloud_6"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@drawable/cloud_6"
+        android:alpha="0.6"/>-->
+
+    <!--Title-->
+    <ImageView
+        android:id="@+id/gateConnect"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true"
+        android:src="@drawable/gate_connect" />
+    <!--android:contentDescription="@string/title_description"-->
+
+
+    <!--Logo-->
+    <ImageView
+        android:id="@+id/logo"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:layout_centerVertical="true"
+        android:src="@drawable/airplane_logo" />
+    <!--android:contentDescription="@string/logo_description"-->
+
+
+    <!--Airport Select-->
+    <Spinner
+        android:id="@+id/airport_select"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/logo"
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="16dp"
+        android:layout_marginTop="8dp"
+        android:entries="@array/airport_selection" />
+
+    <!--Go to Map Button-->
+    <Button
+        android:id="@+id/goButton"
+        style="?android:attr/buttonStyleSmall"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/airport_select"
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="8dp"
+        android:layout_marginTop="32dp"
+        android:onClick="onClick"
+        android:paddingBottom="8dp"
+        android:paddingTop="8dp"
+        android:text="@string/button" />
+
+</RelativeLayout>

@@ -1,0 +1,158 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#c2eafd"
+    android:orientation="vertical"
+    android:paddingBottom="@dimen/activity_vertical_margin"
+    android:paddingLeft="@dimen/activity_horizontal_margin"
+    android:paddingRight="@dimen/activity_horizontal_margin"
+    android:paddingTop="@dimen/activity_vertical_margin"
+    android:weightSum="1"
+    tools:context="com.example.android.gateconnect.MapScreen">
+
+    <ImageView
+        android:id="@+id/cloud_6"
+        android:layout_width="match_parent"
+        android:layout_height="150dp"
+        android:layout_marginTop="-50dp"
+        android:alpha="0.8"
+        android:src="@drawable/cloud_6" />
+
+    <LinearLayout
+        android:id="@+id/top_bar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:orientation="horizontal">
+
+        <!-- Dont need back button due to all android's built in feature
+        <ImageButton
+            android:layout_width="55dp"
+            android:layout_height="55dp"
+            android:onClick="goBack"
+            android:src="@drawable/back_button" />-->
+
+        <TextView
+            android:id="@+id/title_text"
+            android:layout_width="match_parent"
+            android:layout_height="55dp"
+            android:layout_marginLeft="119dp"
+            android:layout_marginStart="119dp"
+            android:text="@string/map_title"
+            android:textSize="45sp" />
+
+    </LinearLayout>
+
+    <ImageView
+        android:id="@+id/map"
+        android:layout_width="wrap_content"
+        android:layout_height="300dp"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_below="@+id/top_bar"
+        android:src="@drawable/atl_map" />
+    <!--style="@style/myImageView"-->
+
+    <!--<ImageView
+        android:layout_width="175dp"
+        android:layout_height="175dp"
+        android:src="@drawable/airplane1"
+        android:alpha="0.6"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"/>
+
+    <ImageView
+        android:layout_width="175dp"
+        android:layout_height="175dp"
+        android:src="@drawable/airplane"
+        android:alpha="0.6"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentEnd="true"/>-->
+
+    <LinearLayout
+        android:id="@+id/bottom_half"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:orientation="vertical">
+
+        <LinearLayout
+            android:id="@+id/gate_title_bar"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <TextView
+                style="@style/gateTitle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="32dp"
+                android:layout_marginLeft="16dp"
+                android:layout_marginRight="32dp"
+                android:layout_marginStart="16dp"
+                android:text="@string/arriving_gate" />
+
+            <TextView
+                style="@style/gateTitle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="16dp"
+                android:layout_marginLeft="32dp"
+                android:layout_marginRight="16dp"
+                android:layout_marginStart="32dp"
+                android:text="@string/departing_gate" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <Spinner
+                android:id="@+id/spinner_a1"
+                android:layout_width="55dp"
+                android:layout_height="100dp"
+                android:layout_marginLeft="16dp"
+                android:layout_marginStart="16dp"
+                android:layout_marginTop="32dp"
+                android:layout_weight="0.23"
+                android:entries="@array/atl_gate_letters" />
+
+            <Spinner
+                android:id="@+id/spinner_a2"
+                android:layout_width="55dp"
+                android:layout_height="100dp"
+                android:layout_marginLeft="16dp"
+                android:layout_marginStart="16dp"
+                android:layout_marginTop="32dp"
+                android:layout_weight="0.23" />
+
+            <Spinner
+                android:id="@+id/spinner_d1"
+                android:layout_width="55dp"
+                android:layout_height="100dp"
+                android:layout_marginLeft="64dp"
+                android:layout_marginStart="64dp"
+                android:layout_marginTop="32dp"
+                android:layout_weight="0.23"
+                android:entries="@array/atl_gate_letters" />
+
+            <Spinner
+                android:id="@+id/spinner_d2"
+                android:layout_width="55dp"
+                android:layout_height="100dp"
+                android:layout_marginLeft="16dp"
+                android:layout_marginStart="16dp"
+                android:layout_marginTop="32dp"
+                android:layout_weight="0.23" />
+
+        </LinearLayout>
+
+    </LinearLayout>
+
+</RelativeLayout>
