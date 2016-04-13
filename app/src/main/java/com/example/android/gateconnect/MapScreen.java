@@ -329,31 +329,53 @@ public class MapScreen extends AppCompatActivity {
         }
 
     /////////////////////////////////////////////////////////////////////////////////////////////////////////////
-    // On Draw //
+    // createBitmap //
     /////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-
-    protected void onDraw(Canvas canvas) {
-
+    // THIS ALLOWS THE MAP IMAGE TO BE DRAWN ON AND IT NOT AFFECT THE OTHER VIEWS ON THE SCREEN //
+    public void createBitmap()
+    {
         //Map
         ImageView myMap = (ImageView) findViewById(R.id.map);
 
-        //Bitmap
-        //Bitmap myBitmap = BitmapFactory.decodeResource(getResources(), R.id.map);
         BitmapFactory.Options options = new BitmapFactory.Options();
-        options.inJustDecodeBounds = true;
-        Bitmap myBitmap = BitmapFactory.decodeResource(getResources(), R.id.map, options);
+
         int imageHeight = options.outHeight;
         int imageWidth = options.outWidth;
-        String imageType = options.outMimeType;
+        //String imageType = options.outMimeType;
+        options.inJustDecodeBounds = true;
+
+        //Create bitmap based on whichever image was selected
+        Bitmap myBitmap = BitmapFactory.decodeResource(getResources(), R.id.map, options);
 
         //Create a new image bitmap and attach a brand new canvas to it
-        Bitmap tempBitmap = Bitmap.createBitmap(myBitmap.getWidth(),
-                myBitmap.getHeight(), Bitmap.Config.RGB_565);
+        Bitmap tempBitmap = Bitmap.createBitmap(imageWidth,
+                imageHeight, Bitmap.Config.RGB_565);
+
         Canvas tempCanvas = new Canvas(tempBitmap);
+
+        //Draw the image bitmap into the canvas
+        tempCanvas.drawBitmap(myBitmap, 0, 0, null);
+
+        //Draw everything else you want into the canvas (the path)
+        tempCanvas.drawPath(path_a, paint);
+        tempCanvas.drawPath(path_b, paint);
+        tempCanvas.drawPath(path_c, paint);
+
 
         //Attach the canvas to the ImageView
         BitmapDrawable bpd = new BitmapDrawable(getResources(), tempBitmap);
+
+        myMap.setImageDrawable(bpd);
+    }
+
+        /////////////////////////////////////////////////////////////////////////////////////////////////////////////
+        // On Draw //
+        /////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+    protected void onDraw(Canvas canvas) {
+
+        createBitmap();
 
         //set paint
         paint.setStyle(Paint.Style.STROKE);
@@ -373,23 +395,6 @@ public class MapScreen extends AppCompatActivity {
         path_c.lineTo(550f, 1200f);
         path_c.close();
 
-        // THIS ALLOWS THE MAP IMAGE TO BE DRAWN ON AND IT NOT AFFECT THE OTHER VIEWS ON THE SCREEN //
-
-        //Create a new image bitmap and attach a brand new canvas to it
-        // ^ in INITIALIZE section ^ //
-
-        //Draw the image bitmap into the canvas
-        tempCanvas.drawBitmap(myBitmap, 0, 0, null);
-
-        //Draw everything else you want into the canvas (the path)
-        tempCanvas.drawPath(path_a, paint);
-        tempCanvas.drawPath(path_b, paint);
-        tempCanvas.drawPath(path_c, paint);
-
-        //Attach the canvas to the ImageView
-        // bpd in ^ INITIALIZE section ^ //
-
-        myMap.setImageDrawable(bpd);
     }
 
 }

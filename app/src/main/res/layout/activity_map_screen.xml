@@ -27,13 +27,6 @@
         android:layout_alignParentTop="true"
         android:orientation="horizontal">
 
-        <!-- Dont need back button due to all android's built in feature
-        <ImageButton
-            android:layout_width="55dp"
-            android:layout_height="55dp"
-            android:onClick="goBack"
-            android:src="@drawable/back_button" />-->
-
         <TextView
             android:id="@+id/title_text"
             android:layout_width="match_parent"
