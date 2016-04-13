@@ -13,6 +13,7 @@ import android.graphics.Path;
 import android.graphics.drawable.BitmapDrawable;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
@@ -22,7 +23,7 @@ import android.widget.SpinnerAdapter;
 import android.widget.TextView;
 import android.widget.Toast;
 
-public class MapScreen extends AppCompatActivity {
+public class MapScreen extends AppCompatActivity implements AdapterView.OnItemSelectedListener {
 
         /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
         // Initialize //
@@ -51,6 +52,9 @@ public class MapScreen extends AppCompatActivity {
         //Initialize Map
         ImageView myMap = (ImageView) findViewById(R.id.map);
 
+        //updates the map with the correct paths
+        myMap.invalidate();
+
         //Change the Title to whichever airport was selected
         TextView tTextView = (TextView) findViewById(R.id.title_text);
         tTextView.setText(value);
@@ -70,18 +74,18 @@ public class MapScreen extends AppCompatActivity {
 
         //Creates all spinners (A1, A2, D1, D2)
         // A2 and D2 options are dependent on A1 and D1 selections respectively
-        Spinner spinner_a1 = Create_Spinner_A1();
-        Spinner spinner_d1 = Create_Spinner_D1();
+        Spinner spinner_a1 = Create_Spinner_A1(myMap);
+        Spinner spinner_d1 = Create_Spinner_D1(myMap);
 
     }
 
-        /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+    /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
         // Create Spinners A1 & A2 //
         /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
     // Creates Spinner A1 and sends the choice made to
     // a method for populating Spinner A2
-    public Spinner Create_Spinner_A1() {
+    public Spinner Create_Spinner_A1(ImageView myMap) {
         // gets value from spinner in previous activity
         String value = getIntent().getStringExtra("data");
 
@@ -110,6 +114,7 @@ public class MapScreen extends AppCompatActivity {
                 gate_letters);
         spinner_a1.setAdapter(spinner_a1_adapter);
         spinner_a1.setOnItemSelectedListener(new Spinner_A1_Listener());
+        myMap.invalidate();
         return spinner_a1;
     }
 
@@ -212,7 +217,7 @@ public class MapScreen extends AppCompatActivity {
 
     // Creates Spinner D1 and sends the choice made to
     // a method for populating Spinner D2
-    public Spinner Create_Spinner_D1() {
+    public Spinner Create_Spinner_D1(ImageView myMap) {
         // gets value from spinner in previous activity
         String value = getIntent().getStringExtra("data");
 
@@ -240,6 +245,7 @@ public class MapScreen extends AppCompatActivity {
                 gate_letters);
         spinner_d1.setAdapter(spinner_d1_adapter);
         spinner_d1.setOnItemSelectedListener(new Spinner_D1_Listener());
+        myMap.invalidate();
         return spinner_d1;
     }
 
@@ -333,6 +339,7 @@ public class MapScreen extends AppCompatActivity {
             Spinner_D2.setAdapter(Spinner_D2_Adapter);
             //Spinner_D2.setOnItemSelectedListener(new Spinner_D2_Listener());
             return Spinner_D2;
+
         }
 
     /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -441,26 +448,53 @@ public class MapScreen extends AppCompatActivity {
         }
     }
 
+
+    @Override
+    public void onItemSelected(AdapterView<?> parent, View view, int pos, long id) {
+        // An item was selected. You can retrieve the selected item using
+        parent.getItemAtPosition(pos);
+        Log.v("onItemSelected", (String) parent.getItemAtPosition(pos));
+    }
+
+    @Override
+    public void onNothingSelected(AdapterView<?> parent) {
+
+    }
+
     /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     // On Draw //
     /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
     protected void onDraw(Canvas canvas) {
 
+        //creates the bitmap over the image to be drawn on
         createBitmap();
 
-        //set paint
+        //set paint that the line will be drawn with
         paint.setStyle(Paint.Style.STROKE);
         paint.setStrokeWidth(18f);
-        paint.setColor(Color.WHITE);
+        paint.setColor(Color.RED);
 
-        //// TODO: 4/13/16 make these the selected values from the spinners
-        //String a_x = Spinner_A1_Choice;
-        //String a_y = Spinner_A2_Choice;
-        //String d_x = Spinner_D1_Choice;
-        //String d_y = Spinner_D2_Choice;
+        //create local spinners
+        Spinner Spinner_A1 = (Spinner) findViewById(R.id.spinner_a1);
+        Spinner Spinner_A2 = (Spinner) findViewById(R.id.spinner_a2);
+        Spinner Spinner_D1 = (Spinner) findViewById(R.id.spinner_d1);
+        Spinner Spinner_D2 = (Spinner) findViewById(R.id.spinner_d2);
 
-        //setPaths(a_x, a_y, d_x, d_y);
+        //attach listeners to spinners
+        Spinner_A1.setOnItemSelectedListener(this);
+        Spinner_A2.setOnItemSelectedListener(this);
+        Spinner_D1.setOnItemSelectedListener(this);
+        Spinner_D2.setOnItemSelectedListener(this);
+
+        //set values of the selected items in each spinner to local variables
+        String a_x = Spinner_A1.getSelectedItem().toString();
+        String a_y = Spinner_A2.getSelectedItem().toString();
+        String d_x = Spinner_D1.getSelectedItem().toString();
+        String d_y = Spinner_D2.getSelectedItem().toString();
+
+        //use local variables as parameters to set paths
+        setPaths(a_x, a_y, d_x, d_y);
 
     }
 
