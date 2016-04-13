@@ -1,5 +1,9 @@
 package com.example.android.gateconnect;
 
+import android.database.Cursor;
+import android.database.sqlite.SQLiteDatabase;
+import android.database.sqlite.SQLiteException;
+import android.database.sqlite.SQLiteOpenHelper;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
@@ -16,6 +20,7 @@ import android.widget.ImageView;
 import android.widget.Spinner;
 import android.widget.SpinnerAdapter;
 import android.widget.TextView;
+import android.widget.Toast;
 
 public class MapScreen extends AppCompatActivity {
 
@@ -369,9 +374,74 @@ public class MapScreen extends AppCompatActivity {
         myMap.setImageDrawable(bpd);
     }
 
-        /////////////////////////////////////////////////////////////////////////////////////////////////////////////
-        // On Draw //
-        /////////////////////////////////////////////////////////////////////////////////////////////////////////////
+    /////////////////////////////////////////////////////////////////////////////////////////////////////////////
+    // Set Paths //
+    /////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+    public void setPaths(String a1_choice, String a2_choice, String d1_choice, String d2_choice)
+    {
+        // gets value from spinner in previous activity
+        String value = getIntent().getStringExtra("data");
+
+        try {
+            //create a database helper so that cursors can navigate the database
+            SQLiteOpenHelper DatabaseHelper = new DatabaseHelper(this);
+            SQLiteDatabase db = DatabaseHelper.getReadableDatabase();
+
+            int hallway = 1500;
+            int a_x = 1;
+            int a_y = 1;
+            int d_x = 1;
+            int d_y = 1;
+
+            Cursor cursor_a = db.query("COORDINATES",
+                    new String[] {"x-coord", "y-coord"},
+                    "airport_name = ? AND airport_letter = ? AND airport_number = ?",
+                    new String[] {value, a1_choice, a2_choice},
+                    null, null, null);
+
+            if(cursor_a.moveToFirst())
+            {
+                a_x = cursor_a.getInt(0);
+                a_y = cursor_a.getInt(1);
+            }
+
+            Cursor cursor_d = db.query("COORDINATES",
+                    new String[] {"x-coord", "y-coord"},
+                    "airport_name = ? AND airport_letter = ? AND airport_number = ?",
+                    new String[] {value, d1_choice, d2_choice},
+                    null, null, null);
+
+            if(cursor_d.moveToFirst())
+            {
+                d_x = cursor_d.getInt(0);
+                d_y = cursor_d.getInt(1);
+            }
+
+            //move through the terminal from first gate to hallway
+            path_a.moveTo(a_x, a_y);
+            path_a.lineTo(a_x, hallway);
+            path_a.close();
+
+            //move through the hallway to next terminal
+            path_b.moveTo(a_x, hallway);
+            path_b.lineTo(d_x, hallway);
+            path_b.close();
+
+            //move through the terminal to the second gate
+            path_c.moveTo(d_x, hallway);
+            path_c.lineTo(d_x, d_y);
+            path_c.close();
+
+        } catch (SQLiteException e) {
+            Toast toast = Toast.makeText(this, "Database Unavailable", Toast.LENGTH_SHORT);
+            toast.show();
+        }
+    }
+
+    /////////////////////////////////////////////////////////////////////////////////////////////////////////////
+    // On Draw //
+    /////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
     protected void onDraw(Canvas canvas) {
 
@@ -382,18 +452,13 @@ public class MapScreen extends AppCompatActivity {
         paint.setStrokeWidth(18f);
         paint.setColor(Color.WHITE);
 
-        //set paths
-        path_a.moveTo(125f, 1000f);
-        path_a.lineTo(125f, 1500f);
-        path_a.close();
+        //// TODO: 4/13/16 make these the selected values from the spinners
+        //String a_x = Spinner_A1_Choice;
+        //String a_y = Spinner_A2_Choice;
+        //String d_x = Spinner_D1_Choice;
+        //String d_y = Spinner_D2_Choice;
 
-        path_b.moveTo(116f, 1500f);
-        path_b.lineTo(559f, 1500f);
-        path_b.close();
-
-        path_c.moveTo(550f, 1500f);
-        path_c.lineTo(550f, 1200f);
-        path_c.close();
+        //setPaths(a_x, a_y, d_x, d_y);
 
     }
 
