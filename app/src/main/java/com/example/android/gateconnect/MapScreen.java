@@ -139,6 +139,10 @@ public class MapScreen extends AppCompatActivity implements AdapterView.OnItemSe
 
     // Creates the second spinner for the Arriving Gate section
     public Spinner Create_A2_Spinner(String Spinner_A1_Choice) {
+
+        //Initialize Map
+        ImageView myMap = (ImageView) findViewById(R.id.map);
+
         // gets value from spinner in previous activity
         String value = getIntent().getStringExtra("data");
 
@@ -152,31 +156,38 @@ public class MapScreen extends AppCompatActivity implements AdapterView.OnItemSe
                     case "A":
                         Spinner_A2_Array = getResources().getStringArray(
                                 R.array.atl_gate_a_numbers);
+                        myMap.invalidate();
                         break;
                     case "B":
                         Spinner_A2_Array = getResources().getStringArray(
                                 R.array.atl_gate_b_numbers);
+                        myMap.invalidate();
                         break;
                     case "C":
                         Spinner_A2_Array = getResources().getStringArray(
                                 R.array.atl_gate_c_numbers);
+                        myMap.invalidate();
                         break;
                     case "D":
                         Spinner_A2_Array = getResources().getStringArray(
                                 R.array.atl_gate_d_numbers);
+                        myMap.invalidate();
                         break;
                     case "E":
                         Spinner_A2_Array = getResources().getStringArray(
                                 R.array.atl_gate_e_numbers);
+                        myMap.invalidate();
                         break;
                     case "F":
                         Spinner_A2_Array = getResources().getStringArray(
                                 R.array.atl_gate_f_numbers);
+                        myMap.invalidate();
                         break;
                     default:
                         // " T "
                         Spinner_A2_Array = getResources().getStringArray(
                                 R.array.atl_gate_t_numbers);
+                        myMap.invalidate();
                         break;
                 }
                 break;
@@ -185,20 +196,24 @@ public class MapScreen extends AppCompatActivity implements AdapterView.OnItemSe
                     case "A":
                         Spinner_A2_Array = getResources().getStringArray(
                                 R.array.dtw_gate_a_numbers);
+                        myMap.invalidate();
                         break;
                     case "B":
                         Spinner_A2_Array = getResources().getStringArray(
                                 R.array.dtw_gate_b_numbers);
+                        myMap.invalidate();
                         break;
                     default:
                         // " C "
                         Spinner_A2_Array = getResources().getStringArray(
                                 R.array.dtw_gate_c_numbers);
+                        myMap.invalidate();
                         break;
                 }
                 break;
             default:    // "IND" //
                 Spinner_A2_Array = getResources().getStringArray(R.array.ind_gate_numbers);
+                myMap.invalidate();
                 break;
         }
 
@@ -256,9 +271,12 @@ public class MapScreen extends AppCompatActivity implements AdapterView.OnItemSe
 
         public void onItemSelected(AdapterView<?> Spinner_D1_Adapter_View,
                                    View v, int position, long row) {
+            //Initialize Map
+            ImageView myMap = (ImageView) findViewById(R.id.map);
+
             String Spinner_D1_Choice = Spinner_D1_Adapter_View
                     .getItemAtPosition(position).toString();
-            Create_D2_Spinner(Spinner_D1_Choice);
+            Create_D2_Spinner(Spinner_D1_Choice, myMap);
         }
 
         public void onNothingSelected(AdapterView<?> arg0) {
@@ -269,7 +287,7 @@ public class MapScreen extends AppCompatActivity implements AdapterView.OnItemSe
     }
 
         // Creates the second spinner for the Departing Gate section
-    public Spinner Create_D2_Spinner(String Spinner_D1_Choice) {
+    public Spinner Create_D2_Spinner(String Spinner_D1_Choice, ImageView myMap) {
         // gets value from spinner in previous activity
         String value = getIntent().getStringExtra("data");
 
@@ -283,31 +301,38 @@ public class MapScreen extends AppCompatActivity implements AdapterView.OnItemSe
                     case "A":
                         Spinner_D2_Array = getResources().getStringArray(
                                 R.array.atl_gate_a_numbers);
+                        myMap.invalidate();
                         break;
                     case "B":
                         Spinner_D2_Array = getResources().getStringArray(
                                 R.array.atl_gate_b_numbers);
+                        myMap.invalidate();
                         break;
                     case "C":
                         Spinner_D2_Array = getResources().getStringArray(
                                 R.array.atl_gate_c_numbers);
+                        myMap.invalidate();
                         break;
                     case "D":
                         Spinner_D2_Array = getResources().getStringArray(
                                 R.array.atl_gate_d_numbers);
+                        myMap.invalidate();
                         break;
                     case "E":
                         Spinner_D2_Array = getResources().getStringArray(
                                 R.array.atl_gate_e_numbers);
+                        myMap.invalidate();
                         break;
                     case "F":
                         Spinner_D2_Array = getResources().getStringArray(
                                 R.array.atl_gate_f_numbers);
+                        myMap.invalidate();
                         break;
                     default:
                         // " T "
                         Spinner_D2_Array = getResources().getStringArray(
                                 R.array.atl_gate_t_numbers);
+                        myMap.invalidate();
                         break;
                 }
                 break;
@@ -316,20 +341,24 @@ public class MapScreen extends AppCompatActivity implements AdapterView.OnItemSe
                     case "A":
                         Spinner_D2_Array = getResources().getStringArray(
                                 R.array.dtw_gate_a_numbers);
+                        myMap.invalidate();
                         break;
                     case "B":
                         Spinner_D2_Array = getResources().getStringArray(
                                 R.array.dtw_gate_b_numbers);
+                        myMap.invalidate();
                         break;
                     default:
                         // " C "
                         Spinner_D2_Array = getResources().getStringArray(
                                 R.array.dtw_gate_c_numbers);
+                        myMap.invalidate();
                         break;
                 }
                 break;
             default:    // "IND" //
                 Spinner_D2_Array = getResources().getStringArray(R.array.ind_gate_numbers);
+                myMap.invalidate();
                 break;
         }
 
@@ -338,6 +367,7 @@ public class MapScreen extends AppCompatActivity implements AdapterView.OnItemSe
                     Spinner_D2_Array);
             Spinner_D2.setAdapter(Spinner_D2_Adapter);
             //Spinner_D2.setOnItemSelectedListener(new Spinner_D2_Listener());
+            myMap.invalidate();
             return Spinner_D2;
 
         }
@@ -350,37 +380,42 @@ public class MapScreen extends AppCompatActivity implements AdapterView.OnItemSe
     public void createBitmap()
     {
         //Map
-        ImageView myMap = (ImageView) findViewById(R.id.map);
+        //ImageView myMap = (ImageView) findViewById(R.id.map);
 
         BitmapFactory.Options options = new BitmapFactory.Options();
 
-        int imageHeight = options.outHeight;
-        int imageWidth = options.outWidth;
+        //int imageHeight = options.outHeight;
+        //int imageWidth = options.outWidth;
         //String imageType = options.outMimeType;
+
+        //code used to free up unused bytes
         options.inJustDecodeBounds = true;
 
         //Create bitmap based on whichever image was selected
         Bitmap myBitmap = BitmapFactory.decodeResource(getResources(), R.id.map, options);
 
-        //Create a new image bitmap and attach a brand new canvas to it
-        Bitmap tempBitmap = Bitmap.createBitmap(imageWidth,
-                imageHeight, Bitmap.Config.RGB_565);
+        //Create a new image bitmap and attach a canvas to it
+        /*Bitmap tempBitmap = Bitmap.createBitmap(imageWidth,
+                imageHeight, Bitmap.Config.RGB_565);*/
 
-        Canvas tempCanvas = new Canvas(tempBitmap);
+        //attach bitmap to canvas
+        Canvas canvas = new Canvas(myBitmap);
 
         //Draw the image bitmap into the canvas
-        tempCanvas.drawBitmap(myBitmap, 0, 0, null);
+        canvas.drawBitmap(myBitmap, 0, 0, null);
 
-        //Draw everything else you want into the canvas (the path)
-        tempCanvas.drawPath(path_a, paint);
-        tempCanvas.drawPath(path_b, paint);
-        tempCanvas.drawPath(path_c, paint);
+        //Draw the path onto the canvas using paint
+        canvas.drawPath(path_a, paint);
+        canvas.drawPath(path_b, paint);
+        canvas.drawPath(path_c, paint);
 
+        onDraw(canvas);
 
-        //Attach the canvas to the ImageView
-        BitmapDrawable bpd = new BitmapDrawable(getResources(), tempBitmap);
+        //Create a new drawable bitmap
+        //BitmapDrawable bpd = new BitmapDrawable(getResources(), myBitmap);
 
-        myMap.setImageDrawable(bpd);
+        //Attach drawable to ImageView myMap
+        //myMap.setImageDrawable(bpd);
     }
 
     /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -496,6 +531,17 @@ public class MapScreen extends AppCompatActivity implements AdapterView.OnItemSe
         //use local variables as parameters to set paths
         setPaths(a_x, a_y, d_x, d_y);
 
+        //Draw the path onto the canvas using paint
+        canvas.drawPath(path_a, paint);
+        canvas.drawPath(path_b, paint);
+        canvas.drawPath(path_c, paint);
+
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        setContentView(R.layout.activity_map_screen);
     }
 
 }
