@@ -542,6 +542,11 @@ public class MapScreen extends AppCompatActivity implements AdapterView.OnItemSe
     protected void onResume() {
         super.onResume();
         setContentView(R.layout.activity_map_screen);
+
+        //Map
+        ImageView myMap = (ImageView) findViewById(R.id.map);
+
+        myMap.invalidate();
     }
 
 }
