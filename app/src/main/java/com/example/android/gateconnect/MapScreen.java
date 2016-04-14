@@ -502,6 +502,11 @@ public class MapScreen extends AppCompatActivity implements AdapterView.OnItemSe
 
     protected void onDraw(Canvas canvas) {
 
+        //Map
+        //ImageView myMap = (ImageView) findViewById(R.id.map);
+
+        //myMap.draw(canvas);
+
         //creates the bitmap over the image to be drawn on
         createBitmap();
 
