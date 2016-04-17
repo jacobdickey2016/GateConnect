@@ -44,7 +44,13 @@ public class MapScreen extends AppCompatActivity {
     String Spinner_D2_Choice;
 
     //create drawable bitmap
-    BitmapDrawable bpd;
+    //BitmapDrawable bpd;
+
+    //create canvas
+    //Canvas canvas;
+
+    //create bitmap
+    //Bitmap myBitmap;
 
     /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     // On Create //
@@ -86,6 +92,12 @@ public class MapScreen extends AppCompatActivity {
         Create_Spinner_A1(myMap);
         Create_Spinner_D1(myMap);
 
+        //creates the bitmap over the image to be drawn on
+        createBitmap();
+
+        //myMap.invalidate();
+        //myMap.invalidateDrawable(bpd);
+
     }
 
     /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -100,31 +112,35 @@ public class MapScreen extends AppCompatActivity {
 
         BitmapFactory.Options options = new BitmapFactory.Options();
 
-        //code used to free up unused bytes
+        int imageHeight = options.outHeight;
+        int imageWidth = options.outWidth;
+        String imageType = options.outMimeType;
         options.inJustDecodeBounds = true;
 
         //Create bitmap based on whichever image was selected
-        Bitmap myBitmap = BitmapFactory.decodeResource(getResources(), R.id.map, options);
+        //Bitmap myBitmap = BitmapFactory.decodeResource(getResources(), R.id.map, options);
 
-        //attach bitmap to canvas
-        Canvas canvas = new Canvas(myBitmap);
+        //Create a new image bitmap and attach a brand new canvas to it
+        Bitmap tempBitmap = Bitmap.createBitmap(imageWidth + 1,
+                imageHeight + 1, Bitmap.Config.RGB_565);
+
+        Canvas tempCanvas = new Canvas(tempBitmap);
 
         //Draw the image bitmap into the canvas
-        canvas.drawBitmap(myBitmap, 0, 0, null);
+        tempCanvas.drawBitmap(tempBitmap, 0, 0, null);
 
-        //Draw the path onto the canvas using paint
-        canvas.drawPath(path_a, paint);
-        canvas.drawPath(path_b, paint);
-        canvas.drawPath(path_c, paint);
+        //Draw everything else you want into the canvas (the path)
+        tempCanvas.drawPath(path_a, paint);
+        tempCanvas.drawPath(path_b, paint);
+        tempCanvas.drawPath(path_c, paint);
 
-        //onDraw(canvas);
 
-        //Create a new drawable bitmap
-        bpd = new BitmapDrawable(getResources(), myBitmap);
+        //Attach the canvas to the ImageView
+        BitmapDrawable bpd = new BitmapDrawable(getResources(), tempBitmap);
 
-        //Attach drawable to ImageView myMap
         myMap.setImageDrawable(bpd);
 
+        myMap.invalidateDrawable(bpd);
     }
 
     /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -536,9 +552,6 @@ public class MapScreen extends AppCompatActivity {
 
     protected void onDraw(Canvas canvas) {
 
-        //creates the bitmap over the image to be drawn on
-        createBitmap();
-
         //set paint that the line will be drawn with
         paint.setStyle(Paint.Style.STROKE);
         paint.setStrokeWidth(18f);
@@ -561,13 +574,13 @@ public class MapScreen extends AppCompatActivity {
     }
 
 
-    protected void onResume(ImageView myMap) {
-        super.onResume();
-        setContentView(R.layout.activity_map_screen);
-
-        myMap.invalidate();
-
-    }
+//    protected void onResume(ImageView myMap) {
+//        super.onResume();
+//        setContentView(R.layout.activity_map_screen);
+//
+//        myMap.invalidate();
+//
+//    }
 
 }
 
