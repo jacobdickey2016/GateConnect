@@ -47,7 +47,7 @@ public class MapScreen extends AppCompatActivity {
     //BitmapDrawable bpd;
 
     //create canvas
-    //Canvas canvas;
+    Canvas tempCanvas;
 
     //create bitmap
     //Bitmap myBitmap;
@@ -68,7 +68,7 @@ public class MapScreen extends AppCompatActivity {
         ImageView myMap = (ImageView) findViewById(R.id.map);
 
         //updates the map with the correct paths
-        myMap.invalidate();
+        findViewById(R.id.main).invalidate();
 
         //Change the Title to whichever airport was selected
         TextView tTextView = (TextView) findViewById(R.id.title_text);
@@ -114,7 +114,7 @@ public class MapScreen extends AppCompatActivity {
 
         int imageHeight = options.outHeight;
         int imageWidth = options.outWidth;
-        String imageType = options.outMimeType;
+        //String imageType = options.outMimeType;
         options.inJustDecodeBounds = true;
 
         //Create bitmap based on whichever image was selected
@@ -124,7 +124,7 @@ public class MapScreen extends AppCompatActivity {
         Bitmap tempBitmap = Bitmap.createBitmap(imageWidth + 1,
                 imageHeight + 1, Bitmap.Config.RGB_565);
 
-        Canvas tempCanvas = new Canvas(tempBitmap);
+        tempCanvas = new Canvas(tempBitmap);
 
         //Draw the image bitmap into the canvas
         tempCanvas.drawBitmap(tempBitmap, 0, 0, null);
@@ -134,13 +134,14 @@ public class MapScreen extends AppCompatActivity {
         tempCanvas.drawPath(path_b, paint);
         tempCanvas.drawPath(path_c, paint);
 
+        myMap.invalidate();
 
         //Attach the canvas to the ImageView
-        BitmapDrawable bpd = new BitmapDrawable(getResources(), tempBitmap);
+        //BitmapDrawable bpd = new BitmapDrawable(getResources(), tempBitmap);
 
-        myMap.setImageDrawable(bpd);
+        //myMap.setImageDrawable(bpd);
 
-        myMap.invalidateDrawable(bpd);
+        //myMap.invalidateDrawable(bpd);
     }
 
     /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -193,6 +194,9 @@ public class MapScreen extends AppCompatActivity {
             //gets selected item
             Spinner_A1_Choice = Spinner_A1_Adapter_View
                     .getItemAtPosition(position).toString();
+            onDraw(tempCanvas);
+            findViewById(R.id.main).invalidate();
+
             Create_A2_Spinner(Spinner_A1_Choice);
         }
 
