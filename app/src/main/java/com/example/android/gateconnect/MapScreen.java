@@ -10,10 +10,10 @@ import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.Path;
-import android.graphics.drawable.BitmapDrawable;
+//import android.graphics.drawable.BitmapDrawable;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.util.Log;
+//import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
@@ -28,6 +28,8 @@ public class MapScreen extends AppCompatActivity {
     /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     // Initialize //
     /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+    //todo ERROR: Bitmap too large to be uploaded into a texture (12132x6560, max=8192x8192)
 
     //create paint
     Paint paint = new Paint();
@@ -116,6 +118,7 @@ public class MapScreen extends AppCompatActivity {
         int imageWidth = options.outWidth;
         //String imageType = options.outMimeType;
         options.inJustDecodeBounds = true;
+        options.inMutable = true;
 
         //Create bitmap based on whichever image was selected
         //Bitmap myBitmap = BitmapFactory.decodeResource(getResources(), R.id.map, options);
@@ -289,23 +292,24 @@ public class MapScreen extends AppCompatActivity {
                 this, android.R.layout.simple_spinner_dropdown_item,
                 Spinner_A2_Array);
         Spinner_A2.setAdapter(Spinner_A2_Adapter);
-        //Spinner_A2.setOnItemSelectedListener(new Spinner_A2_Listener());
+        Spinner_A2.setOnItemSelectedListener(new Spinner_A2_Listener());
         return Spinner_A2;
     }
 
-//    // The listener for Spinner A2 that records
-//    // whatever is currently selected.
-//    public class Spinner_A2_Listener implements
-//            AdapterView.OnItemSelectedListener {
-//
-//        public void onItemSelected(AdapterView<?> Spinner_A2_Adapter_View,
-//                                   View v, int position, long row) {
-//            Spinner_A2_Choice = Spinner_A2_Adapter_View
-//                    .getItemAtPosition(position).toString();
-//        }
-//        public void onNothingSelected(AdapterView<?> arg0) {
-//        }
-//    }
+    // The listener for Spinner A2 that records
+    // whatever is currently selected.
+    public class Spinner_A2_Listener implements
+            AdapterView.OnItemSelectedListener {
+
+        public void onItemSelected(AdapterView<?> Spinner_A2_Adapter_View,
+                                   View v, int position, long row) {
+            Spinner_A2_Choice = Spinner_A2_Adapter_View
+                    .getItemAtPosition(position).toString();
+            findViewById(R.id.main).invalidate();
+        }
+        public void onNothingSelected(AdapterView<?> arg0) {
+        }
+    }
 
     /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     // Create Spinners D1 & D2 //
@@ -356,6 +360,7 @@ public class MapScreen extends AppCompatActivity {
 
             Spinner_D1_Choice = Spinner_D1_Adapter_View
                     .getItemAtPosition(position).toString();
+            findViewById(R.id.main).invalidate();
             Create_D2_Spinner(Spinner_D1_Choice);
 
         }
@@ -449,7 +454,7 @@ public class MapScreen extends AppCompatActivity {
                 this, android.R.layout.simple_spinner_dropdown_item,
                 Spinner_D2_Array);
         Spinner_D2.setAdapter(Spinner_D2_Adapter);
-        //Spinner_D2.setOnItemSelectedListener(new Spinner_D2_Listener());
+        Spinner_D2.setOnItemSelectedListener(new Spinner_D2_Listener());
         //myMap.invalidate();
         return Spinner_D2;
 
@@ -457,17 +462,18 @@ public class MapScreen extends AppCompatActivity {
 
     // The listener for Spinner D2 that records
     // whatever is currently selected.
-//    public class Spinner_D2_Listener implements
-//            AdapterView.OnItemSelectedListener {
-//
-//        public void onItemSelected(AdapterView<?> Spinner_D2_Adapter_View,
-//                                   View v, int position, long row) {
-//            Spinner_D2_Choice = Spinner_D2_Adapter_View
-//                    .getItemAtPosition(position).toString();
-//        }
-//        public void onNothingSelected(AdapterView<?> arg0) {
-//        }
-//    }
+    public class Spinner_D2_Listener implements
+            AdapterView.OnItemSelectedListener {
+
+        public void onItemSelected(AdapterView<?> Spinner_D2_Adapter_View,
+                                   View v, int position, long row) {
+            Spinner_D2_Choice = Spinner_D2_Adapter_View
+                    .getItemAtPosition(position).toString();
+            findViewById(R.id.main).invalidate();
+        }
+        public void onNothingSelected(AdapterView<?> arg0) {
+        }
+    }
 
     /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     // Set Paths //

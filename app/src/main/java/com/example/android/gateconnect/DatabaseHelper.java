@@ -15,6 +15,12 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     //version of the database
     private static final int DB_VERSION = 1;
 
+    public static final String _ID = "_id";
+    public static final String AIRPORT_NAME = "airport_name";
+    public static final String GATE_LETTER = "gate_letter";
+    public static final String GATE_NUMBER = "gate_number";
+    public static final String X_COORD = "x_coord";
+    public static final String Y_COORD = "y_coord";
 
     DatabaseHelper (Context context ) {
         super(context, DB_NAME, null, DB_VERSION);
@@ -26,12 +32,12 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
         //CREATE the database called "COORDINATES"
         db.execSQL("CREATE TABLE " + DB_NAME + "("
-                + "_id INTEGER PRIMARY KEY AUTOINCREMENT,"
-                + "airport_name TEXT"
-                + "gate_letter TEXT,"
-                + "gate_number INTEGER,"
-                + "x_coord INTEGER,"
-                + "y_coord INTEGER)");
+                + _ID + " INTEGER PRIMARY KEY AUTOINCREMENT, "
+                + AIRPORT_NAME + " TEXT, "
+                + GATE_LETTER + " TEXT, "
+                + GATE_NUMBER + " INTEGER, "
+                + X_COORD + " INTEGER, "
+                + Y_COORD + " INTEGER)");
 
         //INSERT automated values into database "COORDINATES" using insertCoordinate method
 
@@ -153,10 +159,10 @@ public class DatabaseHelper extends SQLiteOpenHelper {
             if (i > 1 && i%2 != 0)                                          //
             {
                 IND_AY = IND_AY - 5;                                        //
-                insertCoordinate(db, "IND", "A", i, IND_AX, ATL_AY);
+                insertCoordinate(db, "IND", "A", i, IND_AX, IND_AY);
             }                                                               //
             else
-                insertCoordinate(db, "IND", "FA", i, IND_AX, ATL_AY);
+                insertCoordinate(db, "IND", "A", i, IND_AX, IND_AY);
         }                                                                   //
 
         // IND B //                                                         //

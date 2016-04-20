@@ -18,13 +18,7 @@ public class MainScreen extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main_screen);
 
-        //Add Transparency to Cloud Image
-        /*ImageView myImage = (ImageView) findViewById(R.id.cloud_6);
-        myImage.setAlpha(0.5f);*/
-
     }
-
-
 
     /**
      * Called when the user clicks the Connect button
@@ -42,19 +36,4 @@ public class MainScreen extends AppCompatActivity {
         startActivity(intent);
     }
 
-
-
-    /*public void checkdata(View view) {
-        //Spinner airport_select
-        Spinner spinner1 = (Spinner) findViewById(R.id.airport_select);
-
-        //get selected value here
-        String value = spinner1.getSelectedItem().toString();
-
-        //put selected value and start new activity
-        Intent intent = new Intent(this, checkdatabase.class);
-        intent.putExtra("data", value);
-        startActivity(intent);
-    }
-*/
 }
