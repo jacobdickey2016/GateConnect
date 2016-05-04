@@ -498,11 +498,11 @@ public class MapScreen extends AppCompatActivity {
             SQLiteOpenHelper DatabaseHelper = new DatabaseHelper(this);
             SQLiteDatabase db = DatabaseHelper.getReadableDatabase(); // open database
 
-            int hallway = 1500;
-            int a_x = 1;
-            int a_y = 1;
-            int d_x = 1;
-            int d_y = 1;
+            float hallway = 1500;
+            float a_x = 1;
+            float a_y = 1;
+            float d_x = 1;
+            float d_y = 1;
 
             Cursor cursor_a = db.query("COORDINATES", // open cursor
                     new String[] {"x_coord", "y_coord"},
@@ -513,10 +513,9 @@ public class MapScreen extends AppCompatActivity {
             try {
                 if(cursor_a.moveToFirst())
                 {
-                    d_x = cursor_a.getInt(0);
-                    d_y = cursor_a.getInt(1);
+                    d_x = cursor_a.getFloat(0);
+                    d_y = cursor_a.getFloat(1);
                 }
-                db.close(); //close database
             } catch (Exception e) {
                 // exception handling
             } finally {
@@ -533,10 +532,10 @@ public class MapScreen extends AppCompatActivity {
             try {
                 if(cursor_d.moveToFirst())
                 {
-                    d_x = cursor_d.getInt(0);
-                    d_y = cursor_d.getInt(1);
+                    d_x = cursor_d.getFloat(0);
+                    d_y = cursor_d.getFloat(1);
                 }
-                db.close();
+
             } catch (Exception e) {
                 // exception handling
             } finally {
@@ -545,6 +544,21 @@ public class MapScreen extends AppCompatActivity {
                 }
             }
 
+//
+//            //move through the terminal from first gate to hallway
+//            path_a.moveTo(1, 1);
+//            path_a.lineTo(100, 100);
+//            path_a.close();
+//
+//            //move through the hallway to next terminal
+//            path_b.moveTo(100, 100);
+//            path_b.lineTo(200, 150);
+//            path_b.close();
+//
+//            //move through the terminal to the second gate
+//            path_c.moveTo(200, 150);
+//            path_c.lineTo(2, 2);
+//            path_c.close();
 
             //move through the terminal from first gate to hallway
             path_a.moveTo(a_x, a_y);
@@ -560,6 +574,9 @@ public class MapScreen extends AppCompatActivity {
             path_c.moveTo(d_x, hallway);
             path_c.lineTo(d_x, d_y);
             path_c.close();
+
+            /*if (db.isOpen())
+                db.close();*/
 
         } catch (SQLiteException e) {
             Toast toast = Toast.makeText(this, "Database Unavailable", Toast.LENGTH_SHORT);
@@ -579,13 +596,14 @@ public class MapScreen extends AppCompatActivity {
         paint.setColor(Color.RED);
 
         //set values of the selected items in each spinner to local variables
-        String a_x = Spinner_A1_Choice;
-        String a_y = Spinner_A2_Choice;
-        String d_x = Spinner_D1_Choice;
-        String d_y = Spinner_D2_Choice;
+        String ax_test = "A";
+        String ay_test = "1";
+        String dx_test = "B";
+        String dy_test = "2";
 
         //use local variables as parameters to set paths
-        setPaths(a_x, a_y, d_x, d_y);
+//        setPaths(Spinner_A1_Choice, Spinner_A2_Choice, Spinner_D1_Choice, Spinner_D2_Choice);
+        setPaths(ax_test, ay_test, dx_test, dy_test);
 
         //Draw the path onto the canvas using paint
         canvas.drawPath(path_a, paint);

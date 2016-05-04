@@ -35,9 +35,20 @@
             android:layout_marginLeft="119dp"
             android:layout_marginStart="119dp"
             android:text="@string/map_title"
-            android:textSize="45sp" />
+            android:textSize="45sp"
+            android:layout_marginTop="10dp" />
 
     </LinearLayout>
+<!--
+
+    <ImageView
+        android:id="@+id/mapback"
+        android:layout_width="match_parent"
+        android:layout_height="400dp"
+        android:layout_alignTop="@+id/top_bar"
+        android:src="@drawable/mapback"
+        android:layout_marginTop="40dp" />
+-->
 
     <ImageView
         android:id="@+id/map"
@@ -46,7 +57,8 @@
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true"
         android:layout_below="@+id/top_bar"
-        android:src="@drawable/atl_map" />
+        android:src="@drawable/atl_map"
+        android:layout_marginTop="30dp" />
     <!--style="@style/myImageView"-->
 
     <!--<ImageView

@@ -10,6 +10,8 @@ import android.database.sqlite.SQLiteDatabase;
  */
 public class DatabaseHelper extends SQLiteOpenHelper {
 
+    private static DatabaseHelper sInstance;
+
     //name of the database
     private static final String DB_NAME = "COORDINATES";
     //version of the database
@@ -22,6 +24,17 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     public static final String X_COORD = "x_coord";
     public static final String Y_COORD = "y_coord";
 
+    public static synchronized DatabaseHelper getInstance(Context context) {
+
+        // Use the application context, which will ensure that you
+        // don't accidentally leak an Activity's context.
+        // See this article for more information: http://bit.ly/6LRzfx
+        if (sInstance == null) {
+            sInstance = new DatabaseHelper(context.getApplicationContext());
+        }
+        return sInstance;
+    }
+
     DatabaseHelper (Context context ) {
         super(context, DB_NAME, null, DB_VERSION);
     }
@@ -31,13 +44,13 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     public void onCreate (SQLiteDatabase db) {
 
         //CREATE the database called "COORDINATES"
-        db.execSQL("CREATE TABLE " + DB_NAME + "("
+        db.execSQL("CREATE TABLE " + DB_NAME + " ( "
                 + _ID + " INTEGER PRIMARY KEY AUTOINCREMENT, "
                 + AIRPORT_NAME + " TEXT, "
                 + GATE_LETTER + " TEXT, "
                 + GATE_NUMBER + " INTEGER, "
                 + X_COORD + " INTEGER, "
-                + Y_COORD + " INTEGER);");
+                + Y_COORD + " INTEGER );");
 
         //INSERT automated values into database "COORDINATES" using insertCoordinate method
 
@@ -228,6 +241,10 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         }                                                                           //
 
     //  //  //  //  //  //  //  //  //  //  //  //  //  //  //  //  //  //  //  //  //
+
+        /*if (db.isOpen())
+            db.close();*/
+
     }
 
     //gets called when the database needs to be upgraded
