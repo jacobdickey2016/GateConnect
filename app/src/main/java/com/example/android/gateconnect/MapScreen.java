@@ -500,7 +500,7 @@ public class MapScreen extends AppCompatActivity {
             SQLiteOpenHelper DatabaseHelper = new DatabaseHelper(this);
             SQLiteDatabase db = DatabaseHelper.getReadableDatabase(); // open database
 
-            float hallway = 1500;
+            float atl_hallway = 190;
             float a_x = 1;
             float a_y = 1;
             float d_x = 1;
@@ -562,20 +562,29 @@ public class MapScreen extends AppCompatActivity {
 //            path_c.lineTo(2, 2);
 //            path_c.close();
 
-            //move through the terminal from first gate to hallway
-            path_a.moveTo(a_x, a_y);
-            path_a.lineTo(a_x, hallway);
-            path_a.close();
+            if (value.equals("ATL") && a1_choice.equals(d1_choice))
+            {
+                //move through the terminal from first gate to hallway
+                path_a.moveTo(a_x, a_y);
+                path_a.lineTo(d_x, d_y);
+                path_a.close();
+            }
+            else if (value.equals("ATL")) {
+                //move through the terminal from first gate to hallway
+                path_a.moveTo(a_x, a_y);
+                path_a.lineTo(a_x, atl_hallway);
+                path_a.close();
 
-            //move through the hallway to next terminal
-            path_b.moveTo(a_x, hallway);
-            path_b.lineTo(d_x, hallway);
-            path_b.close();
+                //move through the hallway to next terminal
+                path_b.moveTo(a_x, atl_hallway);
+                path_b.lineTo(d_x, atl_hallway);
+                path_b.close();
 
-            //move through the terminal to the second gate
-            path_c.moveTo(d_x, hallway);
-            path_c.lineTo(d_x, d_y);
-            path_c.close();
+                //move through the terminal to the second gate
+                path_c.moveTo(d_x, atl_hallway);
+                path_c.lineTo(d_x, d_y);
+                path_c.close();
+            }
 
             /*if (db.isOpen())
                 db.close();*/

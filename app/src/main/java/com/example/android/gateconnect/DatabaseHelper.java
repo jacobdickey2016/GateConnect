@@ -56,8 +56,10 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
      // //  //  //  //  //  //  //  //  //  //  //  //  //  //  //  //
 
-        final int HALLWAY_WIDTH = 15;
-        final int HALLWAY_HEIGHT = 20;                              //
+        final int ATL_HALLWAY_WIDTH = 15;                           //
+        final int ATL_HALLWAY_HEIGHT = 20;
+        final int DTW_A_HALLWAY_HEIGHT = 17;                        //
+        final int DTW_B_HALLWAY_HEIGHT = 12;
 
         // ATL T //  (8)                                            //
         int ATL_TX = 195;
@@ -83,14 +85,14 @@ public class DatabaseHelper extends SQLiteOpenHelper {
             //evens
             if (i > 1 && i%2 == 0)                                  //
             {
-                ATL_AX = ATL_AX - HALLWAY_WIDTH;                    //
+                ATL_AX = ATL_AX - ATL_HALLWAY_WIDTH;                //
                 insertCoordinate(db, "ATL", "A", i, ATL_AX, ATL_AY);
             }                                                       //
             //odds
             else if (i > 1)                                         //
             {
                 ATL_AY = ATL_AY - 18;                               //
-                ATL_AX = ATL_AX + HALLWAY_WIDTH;
+                ATL_AX = ATL_AX + ATL_HALLWAY_WIDTH;
                 insertCoordinate(db, "ATL", "A", i, ATL_AX, ATL_AY);//
             }
             //first one                                             //
@@ -98,8 +100,8 @@ public class DatabaseHelper extends SQLiteOpenHelper {
                 insertCoordinate(db, "ATL", "A", i, ATL_AX, ATL_AY);//
         }
                                                                     //
-        ATL_AX = ATL_AX + HALLWAY_WIDTH;
-        ATL_AY = ATL_AY - HALLWAY_HEIGHT;                           //
+        ATL_AX = ATL_AX + ATL_HALLWAY_WIDTH;
+        ATL_AY = ATL_AY - ATL_HALLWAY_HEIGHT;                       //
 
         //top half                                                  //
         for(int i = 19; i < 35; i++)
@@ -107,14 +109,14 @@ public class DatabaseHelper extends SQLiteOpenHelper {
             //evens
             if (i > 1 && i%2 == 0)                                  //
             {
-                ATL_AX = ATL_AX - HALLWAY_WIDTH;                    //
+                ATL_AX = ATL_AX - ATL_HALLWAY_WIDTH;                //
                 insertCoordinate(db, "ATL", "A", i, ATL_AX, ATL_AY);
             }                                                       //
             //odds
             else if (i > 1)                                         //
             {
                 ATL_AY = ATL_AY - 18;                               //
-                ATL_AX = ATL_AX + HALLWAY_WIDTH;
+                ATL_AX = ATL_AX + ATL_HALLWAY_WIDTH;
                 insertCoordinate(db, "ATL", "A", i, ATL_AX, ATL_AY);//
             }
             //first one                                             //
@@ -132,14 +134,14 @@ public class DatabaseHelper extends SQLiteOpenHelper {
             //evens
             if (i > 1 && i%2 == 0)                                  //
             {
-                ATL_BX = ATL_BX - HALLWAY_WIDTH;                    //
+                ATL_BX = ATL_BX - ATL_HALLWAY_WIDTH;                //
                 insertCoordinate(db, "ATL", "B", i, ATL_BX, ATL_BY);
             }                                                       //
             //odds
             else if (i > 1)                                         //
             {
                 ATL_BY = ATL_BY - 18;                               //
-                ATL_BX = ATL_BX + HALLWAY_WIDTH;
+                ATL_BX = ATL_BX + ATL_HALLWAY_WIDTH;
                 insertCoordinate(db, "ATL", "B", i, ATL_BX, ATL_BY);//
             }
             //first one                                             //
@@ -147,8 +149,8 @@ public class DatabaseHelper extends SQLiteOpenHelper {
                 insertCoordinate(db, "ATL", "B", i, ATL_BX, ATL_BY);//
         }
                                                                     //
-        ATL_BX = ATL_BX + HALLWAY_WIDTH;
-        ATL_BY = ATL_BY - HALLWAY_HEIGHT;                           //
+        ATL_BX = ATL_BX + ATL_HALLWAY_WIDTH;
+        ATL_BY = ATL_BY - ATL_HALLWAY_HEIGHT;                       //
 
         //top half                                                  //
         for(int i = 19; i < 37; i++)
@@ -156,14 +158,14 @@ public class DatabaseHelper extends SQLiteOpenHelper {
             //evens
             if (i > 1 && i%2 == 0)                                  //
             {
-                ATL_BX = ATL_BX - HALLWAY_WIDTH;                    //
+                ATL_BX = ATL_BX - ATL_HALLWAY_WIDTH;                //
                 insertCoordinate(db, "ATL", "B", i, ATL_BX, ATL_BY);
             }                                                       //
             //odds
             else if (i > 1)                                         //
             {
                 ATL_BY = ATL_BY - 16;                               //
-                ATL_BX = ATL_BX + HALLWAY_WIDTH;
+                ATL_BX = ATL_BX + ATL_HALLWAY_WIDTH;
                 insertCoordinate(db, "ATL", "B", i, ATL_BX, ATL_BY);//
             }
             //first one                                             //
@@ -181,14 +183,14 @@ public class DatabaseHelper extends SQLiteOpenHelper {
             //evens
             if (i > 1 && i%2 == 0)                                  //
             {
-                ATL_CX = ATL_CX - HALLWAY_WIDTH;                    //
+                ATL_CX = ATL_CX - ATL_HALLWAY_WIDTH;                //
                 insertCoordinate(db, "ATL", "C", i, ATL_CX, ATL_CY);
             }                                                       //
             //odds
             else if (i > 1)                                         //
             {
                 ATL_CY = ATL_CY - 11;                               //
-                ATL_CX = ATL_CX + HALLWAY_WIDTH;
+                ATL_CX = ATL_CX + ATL_HALLWAY_WIDTH;
                 insertCoordinate(db, "ATL", "C", i, ATL_CX, ATL_CY);//
             }
             //first one                                             //
@@ -196,8 +198,8 @@ public class DatabaseHelper extends SQLiteOpenHelper {
                 insertCoordinate(db, "ATL", "C", i, ATL_CX, ATL_CY);//
         }
                                                                     //
-        ATL_CX = ATL_CX + HALLWAY_WIDTH;
-        ATL_CY = ATL_CY - HALLWAY_HEIGHT;                           //
+        ATL_CX = ATL_CX + ATL_HALLWAY_WIDTH;
+        ATL_CY = ATL_CY - ATL_HALLWAY_HEIGHT;                       //
 
         //top half                                                  //
         for(int i = 30; i < 58; i++)
@@ -205,14 +207,14 @@ public class DatabaseHelper extends SQLiteOpenHelper {
             //evens
             if (i > 1 && i%2 == 0)                                  //
             {
-                ATL_CX = ATL_CX - HALLWAY_WIDTH;                    //
+                ATL_CX = ATL_CX - ATL_HALLWAY_WIDTH;                //
                 insertCoordinate(db, "ATL", "C", i, ATL_CX, ATL_CY);
             }                                                       //
             //odds
             else if (i > 1)                                         //
             {
                 ATL_CY = ATL_CY - 10;                               //
-                ATL_CX = ATL_CX + HALLWAY_WIDTH;
+                ATL_CX = ATL_CX + ATL_HALLWAY_WIDTH;
                 insertCoordinate(db, "ATL", "C", i, ATL_CX, ATL_CY);//
             }
             //first one                                             //
@@ -220,7 +222,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
                 insertCoordinate(db, "ATL", "C", i, ATL_CX, ATL_CY);//
         }                                                           //
 
-        // ATL D //  (46)                                               //
+        // ATL D //  (46)                                           //
         int ATL_DX = 350;
         int ATL_DY = 365;                                           //
 
@@ -230,14 +232,14 @@ public class DatabaseHelper extends SQLiteOpenHelper {
             //evens
             if (i > 1 && i%2 == 0)                                  //
             {
-                ATL_DX = ATL_DX - HALLWAY_WIDTH;                    //
+                ATL_DX = ATL_DX - ATL_HALLWAY_WIDTH;                //
                 insertCoordinate(db, "ATL", "D", i, ATL_DX, ATL_DY);
             }                                                       //
             //odds
             else if (i > 1)                                         //
             {
                 ATL_DY = ATL_DY - 15;                               //
-                ATL_DX = ATL_DX + HALLWAY_WIDTH;
+                ATL_DX = ATL_DX + ATL_HALLWAY_WIDTH;
                 insertCoordinate(db, "ATL", "D", i, ATL_DX, ATL_DY);//
             }
             //first one                                             //
@@ -245,8 +247,8 @@ public class DatabaseHelper extends SQLiteOpenHelper {
                 insertCoordinate(db, "ATL", "D", i, ATL_DX, ATL_DY);//
         }
         //
-        ATL_DX = ATL_DX + HALLWAY_WIDTH;
-        ATL_DY = ATL_DY - HALLWAY_HEIGHT;                           //
+        ATL_DX = ATL_DX + ATL_HALLWAY_WIDTH;
+        ATL_DY = ATL_DY - ATL_HALLWAY_HEIGHT;                       //
 
         //top half                                                  //
         for(int i = 22; i < 47; i++)
@@ -254,14 +256,14 @@ public class DatabaseHelper extends SQLiteOpenHelper {
             //evens
             if (i > 1 && i%2 == 0)                                  //
             {
-                ATL_DX = ATL_DX - HALLWAY_WIDTH;                    //
+                ATL_DX = ATL_DX - ATL_HALLWAY_WIDTH;                //
                 insertCoordinate(db, "ATL", "D", i, ATL_DX, ATL_DY);
             }                                                       //
             //odds
             else if (i > 1)                                         //
             {
                 ATL_DY = ATL_DY - 11;                               //
-                ATL_DX = ATL_DX + HALLWAY_WIDTH;
+                ATL_DX = ATL_DX + ATL_HALLWAY_WIDTH;
                 insertCoordinate(db, "ATL", "D", i, ATL_DX, ATL_DY);//
             }
             //first one                                             //
@@ -279,14 +281,14 @@ public class DatabaseHelper extends SQLiteOpenHelper {
             //evens
             if (i > 1 && i%2 == 0)                                  //
             {
-                ATL_EX = ATL_EX - HALLWAY_WIDTH;                    //
+                ATL_EX = ATL_EX - ATL_HALLWAY_WIDTH;                //
                 insertCoordinate(db, "ATL", "E", i, ATL_EX, ATL_EY);
             }                                                       //
             //odds
             else if (i > 1)                                         //
             {
                 ATL_EY = ATL_EY - 23;                               //
-                ATL_EX = ATL_EX + HALLWAY_WIDTH;
+                ATL_EX = ATL_EX + ATL_HALLWAY_WIDTH;
                 insertCoordinate(db, "ATL", "E", i, ATL_EX, ATL_EY);//
             }
             //first one                                             //
@@ -294,15 +296,15 @@ public class DatabaseHelper extends SQLiteOpenHelper {
                 insertCoordinate(db, "ATL", "E", i, ATL_EX, ATL_EY);//
         }
 
-        insertCoordinate(db, "ATL", "E", 14, 454, 176);
+        insertCoordinate(db, "ATL", "E", 14, 454, 176);             //
         insertCoordinate(db, "ATL", "E", 15, 454, 200);
-        insertCoordinate(db, "ATL", "E", 16, 458, 176);
+        insertCoordinate(db, "ATL", "E", 16, 458, 176);             //
         insertCoordinate(db, "ATL", "E", 17, 458, 200);
-        insertCoordinate(db, "ATL", "E", 18, 462, 176);
+        insertCoordinate(db, "ATL", "E", 18, 462, 176);             //
 
                                                                     //
-        ATL_EX = ATL_EX + HALLWAY_WIDTH;
-        ATL_EY = ATL_EY - HALLWAY_HEIGHT;                           //
+        ATL_EX = ATL_EX + ATL_HALLWAY_WIDTH;
+        ATL_EY = ATL_EY - ATL_HALLWAY_HEIGHT;                       //
 
         //top half                                                  //
         for(int i = 19; i < 38; i++)
@@ -310,14 +312,14 @@ public class DatabaseHelper extends SQLiteOpenHelper {
             //evens
             if (i > 1 && i%2 == 0)                                  //
             {
-                ATL_EX = ATL_EX - HALLWAY_WIDTH;                    //
+                ATL_EX = ATL_EX - ATL_HALLWAY_WIDTH;                //
                 insertCoordinate(db, "ATL", "E", i, ATL_EX, ATL_EY);
             }                                                       //
             //odds
             else if (i > 1)                                         //
             {
                 ATL_EY = ATL_EY - 14;                               //
-                ATL_EX = ATL_EX + HALLWAY_WIDTH;
+                ATL_EX = ATL_EX + ATL_HALLWAY_WIDTH;
                 insertCoordinate(db, "ATL", "E", i, ATL_EX, ATL_EY);//
             }
             //first one                                             //
@@ -334,14 +336,14 @@ public class DatabaseHelper extends SQLiteOpenHelper {
             //evens
             if (i > 1 && i%2 != 0)                                  //
             {
-                ATL_FX = ATL_FX - HALLWAY_WIDTH;                    //
+                ATL_FX = ATL_FX - ATL_HALLWAY_WIDTH;                //
                 insertCoordinate(db, "ATL", "F", i, ATL_FX, ATL_FY);
             }                                                       //
 
             //odds                                                  //
             else if (i > 1)
             {                                                       //
-                ATL_FX = ATL_FX + HALLWAY_WIDTH;
+                ATL_FX = ATL_FX + ATL_HALLWAY_WIDTH;
                 ATL_FY = ATL_FY - 21;                               //
                 insertCoordinate(db, "ATL", "F", i, ATL_FX, ATL_FY);
             }                                                       //
@@ -389,45 +391,63 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
     //  //  //  //  //  //  //  //  //  //  //  //  //  //  //  //  //  //  //  //  //
 
-        // DTW A //                                                                 //
-        int DTW_AX = 1000;
-        int DTW_AY = 450;                                                           //
+        // DTW A //  (78)                                                           //
+        int DTW_AX = 44;
+        int DTW_AY = 160;                                                           //
 
         for(int i = 1; i < 79; i++)                                                 //
         {
             if (i > 1 && i%2 != 0)                                                  //
             {
-                DTW_AX = DTW_AX - 5;                                                //
+                DTW_AY = DTW_AY - DTW_A_HALLWAY_HEIGHT;                             //
+                insertCoordinate(db, "DTW", "A", i, DTW_AX, DTW_AY);
+            }
+            else if (i > 1)                                                         //
+            {
+                DTW_AX = DTW_AX + 13;                                               //
+                DTW_AY = DTW_AY + DTW_A_HALLWAY_HEIGHT;
                 insertCoordinate(db, "DTW", "A", i, DTW_AX, DTW_AY);
             }                                                                       //
             else
                 insertCoordinate(db, "DTW", "A", i, DTW_AX, DTW_AY);
         }                                                                           //
 
-        // DTW B //                                                                 //
-        int DTW_BX = 800;
-        int DTW_BY = 250;                                                           //
+        // DTW B // (21)                                                            //
+        int DTW_BX = 276;
+        int DTW_BY = 63;                                                            //
 
         for(int i = 1; i < 22; i++)                                                 //
         {
             if (i > 1 && i%2 != 0)                                                  //
             {
-                DTW_BX = DTW_BX - 5;                                                //
+                DTW_BY = DTW_BY - DTW_B_HALLWAY_HEIGHT;                             //
+                insertCoordinate(db, "DTW", "B", i, DTW_BX, DTW_BY);
+            }
+            else if (i > 1)                                                         //
+            {
+                DTW_BX = DTW_BX - 9;                                                //
+                DTW_BY = DTW_BY + DTW_B_HALLWAY_HEIGHT;
                 insertCoordinate(db, "DTW", "B", i, DTW_BX, DTW_BY);
             }                                                                       //
             else
                 insertCoordinate(db, "DTW", "B", i, DTW_BX, DTW_BY);
         }                                                                           //
 
-        // DTW C //                                                                 //
-        int DTW_CX = 500;
-        int DTW_CY = 250;                                                           //
+        // DTW C // (43)                                                            //
+        int DTW_CX = 284;
+        int DTW_CY = 67;                                                            //
 
         for(int i = 1; i < 44; i++)                                                 //
         {
             if (i > 1 && i%2 != 0)                                                  //
             {
-                DTW_CY = DTW_CY - 5;                                                //
+                DTW_CY = DTW_CY - DTW_B_HALLWAY_HEIGHT;                             //
+                insertCoordinate(db, "DTW", "C", i, DTW_CX, DTW_CY);
+            }
+            else if (i > 1)                                                         //
+            {
+                DTW_CX = DTW_CX + 5;                                                //
+                DTW_CY = DTW_CY + DTW_B_HALLWAY_HEIGHT;
                 insertCoordinate(db, "DTW", "C", i, DTW_CX, DTW_CY);
             }                                                                       //
             else
