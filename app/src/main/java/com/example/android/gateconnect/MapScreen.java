@@ -15,6 +15,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 //import android.util.Log;
 import android.view.View;
+import android.view.Window;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ImageView;
@@ -504,8 +505,8 @@ public class MapScreen extends AppCompatActivity {
             int d_y = 1;
 
             Cursor cursor_a = db.query("COORDINATES", // open cursor
-                    new String[] {"x-coord", "y-coord"},
-                    "airport_name = ? AND airport_letter = ? AND airport_number = ?",
+                    new String[] {"x_coord", "y_coord"},
+                    "airport_name = ? AND gate_letter = ? AND gate_number = ?",
                     new String[] {value, a1_choice, a2_choice},
                     null, null, null);
 
@@ -525,8 +526,8 @@ public class MapScreen extends AppCompatActivity {
             }
 
             Cursor cursor_d = db.query("COORDINATES",
-                    new String[] {"x-coord", "y-coord"},
-                    "airport_name = ? AND airport_letter = ? AND airport_number = ?",
+                    new String[] {"x_coord", "y_coord"},
+                    "airport_name = ? AND gate_letter = ? AND gate_number = ?",
                     new String[] {value, d1_choice, d2_choice},
                     null, null, null);
             try {
