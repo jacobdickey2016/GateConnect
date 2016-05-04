@@ -20,26 +20,31 @@
         android:alpha="0.6"/>-->
 
     <!--Title-->
-    <ImageView
+    <!--<ImageView
         android:id="@+id/gateConnect"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentTop="true"
         android:layout_centerHorizontal="true"
-        android:src="@drawable/gate_connect" />
+        android:src="@drawable/gate_connect" />-->
     <!--android:contentDescription="@string/title_description"-->
 
 
     <!--Logo-->
-    <ImageView
+    <!--<ImageView
         android:id="@+id/logo"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_centerHorizontal="true"
         android:layout_centerVertical="true"
-        android:src="@drawable/airplane_logo" />
+        android:src="@drawable/airplane_logo" />-->
     <!--android:contentDescription="@string/logo_description"-->
 
+    <ImageView
+        android:layout_width="match_parent"
+        android:layout_height="400dp"
+        android:id="@+id/logo"
+        android:src="@drawable/gate_connect_title_logo"/>
 
     <!--Airport Select-->
     <Spinner

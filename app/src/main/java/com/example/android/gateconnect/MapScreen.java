@@ -76,6 +76,8 @@ public class MapScreen extends AppCompatActivity {
         ImageView myMap = (ImageView) findViewById(R.id.map);
 
         // im not sure what picasso does, make bitmap smaller?
+        //...error was with other bitmap...
+        //keeping this line because it doesnt cause issues
         Picasso.with(this).load(R.drawable.atl_map).into(myMap);
 
         //updates the map with the correct paths

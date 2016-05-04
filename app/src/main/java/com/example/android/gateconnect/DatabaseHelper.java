@@ -56,110 +56,304 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
      // //  //  //  //  //  //  //  //  //  //  //  //  //  //  //  //
 
-        // ATL T //                                                 //
-        int ATL_TX = 150;
-        int ATL_TY = 300;                                           //
+        final int HALLWAY_WIDTH = 15;
+        final int HALLWAY_HEIGHT = 20;                              //
 
-        for(int i = 1; i < 56; i++)                                 //
+        // ATL T //  (8)                                            //
+        int ATL_TX = 195;
+        int ATL_TY = 365;                                           //
+
+        for(int i = 1; i < 9; i++)                                  //
         {
-            if (i > 1 && i%2 != 0)                                  //
+            if (i > 1)                                              //
             {
-                ATL_TY = ATL_TY - 5;                                //
+                ATL_TY = ATL_TY - 15;                               //
                 insertCoordinate(db, "ATL", "T", i, ATL_TX, ATL_TY);
             }                                                       //
-            else
-                insertCoordinate(db, "ATL", "T", i, ATL_TX, ATL_TY);
+
         }                                                           //
 
-        // ATL A //                                                 //
-        int ATL_AX = 200;
-        int ATL_AY = 300;                                           //
+        // ATL A // (34)                                            //
+        int ATL_AX = 243;
+        int ATL_AY = 365;                                           //
 
-        for(int i = 1; i < 35; i++)                                 //
-        {
+        //bottom half                                               //
+        for(int i = 1; i < 19; i++)
+        {                                                           //
+            //evens
             if (i > 1 && i%2 == 0)                                  //
             {
-                ATL_AY = ATL_AY - 5;                                //
+                ATL_AX = ATL_AX - HALLWAY_WIDTH;                    //
                 insertCoordinate(db, "ATL", "A", i, ATL_AX, ATL_AY);
             }                                                       //
+            //odds
+            else if (i > 1)                                         //
+            {
+                ATL_AY = ATL_AY - 18;                               //
+                ATL_AX = ATL_AX + HALLWAY_WIDTH;
+                insertCoordinate(db, "ATL", "A", i, ATL_AX, ATL_AY);//
+            }
+            //first one                                             //
             else
+                insertCoordinate(db, "ATL", "A", i, ATL_AX, ATL_AY);//
+        }
+                                                                    //
+        ATL_AX = ATL_AX + HALLWAY_WIDTH;
+        ATL_AY = ATL_AY - HALLWAY_HEIGHT;                           //
+
+        //top half                                                  //
+        for(int i = 19; i < 35; i++)
+        {                                                           //
+            //evens
+            if (i > 1 && i%2 == 0)                                  //
+            {
+                ATL_AX = ATL_AX - HALLWAY_WIDTH;                    //
                 insertCoordinate(db, "ATL", "A", i, ATL_AX, ATL_AY);
-        }                                                           //
-
-        // ATL B //                                                 //
-        int ATL_BX = 250;
-        int ATL_BY = 300;                                           //
-
-        for(int i = 1; i < 37; i++)                                 //
-        {
-            if (i > 1 && i%2 != 0)                                  //
+            }                                                       //
+            //odds
+            else if (i > 1)                                         //
             {
-                ATL_BY = ATL_BY - 5;                                //
+                ATL_AY = ATL_AY - 18;                               //
+                ATL_AX = ATL_AX + HALLWAY_WIDTH;
+                insertCoordinate(db, "ATL", "A", i, ATL_AX, ATL_AY);//
+            }
+            //first one                                             //
+            else
+                insertCoordinate(db, "ATL", "A", i, ATL_AX, ATL_AY);//
+        }
+
+        // ATL B //  (36)                                           //
+        int ATL_BX = 293;
+        int ATL_BY = 365;                                           //
+
+        //bottom half                                               //
+        for(int i = 1; i < 19; i++)
+        {                                                           //
+            //evens
+            if (i > 1 && i%2 == 0)                                  //
+            {
+                ATL_BX = ATL_BX - HALLWAY_WIDTH;                    //
                 insertCoordinate(db, "ATL", "B", i, ATL_BX, ATL_BY);
             }                                                       //
+            //odds
+            else if (i > 1)                                         //
+            {
+                ATL_BY = ATL_BY - 18;                               //
+                ATL_BX = ATL_BX + HALLWAY_WIDTH;
+                insertCoordinate(db, "ATL", "B", i, ATL_BX, ATL_BY);//
+            }
+            //first one                                             //
             else
+                insertCoordinate(db, "ATL", "B", i, ATL_BX, ATL_BY);//
+        }
+                                                                    //
+        ATL_BX = ATL_BX + HALLWAY_WIDTH;
+        ATL_BY = ATL_BY - HALLWAY_HEIGHT;                           //
+
+        //top half                                                  //
+        for(int i = 19; i < 37; i++)
+        {                                                           //
+            //evens
+            if (i > 1 && i%2 == 0)                                  //
+            {
+                ATL_BX = ATL_BX - HALLWAY_WIDTH;                    //
                 insertCoordinate(db, "ATL", "B", i, ATL_BX, ATL_BY);
+            }                                                       //
+            //odds
+            else if (i > 1)                                         //
+            {
+                ATL_BY = ATL_BY - 16;                               //
+                ATL_BX = ATL_BX + HALLWAY_WIDTH;
+                insertCoordinate(db, "ATL", "B", i, ATL_BX, ATL_BY);//
+            }
+            //first one                                             //
+            else
+                insertCoordinate(db, "ATL", "B", i, ATL_BX, ATL_BY);//
         }                                                           //
 
-        // ATL C //                                                 //
-        int ATL_CX = 300;
-        int ATL_CY = 300;                                           //
+        // ATL C //  (57)                                           //
+        int ATL_CX = 345;
+        int ATL_CY = 365;                                           //
 
-        for(int i = 1; i < 56; i++)                                 //
-        {
-            if (i > 1 && i%2 != 0)                                  //
+        //bottom half                                               //
+        for(int i = 1; i < 30; i++)
+        {                                                           //
+            //evens
+            if (i > 1 && i%2 == 0)                                  //
             {
-                ATL_CY = ATL_CY - 5;                                //
+                ATL_CX = ATL_CX - HALLWAY_WIDTH;                    //
                 insertCoordinate(db, "ATL", "C", i, ATL_CX, ATL_CY);
             }                                                       //
+            //odds
+            else if (i > 1)                                         //
+            {
+                ATL_CY = ATL_CY - 11;                               //
+                ATL_CX = ATL_CX + HALLWAY_WIDTH;
+                insertCoordinate(db, "ATL", "C", i, ATL_CX, ATL_CY);//
+            }
+            //first one                                             //
             else
+                insertCoordinate(db, "ATL", "C", i, ATL_CX, ATL_CY);//
+        }
+                                                                    //
+        ATL_CX = ATL_CX + HALLWAY_WIDTH;
+        ATL_CY = ATL_CY - HALLWAY_HEIGHT;                           //
+
+        //top half                                                  //
+        for(int i = 30; i < 58; i++)
+        {                                                           //
+            //evens
+            if (i > 1 && i%2 == 0)                                  //
+            {
+                ATL_CX = ATL_CX - HALLWAY_WIDTH;                    //
                 insertCoordinate(db, "ATL", "C", i, ATL_CX, ATL_CY);
+            }                                                       //
+            //odds
+            else if (i > 1)                                         //
+            {
+                ATL_CY = ATL_CY - 10;                               //
+                ATL_CX = ATL_CX + HALLWAY_WIDTH;
+                insertCoordinate(db, "ATL", "C", i, ATL_CX, ATL_CY);//
+            }
+            //first one                                             //
+            else
+                insertCoordinate(db, "ATL", "C", i, ATL_CX, ATL_CY);//
         }                                                           //
 
-        // ATL D //                                                 //
+        // ATL D //  (46)                                               //
         int ATL_DX = 350;
-        int ATL_DY = 300;                                           //
+        int ATL_DY = 365;                                           //
 
-        for(int i = 1; i < 47; i++)                                 //
-        {
-            if (i > 1 && i%2 != 0)                                  //
+        //bottom half                                               //
+        for(int i = 1; i < 22; i++)
+        {                                                           //
+            //evens
+            if (i > 1 && i%2 == 0)                                  //
             {
-                ATL_DY = ATL_DY - 5;                                //
+                ATL_DX = ATL_DX - HALLWAY_WIDTH;                    //
                 insertCoordinate(db, "ATL", "D", i, ATL_DX, ATL_DY);
             }                                                       //
+            //odds
+            else if (i > 1)                                         //
+            {
+                ATL_DY = ATL_DY - 15;                               //
+                ATL_DX = ATL_DX + HALLWAY_WIDTH;
+                insertCoordinate(db, "ATL", "D", i, ATL_DX, ATL_DY);//
+            }
+            //first one                                             //
             else
+                insertCoordinate(db, "ATL", "D", i, ATL_DX, ATL_DY);//
+        }
+        //
+        ATL_DX = ATL_DX + HALLWAY_WIDTH;
+        ATL_DY = ATL_DY - HALLWAY_HEIGHT;                           //
+
+        //top half                                                  //
+        for(int i = 22; i < 47; i++)
+        {                                                           //
+            //evens
+            if (i > 1 && i%2 == 0)                                  //
+            {
+                ATL_DX = ATL_DX - HALLWAY_WIDTH;                    //
                 insertCoordinate(db, "ATL", "D", i, ATL_DX, ATL_DY);
+            }                                                       //
+            //odds
+            else if (i > 1)                                         //
+            {
+                ATL_DY = ATL_DY - 11;                               //
+                ATL_DX = ATL_DX + HALLWAY_WIDTH;
+                insertCoordinate(db, "ATL", "D", i, ATL_DX, ATL_DY);//
+            }
+            //first one                                             //
+            else
+                insertCoordinate(db, "ATL", "D", i, ATL_DX, ATL_DY);//
         }                                                           //
 
-        // ATL E //                                                 //
+        // ATL E // (37)                                            //
         int ATL_EX = 400;
-        int ATL_EY = 300;                                           //
+        int ATL_EY = 365;                                           //
 
-        for(int i = 1; i < 38; i++)                                 //
-        {
-            if (i > 1 && i%2 != 0)                                  //
+        //bottom half                                               //
+        for(int i = 1; i < 14; i++)
+        {                                                           //
+            //evens
+            if (i > 1 && i%2 == 0)                                  //
             {
-                ATL_EY = ATL_EY - 5;                                //
+                ATL_EX = ATL_EX - HALLWAY_WIDTH;                    //
                 insertCoordinate(db, "ATL", "E", i, ATL_EX, ATL_EY);
             }                                                       //
+            //odds
+            else if (i > 1)                                         //
+            {
+                ATL_EY = ATL_EY - 23;                               //
+                ATL_EX = ATL_EX + HALLWAY_WIDTH;
+                insertCoordinate(db, "ATL", "E", i, ATL_EX, ATL_EY);//
+            }
+            //first one                                             //
             else
+                insertCoordinate(db, "ATL", "E", i, ATL_EX, ATL_EY);//
+        }
+
+        insertCoordinate(db, "ATL", "E", 14, 454, 176);
+        insertCoordinate(db, "ATL", "E", 15, 454, 200);
+        insertCoordinate(db, "ATL", "E", 16, 458, 176);
+        insertCoordinate(db, "ATL", "E", 17, 458, 200);
+        insertCoordinate(db, "ATL", "E", 18, 462, 176);
+
+                                                                    //
+        ATL_EX = ATL_EX + HALLWAY_WIDTH;
+        ATL_EY = ATL_EY - HALLWAY_HEIGHT;                           //
+
+        //top half                                                  //
+        for(int i = 19; i < 38; i++)
+        {                                                           //
+            //evens
+            if (i > 1 && i%2 == 0)                                  //
+            {
+                ATL_EX = ATL_EX - HALLWAY_WIDTH;                    //
                 insertCoordinate(db, "ATL", "E", i, ATL_EX, ATL_EY);
+            }                                                       //
+            //odds
+            else if (i > 1)                                         //
+            {
+                ATL_EY = ATL_EY - 14;                               //
+                ATL_EX = ATL_EX + HALLWAY_WIDTH;
+                insertCoordinate(db, "ATL", "E", i, ATL_EX, ATL_EY);//
+            }
+            //first one                                             //
+            else
+                insertCoordinate(db, "ATL", "E", i, ATL_EX, ATL_EY);//
         }                                                           //
 
-        // ATL F //                                                 //
+        // ATL F //  (10)                                           //
         int ATL_FX = 450;
-        int ATL_FY = 300;                                           //
+        int ATL_FY = 365;                                           //
 
         for(int i = 1; i < 11; i++)                                 //
         {
+            //evens
             if (i > 1 && i%2 != 0)                                  //
             {
-                ATL_FY = ATL_FY - 5;                                //
+                ATL_FX = ATL_FX - HALLWAY_WIDTH;                    //
                 insertCoordinate(db, "ATL", "F", i, ATL_FX, ATL_FY);
             }                                                       //
-            else
+
+            //odds                                                  //
+            else if (i > 1)
+            {                                                       //
+                ATL_FX = ATL_FX + HALLWAY_WIDTH;
+                ATL_FY = ATL_FY - 21;                               //
+                insertCoordinate(db, "ATL", "F", i, ATL_FX, ATL_FY);
+            }                                                       //
+            //the first one
+            else                                                    //
                 insertCoordinate(db, "ATL", "F", i, ATL_FX, ATL_FY);
         }                                                           //
+
+        insertCoordinate(db, "ATL", "F", 11, 497, 175);             //
+        insertCoordinate(db, "ATL", "F", 12, 497, 175);
+        insertCoordinate(db, "ATL", "F", 13, 497, 175);             //
+        insertCoordinate(db, "ATL", "F", 14, 497, 175);
 
     //  //  //  //  //  //  //  //  //  //  //  //  //  //  //  //  //  //  //
 
