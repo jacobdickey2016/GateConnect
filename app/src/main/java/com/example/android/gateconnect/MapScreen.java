@@ -23,6 +23,10 @@ import android.widget.SpinnerAdapter;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.squareup.picasso.Picasso;
+
+//import java.io.File;
+
 public class MapScreen extends AppCompatActivity {
 
     /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -30,6 +34,7 @@ public class MapScreen extends AppCompatActivity {
     /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
     //todo ERROR: Bitmap too large to be uploaded into a texture (12132x6560, max=8192x8192)
+    //todo ERROR: database unavailable
 
     //create paint
     Paint paint = new Paint();
@@ -68,6 +73,9 @@ public class MapScreen extends AppCompatActivity {
 
         //Initialize Map
         ImageView myMap = (ImageView) findViewById(R.id.map);
+
+        // im not sure what picasso does, make bitmap smaller?
+        Picasso.with(this).load(R.drawable.atl_map).into(myMap);
 
         //updates the map with the correct paths
         findViewById(R.id.main).invalidate();
@@ -487,7 +495,7 @@ public class MapScreen extends AppCompatActivity {
         try {
             //create a database helper so that cursors can navigate the database
             SQLiteOpenHelper DatabaseHelper = new DatabaseHelper(this);
-            SQLiteDatabase db = DatabaseHelper.getReadableDatabase();
+            SQLiteDatabase db = DatabaseHelper.getReadableDatabase(); // open database
 
             int hallway = 1500;
             int a_x = 1;
@@ -495,7 +503,7 @@ public class MapScreen extends AppCompatActivity {
             int d_x = 1;
             int d_y = 1;
 
-            Cursor cursor_a = db.query("COORDINATES",
+            Cursor cursor_a = db.query("COORDINATES", // open cursor
                     new String[] {"x-coord", "y-coord"},
                     "airport_name = ? AND airport_letter = ? AND airport_number = ?",
                     new String[] {value, a1_choice, a2_choice},
@@ -507,11 +515,12 @@ public class MapScreen extends AppCompatActivity {
                     d_x = cursor_a.getInt(0);
                     d_y = cursor_a.getInt(1);
                 }
+                db.close(); //close database
             } catch (Exception e) {
                 // exception handling
             } finally {
                 if(cursor_a != null){
-                    cursor_a.close();
+                    cursor_a.close(); // close cursor
                 }
             }
 
@@ -526,6 +535,7 @@ public class MapScreen extends AppCompatActivity {
                     d_x = cursor_d.getInt(0);
                     d_y = cursor_d.getInt(1);
                 }
+                db.close();
             } catch (Exception e) {
                 // exception handling
             } finally {

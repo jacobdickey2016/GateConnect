@@ -14,7 +14,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     private static final String DB_NAME = "COORDINATES";
     //version of the database
     private static final int DB_VERSION = 1;
-
+    //name of columns
     public static final String _ID = "_id";
     public static final String AIRPORT_NAME = "airport_name";
     public static final String GATE_LETTER = "gate_letter";
@@ -37,7 +37,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
                 + GATE_LETTER + " TEXT, "
                 + GATE_NUMBER + " INTEGER, "
                 + X_COORD + " INTEGER, "
-                + Y_COORD + " INTEGER)");
+                + Y_COORD + " INTEGER);");
 
         //INSERT automated values into database "COORDINATES" using insertCoordinate method
 
