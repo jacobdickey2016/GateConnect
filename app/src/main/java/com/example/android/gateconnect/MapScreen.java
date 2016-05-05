@@ -501,6 +501,7 @@ public class MapScreen extends AppCompatActivity {
             SQLiteDatabase db = DatabaseHelper.getReadableDatabase(); // open database
 
             float atl_hallway = 190;
+            float dtw_hallway = 295;
             float a_x = 1;
             float a_y = 1;
             float d_x = 1;
@@ -569,7 +570,8 @@ public class MapScreen extends AppCompatActivity {
                 path_a.lineTo(d_x, d_y);
                 path_a.close();
             }
-            else if (value.equals("ATL")) {
+            else if (value.equals("ATL"))
+            {
                 //move through the terminal from first gate to hallway
                 path_a.moveTo(a_x, a_y);
                 path_a.lineTo(a_x, atl_hallway);
@@ -585,7 +587,71 @@ public class MapScreen extends AppCompatActivity {
                 path_c.lineTo(d_x, d_y);
                 path_c.close();
             }
+            else if (value.equals("DTW") && a1_choice.equals(d1_choice))
+            {
+                //move through the terminal from first gate to hallway
+                path_a.moveTo(a_x, a_y);
+                path_a.lineTo(d_x, d_y);
+                path_a.close();
+            }
+            else if (value.equals("DTW"))
+            {
+                //move through the terminal from first gate to hallway
+                path_a.moveTo(a_x, a_y);
+                path_a.lineTo(a_x, dtw_hallway);
+                path_a.close();
 
+                //move through the hallway to next terminal
+                path_b.moveTo(a_x, dtw_hallway);
+                path_b.lineTo(d_x, dtw_hallway);
+                path_b.close();
+
+                //move through the terminal to the second gate
+                path_c.moveTo(d_x, dtw_hallway);
+                path_c.lineTo(d_x, d_y);
+                path_c.close();
+            }
+            else if (value.equals("IND") && a1_choice.equals(d1_choice))
+            {
+                //move through the terminal from first gate to hallway
+                path_a.moveTo(a_x, a_y);
+                path_a.lineTo(d_x, d_y);
+                path_a.close();
+            }
+            else if (value.equals("IND") && ((a_x + a_y) < (d_x + d_y)))
+            {
+                //move through the terminal from first gate to hallway
+                path_a.moveTo(a_x, a_y);
+                path_a.lineTo(93,222);
+                path_a.close();
+
+                //move through the hallway to next terminal
+                path_b.moveTo(93,222);
+                path_b.lineTo(230,357);
+                path_b.close();
+
+                //move through the terminal to the second gate
+                path_c.moveTo(230,357);
+                path_c.lineTo(d_x, d_y);
+                path_c.close();
+            }
+            else //(value.equals("IND") && ((a_x + a_y) > (d_x + d_y)))
+            {
+                //move through the terminal from first gate to hallway
+                path_a.moveTo(a_x, a_y);
+                path_a.lineTo(230,357);
+                path_a.close();
+
+                //move through the hallway to next terminal
+                path_b.moveTo(230,357);
+                path_b.lineTo(93,222);
+                path_b.close();
+
+                //move through the terminal to the second gate
+                path_c.moveTo(93,222);
+                path_c.lineTo(d_x, d_y);
+                path_c.close();
+            }
             /*if (db.isOpen())
                 db.close();*/
 
