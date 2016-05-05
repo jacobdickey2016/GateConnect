@@ -193,14 +193,14 @@ public class MapScreen extends AppCompatActivity {
                 this, android.R.layout.simple_spinner_dropdown_item,
                 gate_letters);
         spinner_a1.setAdapter(spinner_a1_adapter);
-        spinner_a1.setOnItemSelectedListener(new Spinner_A1_Listener());
+        spinner_a1.setOnItemSelectedListener(new All_Spinner_Listener());
         myMap.invalidate();
         return spinner_a1;
     }
 
     // The listener for Spinner A1 that sends whatever choice made to
     // the method that populates the second spinner.
-    public class Spinner_A1_Listener implements
+    /*public class Spinner_A1_Listener implements
             AdapterView.OnItemSelectedListener {
 
         public void onItemSelected(AdapterView<?>Spinner_A1_Adapter_View,
@@ -208,7 +208,6 @@ public class MapScreen extends AppCompatActivity {
             //gets selected item
             Spinner_A1_Choice = Spinner_A1_Adapter_View
                     .getItemAtPosition(position).toString();
-            onDraw(tempCanvas);
             findViewById(R.id.main).invalidate();
 
             Create_A2_Spinner(Spinner_A1_Choice);
@@ -219,7 +218,7 @@ public class MapScreen extends AppCompatActivity {
 
         }
 
-    }
+    }*/
 
     // Creates the second spinner for the Arriving Gate section
     public Spinner Create_A2_Spinner(String Spinner_A1_Choice) {
@@ -303,13 +302,13 @@ public class MapScreen extends AppCompatActivity {
                 this, android.R.layout.simple_spinner_dropdown_item,
                 Spinner_A2_Array);
         Spinner_A2.setAdapter(Spinner_A2_Adapter);
-        Spinner_A2.setOnItemSelectedListener(new Spinner_A2_Listener());
+        Spinner_A2.setOnItemSelectedListener(new All_Spinner_Listener());
         return Spinner_A2;
     }
 
     // The listener for Spinner A2 that records
     // whatever is currently selected.
-    public class Spinner_A2_Listener implements
+/*    public class Spinner_A2_Listener implements
             AdapterView.OnItemSelectedListener {
 
         public void onItemSelected(AdapterView<?> Spinner_A2_Adapter_View,
@@ -317,6 +316,49 @@ public class MapScreen extends AppCompatActivity {
             Spinner_A2_Choice = Spinner_A2_Adapter_View
                     .getItemAtPosition(position).toString();
             findViewById(R.id.main).invalidate();
+            //onDraw(tempCanvas);
+        }
+        public void onNothingSelected(AdapterView<?> arg0) {
+        }
+    }*/
+    public class All_Spinner_Listener implements
+            AdapterView.OnItemSelectedListener {
+
+        public void onItemSelected(AdapterView<?> Spinner_Adapter_View,
+                                   View v, int position, long row) {
+
+            //get id to specify for different spinners
+            int id = v.getId();
+
+            if (id == R.id.spinner_a1)
+            {
+                Spinner_A1_Choice = Spinner_Adapter_View
+                        .getItemAtPosition(position).toString();
+                findViewById(R.id.main).invalidate();
+                Create_A2_Spinner(Spinner_A1_Choice);
+            }
+            else if (id == R.id.spinner_a2)
+            {
+                Spinner_A2_Choice = Spinner_Adapter_View
+                        .getItemAtPosition(position).toString();
+                findViewById(R.id.main).invalidate();
+            }
+            else if (id == R.id.spinner_d1)
+            {
+                Spinner_D1_Choice = Spinner_Adapter_View
+                        .getItemAtPosition(position).toString();
+                findViewById(R.id.main).invalidate();
+                Create_D2_Spinner(Spinner_D1_Choice);
+            }
+            else if (id == R.id.spinner_d2)
+            {
+                Spinner_D2_Choice = Spinner_Adapter_View
+                        .getItemAtPosition(position).toString();
+                findViewById(R.id.main).invalidate();
+            }
+
+            //finally draw using the spinner choices
+            onDraw(tempCanvas);
         }
         public void onNothingSelected(AdapterView<?> arg0) {
         }
@@ -356,14 +398,14 @@ public class MapScreen extends AppCompatActivity {
                 this, android.R.layout.simple_spinner_dropdown_item,
                 gate_letters);
         spinner_d1.setAdapter(spinner_d1_adapter);
-        spinner_d1.setOnItemSelectedListener(new Spinner_D1_Listener());
+        spinner_d1.setOnItemSelectedListener(new All_Spinner_Listener());
         myMap.invalidate();
         return spinner_d1;
     }
 
     // The listener for Spinner D1 that sends whatever choice made to
     // the method that populates the second spinner.
-    public class Spinner_D1_Listener implements
+    /*public class Spinner_D1_Listener implements
             AdapterView.OnItemSelectedListener {
 
         public void onItemSelected(AdapterView<?> Spinner_D1_Adapter_View,
@@ -381,7 +423,7 @@ public class MapScreen extends AppCompatActivity {
 
         }
 
-    }
+    }*/
 
     // Creates the second spinner for the Departing Gate section
     public Spinner Create_D2_Spinner(String Spinner_D1_Choice) {
@@ -465,7 +507,7 @@ public class MapScreen extends AppCompatActivity {
                 this, android.R.layout.simple_spinner_dropdown_item,
                 Spinner_D2_Array);
         Spinner_D2.setAdapter(Spinner_D2_Adapter);
-        Spinner_D2.setOnItemSelectedListener(new Spinner_D2_Listener());
+        Spinner_D2.setOnItemSelectedListener(new All_Spinner_Listener());
         //myMap.invalidate();
         return Spinner_D2;
 
@@ -473,7 +515,7 @@ public class MapScreen extends AppCompatActivity {
 
     // The listener for Spinner D2 that records
     // whatever is currently selected.
-    public class Spinner_D2_Listener implements
+    /*public class Spinner_D2_Listener implements
             AdapterView.OnItemSelectedListener {
 
         public void onItemSelected(AdapterView<?> Spinner_D2_Adapter_View,
@@ -481,10 +523,11 @@ public class MapScreen extends AppCompatActivity {
             Spinner_D2_Choice = Spinner_D2_Adapter_View
                     .getItemAtPosition(position).toString();
             findViewById(R.id.main).invalidate();
+            onDraw(tempCanvas);
         }
         public void onNothingSelected(AdapterView<?> arg0) {
         }
-    }
+    }*/
 
     /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     // Set Paths //
@@ -521,11 +564,11 @@ public class MapScreen extends AppCompatActivity {
                 }
             } catch (Exception e) {
                 // exception handling
-            } finally {
+            }/* finally {
                 if(cursor_a != null){
                     cursor_a.close(); // close cursor
                 }
-            }
+            }*/
 
             Cursor cursor_d = db.query("COORDINATES",
                     new String[] {"x_coord", "y_coord"},
@@ -547,21 +590,21 @@ public class MapScreen extends AppCompatActivity {
                 }
             }
 
-//
-//            //move through the terminal from first gate to hallway
-//            path_a.moveTo(1, 1);
-//            path_a.lineTo(100, 100);
-//            path_a.close();
-//
-//            //move through the hallway to next terminal
-//            path_b.moveTo(100, 100);
-//            path_b.lineTo(200, 150);
-//            path_b.close();
-//
-//            //move through the terminal to the second gate
-//            path_c.moveTo(200, 150);
-//            path_c.lineTo(2, 2);
-//            path_c.close();
+
+           /* //move through the terminal from first gate to hallway
+            path_a.moveTo(1, 1);
+            path_a.lineTo(100, 100);
+            path_a.close();
+
+            //move through the hallway to next terminal
+            path_b.moveTo(100, 100);
+            path_b.lineTo(200, 150);
+            path_b.close();
+
+            //move through the terminal to the second gate
+            path_c.moveTo(200, 150);
+            path_c.lineTo(2, 2);
+            path_c.close();*/
 
             if (value.equals("ATL") && a1_choice.equals(d1_choice))
             {
@@ -652,8 +695,8 @@ public class MapScreen extends AppCompatActivity {
                 path_c.lineTo(d_x, d_y);
                 path_c.close();
             }
-            /*if (db.isOpen())
-                db.close();*/
+            if (db.isOpen())
+                db.close();
 
         } catch (SQLiteException e) {
             Toast toast = Toast.makeText(this, "Database Unavailable", Toast.LENGTH_SHORT);
@@ -672,15 +715,15 @@ public class MapScreen extends AppCompatActivity {
         paint.setStrokeWidth(18f);
         paint.setColor(Color.RED);
 
-        //set values of the selected items in each spinner to local variables
-        String ax_test = "A";
-        String ay_test = "1";
-        String dx_test = "B";
-        String dy_test = "2";
-
         //use local variables as parameters to set paths
-//        setPaths(Spinner_A1_Choice, Spinner_A2_Choice, Spinner_D1_Choice, Spinner_D2_Choice);
-        setPaths(ax_test, ay_test, dx_test, dy_test);
+        setPaths(Spinner_A1_Choice, Spinner_A2_Choice, Spinner_D1_Choice, Spinner_D2_Choice);
+
+        //set values of the selected items in each spinner to local variables
+//        String ax_test = "A";
+//        String ay_test = "1";
+//        String dx_test = "B";
+//        String dy_test = "2";
+//        setPaths(ax_test, ay_test, dx_test, dy_test);
 
         //Draw the path onto the canvas using paint
         canvas.drawPath(path_a, paint);
