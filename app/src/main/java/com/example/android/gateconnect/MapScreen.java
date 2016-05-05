@@ -156,6 +156,54 @@ public class MapScreen extends AppCompatActivity {
     }
 
     /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+    // Create Listener for all Spinners //
+    /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+    public class All_Spinner_Listener implements
+            AdapterView.OnItemSelectedListener {
+
+        public void onItemSelected(AdapterView<?> Spinner_Adapter_View,
+                                   View v, int position, long row) {
+
+            //get id to specify for different spinners
+            int id = v.getId();
+
+            if (id == R.id.spinner_a1)
+            {
+                Spinner_A1_Choice = Spinner_Adapter_View
+                        .getItemAtPosition(position).toString();
+                findViewById(R.id.main).invalidate();
+                Create_A2_Spinner(Spinner_A1_Choice);
+            }
+            else if (id == R.id.spinner_a2)
+            {
+                Spinner_A2_Choice = Spinner_Adapter_View
+                        .getItemAtPosition(position).toString();
+                findViewById(R.id.main).invalidate();
+            }
+            else if (id == R.id.spinner_d1)
+            {
+                Spinner_D1_Choice = Spinner_Adapter_View
+                        .getItemAtPosition(position).toString();
+                findViewById(R.id.main).invalidate();
+                Create_D2_Spinner(Spinner_D1_Choice);
+            }
+            else if (id == R.id.spinner_d2)
+            {
+                Spinner_D2_Choice = Spinner_Adapter_View
+                        .getItemAtPosition(position).toString();
+                findViewById(R.id.main).invalidate();
+            }
+
+            //finally draw using the spinner choices
+            setPaths(Spinner_A1_Choice, Spinner_A2_Choice, Spinner_D1_Choice, Spinner_D2_Choice);
+            onDraw(tempCanvas);
+        }
+        public void onNothingSelected(AdapterView<?> arg0) {
+        }
+    }
+
+    /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     // Create Spinners A1 & A2 //
     /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
@@ -318,48 +366,7 @@ public class MapScreen extends AppCompatActivity {
         public void onNothingSelected(AdapterView<?> arg0) {
         }
     }*/
-    public class All_Spinner_Listener implements
-            AdapterView.OnItemSelectedListener {
 
-        public void onItemSelected(AdapterView<?> Spinner_Adapter_View,
-                                   View v, int position, long row) {
-
-            //get id to specify for different spinners
-            int id = v.getId();
-
-            if (id == R.id.spinner_a1)
-            {
-                Spinner_A1_Choice = Spinner_Adapter_View
-                        .getItemAtPosition(position).toString();
-                findViewById(R.id.main).invalidate();
-                Create_A2_Spinner(Spinner_A1_Choice);
-            }
-            else if (id == R.id.spinner_a2)
-            {
-                Spinner_A2_Choice = Spinner_Adapter_View
-                        .getItemAtPosition(position).toString();
-                findViewById(R.id.main).invalidate();
-            }
-            else if (id == R.id.spinner_d1)
-            {
-                Spinner_D1_Choice = Spinner_Adapter_View
-                        .getItemAtPosition(position).toString();
-                findViewById(R.id.main).invalidate();
-                Create_D2_Spinner(Spinner_D1_Choice);
-            }
-            else if (id == R.id.spinner_d2)
-            {
-                Spinner_D2_Choice = Spinner_Adapter_View
-                        .getItemAtPosition(position).toString();
-                findViewById(R.id.main).invalidate();
-            }
-
-            //finally draw using the spinner choices
-            onDraw(tempCanvas);
-        }
-        public void onNothingSelected(AdapterView<?> arg0) {
-        }
-    }
 
     /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     // Create Spinners D1 & D2 //
@@ -713,7 +720,7 @@ public class MapScreen extends AppCompatActivity {
         paint.setColor(Color.RED);
 
         //use local variables as parameters to set paths
-        setPaths(Spinner_A1_Choice, Spinner_A2_Choice, Spinner_D1_Choice, Spinner_D2_Choice);
+//        setPaths(Spinner_A1_Choice, Spinner_A2_Choice, Spinner_D1_Choice, Spinner_D2_Choice);
 
         //set values of the selected items in each spinner to local variables
 //        String ax_test = "A";
