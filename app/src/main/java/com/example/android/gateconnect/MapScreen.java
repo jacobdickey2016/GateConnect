@@ -28,6 +28,8 @@ import com.squareup.picasso.Picasso;
 
 //import java.io.File;
 
+//todo:: the path still does not display
+
 public class MapScreen extends AppCompatActivity {
 
     /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -195,12 +197,14 @@ public class MapScreen extends AppCompatActivity {
                 findViewById(R.id.main).invalidate();
             }
 
+            //todo:: these spinner choices are null, check values
             //finally draw using the spinner choices
             setPaths(Spinner_A1_Choice, Spinner_A2_Choice, Spinner_D1_Choice, Spinner_D2_Choice);
             onDraw(tempCanvas);
         }
         public void onNothingSelected(AdapterView<?> arg0) {
         }
+
     }
 
     /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -549,12 +553,12 @@ public class MapScreen extends AppCompatActivity {
 
             float atl_hallway = 190;
             float dtw_hallway = 295;
-            float a_x = 1;
-            float a_y = 1;
-            float d_x = 1;
-            float d_y = 1;
+            float a_x = 100;
+            float a_y = 100;
+            float d_x = 300;
+            float d_y = 300;
 
-            Cursor cursor_a = db.query("COORDINATES", // open cursor
+            /*Cursor cursor_a = db.query("COORDINATES", // open cursor
                     new String[] {"x_coord", "y_coord"},
                     "airport_name = ? AND gate_letter = ? AND gate_number = ?",
                     new String[] {value, a1_choice, a2_choice},
@@ -572,9 +576,9 @@ public class MapScreen extends AppCompatActivity {
                 if(cursor_a != null){
                     cursor_a.close(); // close cursor
                 }
-            }
+            }*/
 
-            Cursor cursor_d = db.query("COORDINATES",
+            /*Cursor cursor_d = db.query("COORDINATES",
                     new String[] {"x_coord", "y_coord"},
                     "airport_name = ? AND gate_letter = ? AND gate_number = ?",
                     new String[] {value, d1_choice, d2_choice},
@@ -592,7 +596,7 @@ public class MapScreen extends AppCompatActivity {
                 if(cursor_d != null){
                     cursor_d.close();
                 }
-            }
+            }*/
 
 
            /* //move through the terminal from first gate to hallway
@@ -610,14 +614,14 @@ public class MapScreen extends AppCompatActivity {
             path_c.lineTo(2, 2);
             path_c.close();*/
 
-            if (value.equals("ATL") && a1_choice.equals(d1_choice))
+            /*if (value.equals("ATL") && a1_choice.equals(d1_choice))
             {
                 //move through the terminal from first gate to hallway
                 path_a.moveTo(a_x, a_y);
                 path_a.lineTo(d_x, d_y);
                 path_a.close();
             }
-            else if (value.equals("ATL"))
+            else*/ if (value.equals("ATL"))
             {
                 //move through the terminal from first gate to hallway
                 path_a.moveTo(a_x, a_y);
@@ -634,13 +638,13 @@ public class MapScreen extends AppCompatActivity {
                 path_c.lineTo(d_x, d_y);
                 path_c.close();
             }
-            else if (value.equals("DTW") && a1_choice.equals(d1_choice))
+            /*else if (value.equals("DTW") && a1_choice.equals(d1_choice))
             {
                 //move through the terminal from first gate to hallway
                 path_a.moveTo(a_x, a_y);
                 path_a.lineTo(d_x, d_y);
                 path_a.close();
-            }
+            }*/
             else if (value.equals("DTW"))
             {
                 //move through the terminal from first gate to hallway
@@ -658,13 +662,13 @@ public class MapScreen extends AppCompatActivity {
                 path_c.lineTo(d_x, d_y);
                 path_c.close();
             }
-            else if (value.equals("IND") && a1_choice.equals(d1_choice))
+            /*else if (value.equals("IND") && a1_choice.equals(d1_choice))
             {
                 //move through the terminal from first gate to hallway
                 path_a.moveTo(a_x, a_y);
                 path_a.lineTo(d_x, d_y);
                 path_a.close();
-            }
+            }*/
             else if (value.equals("IND") && ((a_x + a_y) < (d_x + d_y)))
             {
                 //move through the terminal from first gate to hallway
