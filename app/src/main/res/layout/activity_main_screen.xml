@@ -54,20 +54,24 @@
         android:layout_height="wrap_content"
         android:src="@drawable/airplane_in_background"
         android:id="@+id/background_airplane"
-        android:layout_marginTop="40dp" />
+        android:layout_marginTop="40dp"
+        android:contentDescription="@string/airplane_in_background" />
 
     <ImageView
         android:layout_width="match_parent"
         android:layout_height="400dp"
         android:id="@+id/logo"
-        android:src="@drawable/gate_connect_title_logo"/>
+        android:src="@drawable/gate_connect_title_logo"
+        android:contentDescription="@string/app_name"/>
 
     <ImageView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:src="@drawable/airplane_in_background_top"
         android:id="@+id/background_airplane_top"
-        android:layout_marginTop="40dp" />
+        android:layout_marginTop="40dp"
+        android:contentDescription="@string/app_name"
+        />
 
     <!--Airport Select-->
     <Spinner

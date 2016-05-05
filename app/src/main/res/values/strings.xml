@@ -12,6 +12,7 @@
 
     <!--Spinner 3 & 4 Title-->
     <string name="departing_gate">Departing Gate</string>
+    <string name="airplane_in_background">airplane_in_the_background</string>
 
     <!--Main screen spinner-->
     <string-array name="airport_selection">
