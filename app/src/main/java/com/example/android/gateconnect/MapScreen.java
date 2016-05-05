@@ -564,11 +564,11 @@ public class MapScreen extends AppCompatActivity {
                 }
             } catch (Exception e) {
                 // exception handling
-            }/* finally {
+            } finally {
                 if(cursor_a != null){
                     cursor_a.close(); // close cursor
                 }
-            }*/
+            }
 
             Cursor cursor_d = db.query("COORDINATES",
                     new String[] {"x_coord", "y_coord"},
