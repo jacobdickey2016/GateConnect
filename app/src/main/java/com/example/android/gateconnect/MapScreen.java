@@ -34,9 +34,6 @@ public class MapScreen extends AppCompatActivity {
     // Initialize //
     /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-    //todo ERROR: Bitmap too large to be uploaded into a texture (12132x6560, max=8192x8192)
-    //todo ERROR: database unavailable
-
     //create paint
     Paint paint = new Paint();
 
