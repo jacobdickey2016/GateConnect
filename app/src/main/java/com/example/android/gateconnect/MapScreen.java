@@ -75,7 +75,7 @@ public class MapScreen extends AppCompatActivity {
         ImageView myMap = (ImageView) findViewById(R.id.map);
 
         // im not sure what picasso does, make bitmap smaller?
-        //...error was with other bitmap...
+        //...error was with other bitmap, not this one...
         //keeping this line because it doesnt cause issues
         Picasso.with(this).load(R.drawable.atl_map).into(myMap);
 
@@ -161,7 +161,7 @@ public class MapScreen extends AppCompatActivity {
     // Create Listener for all Spinners //
     /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-    public class All_Spinner_Listener implements
+    /*public class All_Spinner_Listener implements
             AdapterView.OnItemSelectedListener {
 
         public void onItemSelected(AdapterView<?> Spinner_Adapter_View,
@@ -205,6 +205,81 @@ public class MapScreen extends AppCompatActivity {
         public void onNothingSelected(AdapterView<?> arg0) {
         }
 
+    }*/
+
+    /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+    // Create Spinner Listeners //
+    /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+    // The listener for Spinner A1 that sends whatever choice made to
+    // the method that populates the second spinner.
+    public class Spinner_A1_Listener implements
+            AdapterView.OnItemSelectedListener {
+
+        public void onItemSelected(AdapterView<?>Spinner_A1_Adapter_View,
+                                   View v, int position, long row) {
+            //gets selected item
+            Spinner_A1_Choice = Spinner_A1_Adapter_View
+                    .getItemAtPosition(position).toString();
+            findViewById(R.id.main).invalidate();
+
+            Create_A2_Spinner(Spinner_A1_Choice);
+        }
+
+        public void onNothingSelected(AdapterView<?> arg0) {
+        }
+    }
+
+
+    // The listener for Spinner A2 that records
+    // whatever is currently selected.
+    public class Spinner_A2_Listener implements
+            AdapterView.OnItemSelectedListener {
+
+        public void onItemSelected(AdapterView<?> Spinner_A2_Adapter_View,
+                                   View v, int position, long row) {
+            Spinner_A2_Choice = Spinner_A2_Adapter_View
+                    .getItemAtPosition(position).toString();
+            findViewById(R.id.main).invalidate();
+            //onDraw(tempCanvas);
+        }
+        public void onNothingSelected(AdapterView<?> arg0) {
+        }
+    }
+
+    // The listener for Spinner D1 that sends whatever choice made to
+    // the method that populates the second spinner.
+    public class Spinner_D1_Listener implements
+            AdapterView.OnItemSelectedListener {
+
+        public void onItemSelected(AdapterView<?> Spinner_D1_Adapter_View,
+                                   View v, int position, long row) {
+
+            Spinner_D1_Choice = Spinner_D1_Adapter_View
+                    .getItemAtPosition(position).toString();
+            findViewById(R.id.main).invalidate();
+            Create_D2_Spinner(Spinner_D1_Choice);
+
+        }
+
+        public void onNothingSelected(AdapterView<?> arg0) {
+        }
+    }
+
+    // The listener for Spinner D2 that records
+    // whatever is currently selected.
+    public class Spinner_D2_Listener implements
+            AdapterView.OnItemSelectedListener {
+
+        public void onItemSelected(AdapterView<?> Spinner_D2_Adapter_View,
+                                   View v, int position, long row) {
+            Spinner_D2_Choice = Spinner_D2_Adapter_View
+                    .getItemAtPosition(position).toString();
+            findViewById(R.id.main).invalidate();
+            onDraw(tempCanvas);
+        }
+        public void onNothingSelected(AdapterView<?> arg0) {
+        }
     }
 
     /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -242,32 +317,11 @@ public class MapScreen extends AppCompatActivity {
                 this, android.R.layout.simple_spinner_dropdown_item,
                 gate_letters);
         spinner_a1.setAdapter(spinner_a1_adapter);
-        spinner_a1.setOnItemSelectedListener(new All_Spinner_Listener());
+        spinner_a1.setOnItemSelectedListener(new Spinner_A1_Listener());
         myMap.invalidate();
         return spinner_a1;
     }
 
-    // The listener for Spinner A1 that sends whatever choice made to
-    // the method that populates the second spinner.
-    /*public class Spinner_A1_Listener implements
-            AdapterView.OnItemSelectedListener {
-
-        public void onItemSelected(AdapterView<?>Spinner_A1_Adapter_View,
-                                   View v, int position, long row) {
-            //gets selected item
-            Spinner_A1_Choice = Spinner_A1_Adapter_View
-                    .getItemAtPosition(position).toString();
-            findViewById(R.id.main).invalidate();
-
-            Create_A2_Spinner(Spinner_A1_Choice);
-        }
-
-        public void onNothingSelected(AdapterView<?> arg0) {
-
-
-        }
-
-    }*/
 
     // Creates the second spinner for the Arriving Gate section
     public Spinner Create_A2_Spinner(String Spinner_A1_Choice) {
@@ -351,25 +405,9 @@ public class MapScreen extends AppCompatActivity {
                 this, android.R.layout.simple_spinner_dropdown_item,
                 Spinner_A2_Array);
         Spinner_A2.setAdapter(Spinner_A2_Adapter);
-        Spinner_A2.setOnItemSelectedListener(new All_Spinner_Listener());
+        Spinner_A2.setOnItemSelectedListener(new Spinner_A2_Listener());
         return Spinner_A2;
     }
-
-    // The listener for Spinner A2 that records
-    // whatever is currently selected.
-/*    public class Spinner_A2_Listener implements
-            AdapterView.OnItemSelectedListener {
-
-        public void onItemSelected(AdapterView<?> Spinner_A2_Adapter_View,
-                                   View v, int position, long row) {
-            Spinner_A2_Choice = Spinner_A2_Adapter_View
-                    .getItemAtPosition(position).toString();
-            findViewById(R.id.main).invalidate();
-            //onDraw(tempCanvas);
-        }
-        public void onNothingSelected(AdapterView<?> arg0) {
-        }
-    }*/
 
 
     /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -406,32 +444,10 @@ public class MapScreen extends AppCompatActivity {
                 this, android.R.layout.simple_spinner_dropdown_item,
                 gate_letters);
         spinner_d1.setAdapter(spinner_d1_adapter);
-        spinner_d1.setOnItemSelectedListener(new All_Spinner_Listener());
+        spinner_d1.setOnItemSelectedListener(new Spinner_D1_Listener());
         myMap.invalidate();
         return spinner_d1;
     }
-
-    // The listener for Spinner D1 that sends whatever choice made to
-    // the method that populates the second spinner.
-    /*public class Spinner_D1_Listener implements
-            AdapterView.OnItemSelectedListener {
-
-        public void onItemSelected(AdapterView<?> Spinner_D1_Adapter_View,
-                                   View v, int position, long row) {
-
-            Spinner_D1_Choice = Spinner_D1_Adapter_View
-                    .getItemAtPosition(position).toString();
-            findViewById(R.id.main).invalidate();
-            Create_D2_Spinner(Spinner_D1_Choice);
-
-        }
-
-        public void onNothingSelected(AdapterView<?> arg0) {
-
-
-        }
-
-    }*/
 
     // Creates the second spinner for the Departing Gate section
     public Spinner Create_D2_Spinner(String Spinner_D1_Choice) {
@@ -515,27 +531,11 @@ public class MapScreen extends AppCompatActivity {
                 this, android.R.layout.simple_spinner_dropdown_item,
                 Spinner_D2_Array);
         Spinner_D2.setAdapter(Spinner_D2_Adapter);
-        Spinner_D2.setOnItemSelectedListener(new All_Spinner_Listener());
+        Spinner_D2.setOnItemSelectedListener(new Spinner_D2_Listener());
         //myMap.invalidate();
         return Spinner_D2;
 
     }
-
-    // The listener for Spinner D2 that records
-    // whatever is currently selected.
-    /*public class Spinner_D2_Listener implements
-            AdapterView.OnItemSelectedListener {
-
-        public void onItemSelected(AdapterView<?> Spinner_D2_Adapter_View,
-                                   View v, int position, long row) {
-            Spinner_D2_Choice = Spinner_D2_Adapter_View
-                    .getItemAtPosition(position).toString();
-            findViewById(R.id.main).invalidate();
-            onDraw(tempCanvas);
-        }
-        public void onNothingSelected(AdapterView<?> arg0) {
-        }
-    }*/
 
     /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     // Set Paths //
@@ -724,7 +724,7 @@ public class MapScreen extends AppCompatActivity {
         paint.setColor(Color.RED);
 
         //use local variables as parameters to set paths
-//        setPaths(Spinner_A1_Choice, Spinner_A2_Choice, Spinner_D1_Choice, Spinner_D2_Choice);
+        setPaths(Spinner_A1_Choice, Spinner_A2_Choice, Spinner_D1_Choice, Spinner_D2_Choice);
 
         //set values of the selected items in each spinner to local variables
 //        String ax_test = "A";
