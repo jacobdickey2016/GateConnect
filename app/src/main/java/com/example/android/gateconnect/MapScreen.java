@@ -11,6 +11,7 @@ import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.Path;
 //import android.graphics.drawable.BitmapDrawable;
+import android.graphics.drawable.BitmapDrawable;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 //import android.util.Log;
@@ -131,21 +132,25 @@ public class MapScreen extends AppCompatActivity {
         options.inMutable = true;
 
         //Create bitmap based on whichever image was selected
-        //Bitmap myBitmap = BitmapFactory.decodeResource(getResources(), R.id.map, options);
+        //Bitmap tempBitmap = BitmapFactory.decodeResource(getResources(), R.id.map, options);
 
         //Create a new image bitmap and attach a brand new canvas to it
         Bitmap tempBitmap = Bitmap.createBitmap(imageWidth + 1,
                 imageHeight + 1, Bitmap.Config.RGB_565);
 
-        tempCanvas = new Canvas(tempBitmap);
-
         //Draw the image bitmap into the canvas
+        tempCanvas = new Canvas(tempBitmap);
         tempCanvas.drawBitmap(tempBitmap, 0, 0, null);
 
         //Draw everything else you want into the canvas (the path)
         tempCanvas.drawPath(path_a, paint);
         tempCanvas.drawPath(path_b, paint);
         tempCanvas.drawPath(path_c, paint);
+
+        //Attach the canvas to the ImageView
+        myMap.setImageDrawable(new BitmapDrawable(getResources(), tempBitmap));
+
+        //onDraw(tempCanvas);
 
         myMap.invalidate();
 
