@@ -11,7 +11,11 @@ import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.Path;
 //import android.graphics.drawable.BitmapDrawable;
+import android.graphics.PixelFormat;
+import android.graphics.PorterDuff;
+import android.graphics.PorterDuffXfermode;
 import android.graphics.drawable.BitmapDrawable;
+import android.graphics.drawable.Drawable;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 //import android.util.Log;
@@ -140,7 +144,8 @@ public class MapScreen extends AppCompatActivity {
 
         //Draw the image bitmap into the canvas
         tempCanvas = new Canvas(tempBitmap);
-        tempCanvas.drawBitmap(tempBitmap, 0, 0, null);
+//        tempCanvas.drawBitmap(myMap.getDrawingCache(), 0, 0, null);
+        tempCanvas.drawBitmap(BitmapFactory.decodeResource(getResources(), R.drawable.atl_map), 0, 0, null);
 
         //Draw everything else you want into the canvas (the path)
         tempCanvas.drawPath(path_a, paint);
@@ -722,10 +727,18 @@ public class MapScreen extends AppCompatActivity {
 
     protected void onDraw(Canvas canvas) {
 
+        //Initialize Map
+        ImageView myMap = (ImageView) findViewById(R.id.map);
+
         //set paint that the line will be drawn with
         paint.setStyle(Paint.Style.STROKE);
         paint.setStrokeWidth(18f);
         paint.setColor(Color.RED);
+/*
+        Paint transparentPaint = new Paint();
+        transparentPaint.setColor(getResources().getColor(android.R.color.transparent));
+        transparentPaint.setXfermode(new PorterDuffXfermode(PorterDuff.Mode.CLEAR));
+        transparentPaint.setAntiAlias(true);*/
 
         //use local variables as parameters to set paths
         setPaths(Spinner_A1_Choice, Spinner_A2_Choice, Spinner_D1_Choice, Spinner_D2_Choice);
@@ -738,9 +751,39 @@ public class MapScreen extends AppCompatActivity {
 //        setPaths(ax_test, ay_test, dx_test, dy_test);
 
         //Draw the path onto the canvas using paint
-        canvas.drawPath(path_a, paint);
-        canvas.drawPath(path_b, paint);
-        canvas.drawPath(path_c, paint);
+//        canvas.drawPath(path_a, paint);
+//        canvas.drawPath(path_b, paint);
+//        canvas.drawPath(path_c, paint);
+
+        //Create a new image bitmap and attach a brand new canvas to it
+        Bitmap tempBitmap = Bitmap.createBitmap(myMap.getWidth(),
+                myMap.getHeight(), Bitmap.Config.ARGB_8888);
+        tempBitmap.setHasAlpha(true);
+
+        //Draw the image bitmap into the canvas
+        tempCanvas = new Canvas(tempBitmap);
+
+//        tempCanvas.drawBitmap(myMap.getDrawingCache(), 0, 0, null);
+//        tempCanvas.drawBitmap(BitmapFactory.decodeResource(getResources(), R.drawable.atl_map), 0, 0, null);
+
+
+        Drawable myDrawable = getResources().getDrawable(R.drawable.atl_map);
+        Bitmap atlMap = ((BitmapDrawable) myDrawable).getBitmap();
+
+
+        //create everything else you want into the canvas (the path)
+        tempCanvas.drawColor(Color.TRANSPARENT);
+        tempCanvas.drawPath(path_a, paint);
+        tempCanvas.drawPath(path_b, paint);
+        tempCanvas.drawPath(path_c, paint);
+
+        //draw it
+        tempCanvas.drawBitmap(atlMap, 0, 0, null);
+
+        //Attach the canvas to the ImageView
+        myMap.setImageDrawable(new BitmapDrawable(getResources(), tempBitmap));
+
+        myMap.invalidate();
 
     }
 
