@@ -122,8 +122,7 @@ public class MapScreen extends AppCompatActivity {
     /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
     // THIS ALLOWS THE MAP IMAGE TO BE DRAWN ON AND IT NOT AFFECT THE OTHER VIEWS ON THE SCREEN //
-    public void createBitmap()
-    {
+    public void createBitmap() {
         //Map
         ImageView myMap = (ImageView) findViewById(R.id.map);
 
@@ -225,7 +224,7 @@ public class MapScreen extends AppCompatActivity {
     public class Spinner_A1_Listener implements
             AdapterView.OnItemSelectedListener {
 
-        public void onItemSelected(AdapterView<?>Spinner_A1_Adapter_View,
+        public void onItemSelected(AdapterView<?> Spinner_A1_Adapter_View,
                                    View v, int position, long row) {
             //gets selected item
             Spinner_A1_Choice = Spinner_A1_Adapter_View
@@ -252,6 +251,7 @@ public class MapScreen extends AppCompatActivity {
             findViewById(R.id.main).invalidate();
             //onDraw(tempCanvas);
         }
+
         public void onNothingSelected(AdapterView<?> arg0) {
         }
     }
@@ -287,6 +287,7 @@ public class MapScreen extends AppCompatActivity {
             findViewById(R.id.main).invalidate();
             onDraw(tempCanvas);
         }
+
         public void onNothingSelected(AdapterView<?> arg0) {
         }
     }
@@ -550,8 +551,7 @@ public class MapScreen extends AppCompatActivity {
     // Set Paths //
     /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-    public void setPaths(String a1_choice, String a2_choice, String d1_choice, String d2_choice)
-    {
+    public void setPaths(String a1_choice, String a2_choice, String d1_choice, String d2_choice) {
         // gets value from spinner in previous activity
         String value = getIntent().getStringExtra("data");
 
@@ -583,33 +583,31 @@ public class MapScreen extends AppCompatActivity {
             path_c.close();*/
 
             Cursor cursor_a = db.query("COORDINATES", // open cursor
-                    new String[] {"x_coord", "y_coord"},
+                    new String[]{"x_coord", "y_coord"},
                     "airport_name = ? AND gate_letter = ? AND gate_number = ?",
-                    new String[] {value, a1_choice, a2_choice},
+                    new String[]{value, a1_choice, a2_choice},
                     null, null, null);
 
             try {
-                if(cursor_a.moveToFirst())
-                {
+                if (cursor_a.moveToFirst()) {
                     d_x = cursor_a.getFloat(0);
                     d_y = cursor_a.getFloat(1);
                 }
             } catch (Exception e) {
                 // exception handling
             } finally {
-                if(cursor_a != null){
+                if (cursor_a != null) {
                     cursor_a.close(); // close cursor
                 }
             }
 
             Cursor cursor_d = db.query("COORDINATES",
-                    new String[] {"x_coord", "y_coord"},
+                    new String[]{"x_coord", "y_coord"},
                     "airport_name = ? AND gate_letter = ? AND gate_number = ?",
-                    new String[] {value, d1_choice, d2_choice},
+                    new String[]{value, d1_choice, d2_choice},
                     null, null, null);
             try {
-                if(cursor_d.moveToFirst())
-                {
+                if (cursor_d.moveToFirst()) {
                     d_x = cursor_d.getFloat(0);
                     d_y = cursor_d.getFloat(1);
                 }
@@ -617,21 +615,18 @@ public class MapScreen extends AppCompatActivity {
             } catch (Exception e) {
                 // exception handling
             } finally {
-                if(cursor_d != null){
+                if (cursor_d != null) {
                     cursor_d.close();
                 }
             }
 
 
-            if (value.equals("ATL") && a1_choice.equals(d1_choice))
-            {
+            if (value.equals("ATL") && a1_choice.equals(d1_choice)) {
                 //move through the terminal from first gate to hallway
                 path_a.moveTo(a_x, a_y);
                 path_a.lineTo(d_x, d_y);
                 path_a.close();
-            }
-            else if (value.equals("ATL"))
-            {
+            } else if (value.equals("ATL")) {
                 //move through the terminal from first gate to hallway
                 path_a.moveTo(a_x, a_y);
                 path_a.lineTo(a_x, atl_hallway);
@@ -646,16 +641,12 @@ public class MapScreen extends AppCompatActivity {
                 path_c.moveTo(d_x, atl_hallway);
                 path_c.lineTo(d_x, d_y);
                 path_c.close();
-            }
-            else if (value.equals("DTW") && a1_choice.equals(d1_choice))
-            {
+            } else if (value.equals("DTW") && a1_choice.equals(d1_choice)) {
                 //move through the terminal from first gate to hallway
                 path_a.moveTo(a_x, a_y);
                 path_a.lineTo(d_x, d_y);
                 path_a.close();
-            }
-            else if (value.equals("DTW"))
-            {
+            } else if (value.equals("DTW")) {
                 //move through the terminal from first gate to hallway
                 path_a.moveTo(a_x, a_y);
                 path_a.lineTo(a_x, dtw_hallway);
@@ -670,45 +661,40 @@ public class MapScreen extends AppCompatActivity {
                 path_c.moveTo(d_x, dtw_hallway);
                 path_c.lineTo(d_x, d_y);
                 path_c.close();
-            }
-            else if (value.equals("IND") && a1_choice.equals(d1_choice))
-            {
+            } else if (value.equals("IND") && a1_choice.equals(d1_choice)) {
                 //move through the terminal from first gate to hallway
                 path_a.moveTo(a_x, a_y);
                 path_a.lineTo(d_x, d_y);
                 path_a.close();
-            }
-            else if (value.equals("IND") && ((a_x + a_y) < (d_x + d_y)))
-            {
+            } else if (value.equals("IND") && ((a_x + a_y) < (d_x + d_y))) {
                 //move through the terminal from first gate to hallway
                 path_a.moveTo(a_x, a_y);
-                path_a.lineTo(93,222);
+                path_a.lineTo(93, 222);
                 path_a.close();
 
                 //move through the hallway to next terminal
-                path_b.moveTo(93,222);
-                path_b.lineTo(230,357);
+                path_b.moveTo(93, 222);
+                path_b.lineTo(230, 357);
                 path_b.close();
 
                 //move through the terminal to the second gate
-                path_c.moveTo(230,357);
+                path_c.moveTo(230, 357);
                 path_c.lineTo(d_x, d_y);
                 path_c.close();
-            }
-            else //(value.equals("IND") && ((a_x + a_y) > (d_x + d_y)))
+            } else //(value.equals("IND") && ((a_x + a_y) > (d_x + d_y)))
             {
                 //move through the terminal from first gate to hallway
                 path_a.moveTo(a_x, a_y);
-                path_a.lineTo(230,357);
+                path_a.lineTo(230, 357);
                 path_a.close();
 
                 //move through the hallway to next terminal
-                path_b.moveTo(230,357);
-                path_b.lineTo(93,222);
+                path_b.moveTo(230, 357);
+                path_b.lineTo(93, 222);
                 path_b.close();
 
                 //move through the terminal to the second gate
-                path_c.moveTo(93,222);
+                path_c.moveTo(93, 222);
                 path_c.lineTo(d_x, d_y);
                 path_c.close();
             }
