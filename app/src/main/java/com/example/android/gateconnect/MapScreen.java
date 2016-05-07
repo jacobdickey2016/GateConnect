@@ -752,7 +752,6 @@ public class MapScreen extends AppCompatActivity {
 //        tempCanvas.drawBitmap(myMap.getDrawingCache(), 0, 0, null);
 //        tempCanvas.drawBitmap(BitmapFactory.decodeResource(getResources(), R.drawable.atl_map), 0, 0, null);
 
-
         Drawable myDrawable = getResources().getDrawable(R.drawable.atl_map);
         Bitmap atlMap = ((BitmapDrawable) myDrawable).getBitmap();
 
@@ -766,11 +765,14 @@ public class MapScreen extends AppCompatActivity {
         //draw it
         tempCanvas.drawBitmap(atlMap, 0, 0, null);
 
+        BitmapDrawable atlMapDrawable = new BitmapDrawable(getResources(), tempBitmap);
+
         //Attach the canvas to the ImageView
-        myMap.setImageDrawable(new BitmapDrawable(getResources(), tempBitmap));
+        myMap.setImageDrawable(atlMapDrawable);
 
         myMap.invalidate();
 
+        myMap.invalidateDrawable(atlMapDrawable);
     }
 
 
