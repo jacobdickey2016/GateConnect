@@ -5,22 +5,23 @@ import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteException;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
+//import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
 import android.graphics.Color;
+//import android.graphics.Matrix;
 import android.graphics.Paint;
 import android.graphics.Path;
 //import android.graphics.drawable.BitmapDrawable;
-import android.graphics.PixelFormat;
-import android.graphics.PorterDuff;
-import android.graphics.PorterDuffXfermode;
+//import android.graphics.PixelFormat;
+//import android.graphics.PorterDuff;
+//import android.graphics.PorterDuffXfermode;
 import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 //import android.util.Log;
 import android.view.View;
-import android.view.Window;
+//import android.view.Window;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ImageView;
@@ -31,10 +32,8 @@ import android.widget.Toast;
 
 import com.squareup.picasso.Picasso;
 
-//import java.io.File;
 
-//todo:: the path still does not display
-
+@SuppressWarnings("deprecation")
 public class MapScreen extends AppCompatActivity {
 
     /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -49,20 +48,24 @@ public class MapScreen extends AppCompatActivity {
     Path path_b = new Path();
     Path path_c = new Path();
 
+    //this is to scale what is in the database it fit the imageView right
+    final float SCALE_FACTOR = 4;
+
     //create strings
     String Spinner_A1_Choice = "A";
     String Spinner_A2_Choice = "1";
     String Spinner_D1_Choice = "A";
     String Spinner_D2_Choice = "15";
 
-    //create drawable bitmap
-    //BitmapDrawable bpd;
+    //create bitmaps
+    Bitmap tempBitmap;
+    BitmapDrawable atlMapDrawable;
 
     //create canvas
     Canvas tempCanvas;
 
-    //create bitmap
-    //Bitmap myBitmap;
+    // gets value from spinner in previous activity
+    String value = getIntent().getStringExtra("data");
 
     /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     // On Create //
@@ -72,9 +75,6 @@ public class MapScreen extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_map_screen);
-
-        // gets value from spinner in previous activity
-        String value = getIntent().getStringExtra("data");
 
         //Initialize Map
         ImageView myMap = (ImageView) findViewById(R.id.map);
@@ -106,13 +106,12 @@ public class MapScreen extends AppCompatActivity {
 
         //Creates all spinners (A1, A2, D1, D2)
         // A2 and D2 options are dependent on A1 and D1 selections respectively
-        Create_Spinner_A1(myMap);
-        Create_Spinner_D1(myMap);
+        Create_Spinner_A1();
+        Create_Spinner_D1();
 
         //creates the bitmap over the image to be drawn on
-        createBitmap();
+        //createBitmap();
 
-        //myMap.invalidate();
         //myMap.invalidateDrawable(bpd);
 
     }
@@ -123,97 +122,76 @@ public class MapScreen extends AppCompatActivity {
 
     // THIS ALLOWS THE MAP IMAGE TO BE DRAWN ON AND IT NOT AFFECT THE OTHER VIEWS ON THE SCREEN //
     public void createBitmap() {
-        //Map
+
+        //BitmapFactory.Options options = new BitmapFactory.Options();
+        //int imageHeight = options.outHeight;
+        //int imageWidth = options.outWidth;
+        //String imageType = options.outMimeType;
+        //options.inJustDecodeBounds = true;
+        //options.inMutable = true;
+
+        //Initialize Map
         ImageView myMap = (ImageView) findViewById(R.id.map);
 
-        BitmapFactory.Options options = new BitmapFactory.Options();
+        int myMapWidth = myMap.getWidth();
+        int myMapHeight = myMap.getHeight();
 
-        int imageHeight = options.outHeight;
-        int imageWidth = options.outWidth;
-        //String imageType = options.outMimeType;
-        options.inJustDecodeBounds = true;
-        options.inMutable = true;
+        if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.JELLY_BEAN) {
+            myMapWidth = myMap.getMaxWidth();
+            myMapHeight = myMap.getMaxHeight();
+        }
 
-        //Create bitmap based on whichever image was selected
-        //Bitmap tempBitmap = BitmapFactory.decodeResource(getResources(), R.id.map, options);
+        //set paint that the line will be drawn with
+        paint.setStyle(Paint.Style.STROKE);
+        paint.setStrokeWidth(18f);
+        paint.setColor(Color.RED);
 
         //Create a new image bitmap and attach a brand new canvas to it
-        Bitmap tempBitmap = Bitmap.createBitmap(imageWidth + 1,
-                imageHeight + 1, Bitmap.Config.RGB_565);
+        tempBitmap = Bitmap.createBitmap(myMapWidth,
+                myMapHeight, Bitmap.Config.ARGB_8888);
+        tempBitmap.setHasAlpha(true);
 
         //Draw the image bitmap into the canvas
         tempCanvas = new Canvas(tempBitmap);
-//        tempCanvas.drawBitmap(myMap.getDrawingCache(), 0, 0, null);
-        tempCanvas.drawBitmap(BitmapFactory.decodeResource(getResources(), R.drawable.atl_map), 0, 0, null);
 
-        //Draw everything else you want into the canvas (the path)
+//        tempCanvas.drawBitmap(myMap.getDrawingCache(), 0, 0, null);
+//        tempCanvas.drawBitmap(BitmapFactory.decodeResource(getResources(), R.drawable.atl_map), 0, 0, null);
+
+        Drawable myDrawable;
+
+        switch (value) {
+            case "ATL":
+                myDrawable = getResources().getDrawable(R.drawable.atl_map);
+                break;
+            case "DTW":
+                myDrawable = getResources().getDrawable(R.drawable.dtw_map);
+                break;
+            default: // case "IND"
+                myDrawable = getResources().getDrawable(R.drawable.ind_map);
+                break;
+        }
+
+        assert (myDrawable) != null;
+        Bitmap atlMap = ((BitmapDrawable) myDrawable).getBitmap();
+
+        //create everything else you want into the canvas (the path)
+        tempCanvas.drawColor(Color.TRANSPARENT);
         tempCanvas.drawPath(path_a, paint);
         tempCanvas.drawPath(path_b, paint);
         tempCanvas.drawPath(path_c, paint);
 
-        //Attach the canvas to the ImageView
-        myMap.setImageDrawable(new BitmapDrawable(getResources(), tempBitmap));
+        //draw it
+        tempCanvas.drawBitmap(atlMap, 0, 0, null);
 
-        //onDraw(tempCanvas);
+        //Attach the canvas to the ImageView
+        // TODO: 5/7/16  THIS IS WHAT CAUSES THE LINE TO APPEAR AND FOR THE IMAGE TO BE RESIZED
+        atlMapDrawable = new BitmapDrawable(getResources(), tempBitmap);
+        myMap.setImageDrawable(atlMapDrawable);
 
         myMap.invalidate();
 
-        //Attach the canvas to the ImageView
-        //BitmapDrawable bpd = new BitmapDrawable(getResources(), tempBitmap);
-
-        //myMap.setImageDrawable(bpd);
-
-        //myMap.invalidateDrawable(bpd);
+        myMap.invalidateDrawable(atlMapDrawable);
     }
-
-    /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-    // Create Listener for all Spinners //
-    /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-
-    /*public class All_Spinner_Listener implements
-            AdapterView.OnItemSelectedListener {
-
-        public void onItemSelected(AdapterView<?> Spinner_Adapter_View,
-                                   View v, int position, long row) {
-
-            //get id to specify for different spinners
-            int id = v.getId();
-
-            if (id == R.id.spinner_a1)
-            {
-                Spinner_A1_Choice = Spinner_Adapter_View
-                        .getItemAtPosition(position).toString();
-                findViewById(R.id.main).invalidate();
-                Create_A2_Spinner(Spinner_A1_Choice);
-            }
-            else if (id == R.id.spinner_a2)
-            {
-                Spinner_A2_Choice = Spinner_Adapter_View
-                        .getItemAtPosition(position).toString();
-                findViewById(R.id.main).invalidate();
-            }
-            else if (id == R.id.spinner_d1)
-            {
-                Spinner_D1_Choice = Spinner_Adapter_View
-                        .getItemAtPosition(position).toString();
-                findViewById(R.id.main).invalidate();
-                Create_D2_Spinner(Spinner_D1_Choice);
-            }
-            else if (id == R.id.spinner_d2)
-            {
-                Spinner_D2_Choice = Spinner_Adapter_View
-                        .getItemAtPosition(position).toString();
-                findViewById(R.id.main).invalidate();
-            }
-
-            //finally draw using the spinner choices
-            setPaths(Spinner_A1_Choice, Spinner_A2_Choice, Spinner_D1_Choice, Spinner_D2_Choice);
-            onDraw(tempCanvas);
-        }
-        public void onNothingSelected(AdapterView<?> arg0) {
-        }
-
-    }*/
 
     /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     // Create Spinner Listeners //
@@ -229,8 +207,7 @@ public class MapScreen extends AppCompatActivity {
             //gets selected item
             Spinner_A1_Choice = Spinner_A1_Adapter_View
                     .getItemAtPosition(position).toString();
-            findViewById(R.id.main).invalidate();
-
+            findViewById(R.id.map).invalidate();
             Create_A2_Spinner(Spinner_A1_Choice);
         }
 
@@ -248,8 +225,10 @@ public class MapScreen extends AppCompatActivity {
                                    View v, int position, long row) {
             Spinner_A2_Choice = Spinner_A2_Adapter_View
                     .getItemAtPosition(position).toString();
-            findViewById(R.id.main).invalidate();
-            //onDraw(tempCanvas);
+            //use local variables as parameters to set paths
+            setPaths(Spinner_A1_Choice, Spinner_A2_Choice, Spinner_D1_Choice, Spinner_D2_Choice);
+            findViewById(R.id.map).invalidate();
+            onDraw(tempCanvas);
         }
 
         public void onNothingSelected(AdapterView<?> arg0) {
@@ -266,7 +245,7 @@ public class MapScreen extends AppCompatActivity {
 
             Spinner_D1_Choice = Spinner_D1_Adapter_View
                     .getItemAtPosition(position).toString();
-            findViewById(R.id.main).invalidate();
+            findViewById(R.id.map).invalidate();
             Create_D2_Spinner(Spinner_D1_Choice);
 
         }
@@ -284,7 +263,9 @@ public class MapScreen extends AppCompatActivity {
                                    View v, int position, long row) {
             Spinner_D2_Choice = Spinner_D2_Adapter_View
                     .getItemAtPosition(position).toString();
-            findViewById(R.id.main).invalidate();
+            //use local variables as parameters to set paths
+            setPaths(Spinner_A1_Choice, Spinner_A2_Choice, Spinner_D1_Choice, Spinner_D2_Choice);
+            findViewById(R.id.map).invalidate();
             onDraw(tempCanvas);
         }
 
@@ -298,7 +279,7 @@ public class MapScreen extends AppCompatActivity {
 
     // Creates Spinner A1 and sends the choice made to
     // a method for populating Spinner A2
-    public Spinner Create_Spinner_A1(ImageView myMap) {
+    public Spinner Create_Spinner_A1() {
 
         // gets value from spinner in previous activity
         String value = getIntent().getStringExtra("data");
@@ -328,7 +309,6 @@ public class MapScreen extends AppCompatActivity {
                 gate_letters);
         spinner_a1.setAdapter(spinner_a1_adapter);
         spinner_a1.setOnItemSelectedListener(new Spinner_A1_Listener());
-        myMap.invalidate();
         return spinner_a1;
     }
 
@@ -349,38 +329,31 @@ public class MapScreen extends AppCompatActivity {
                     case "A":
                         Spinner_A2_Array = getResources().getStringArray(
                                 R.array.atl_gate_a_numbers);
-                        //myMap.invalidate();
                         break;
                     case "B":
                         Spinner_A2_Array = getResources().getStringArray(
                                 R.array.atl_gate_b_numbers);
-                        //myMap.invalidate();
                         break;
                     case "C":
                         Spinner_A2_Array = getResources().getStringArray(
                                 R.array.atl_gate_c_numbers);
-                        //myMap.invalidate();
                         break;
                     case "D":
                         Spinner_A2_Array = getResources().getStringArray(
                                 R.array.atl_gate_d_numbers);
-                        //myMap.invalidate();
                         break;
                     case "E":
                         Spinner_A2_Array = getResources().getStringArray(
                                 R.array.atl_gate_e_numbers);
-                        //myMap.invalidate();
                         break;
                     case "F":
                         Spinner_A2_Array = getResources().getStringArray(
                                 R.array.atl_gate_f_numbers);
-                        //myMap.invalidate();
                         break;
                     default:
                         // " T "
                         Spinner_A2_Array = getResources().getStringArray(
                                 R.array.atl_gate_t_numbers);
-                        //myMap.invalidate();
                         break;
                 }
                 break;
@@ -389,24 +362,20 @@ public class MapScreen extends AppCompatActivity {
                     case "A":
                         Spinner_A2_Array = getResources().getStringArray(
                                 R.array.dtw_gate_a_numbers);
-                        //myMap.invalidate();
                         break;
                     case "B":
                         Spinner_A2_Array = getResources().getStringArray(
                                 R.array.dtw_gate_b_numbers);
-                        //myMap.invalidate();
                         break;
                     default:
                         // " C "
                         Spinner_A2_Array = getResources().getStringArray(
                                 R.array.dtw_gate_c_numbers);
-                        //myMap.invalidate();
                         break;
                 }
                 break;
             default:    // "IND" //
                 Spinner_A2_Array = getResources().getStringArray(R.array.ind_gate_numbers);
-                //myMap.invalidate();
                 break;
         }
 
@@ -426,7 +395,7 @@ public class MapScreen extends AppCompatActivity {
 
     // Creates Spinner D1 and sends the choice made to
     // a method for populating Spinner D2
-    public Spinner Create_Spinner_D1(ImageView myMap) {
+    public Spinner Create_Spinner_D1() {
 
         // gets value from spinner in previous activity
         String value = getIntent().getStringExtra("data");
@@ -455,7 +424,6 @@ public class MapScreen extends AppCompatActivity {
                 gate_letters);
         spinner_d1.setAdapter(spinner_d1_adapter);
         spinner_d1.setOnItemSelectedListener(new Spinner_D1_Listener());
-        myMap.invalidate();
         return spinner_d1;
     }
 
@@ -475,39 +443,32 @@ public class MapScreen extends AppCompatActivity {
                     case "A":
                         Spinner_D2_Array = getResources().getStringArray(
                                 R.array.atl_gate_a_numbers);
-                        //myMap.invalidate();
                         //myMap.invalidateDrawable(bpd);
                         break;
                     case "B":
                         Spinner_D2_Array = getResources().getStringArray(
                                 R.array.atl_gate_b_numbers);
-                        //myMap.invalidate();
                         break;
                     case "C":
                         Spinner_D2_Array = getResources().getStringArray(
                                 R.array.atl_gate_c_numbers);
-                        //myMap.invalidate();
                         break;
                     case "D":
                         Spinner_D2_Array = getResources().getStringArray(
                                 R.array.atl_gate_d_numbers);
-                        //myMap.invalidate();
                         break;
                     case "E":
                         Spinner_D2_Array = getResources().getStringArray(
                                 R.array.atl_gate_e_numbers);
-                        //myMap.invalidate();
                         break;
                     case "F":
                         Spinner_D2_Array = getResources().getStringArray(
                                 R.array.atl_gate_f_numbers);
-                        //myMap.invalidate();
                         break;
                     default:
                         // " T "
                         Spinner_D2_Array = getResources().getStringArray(
                                 R.array.atl_gate_t_numbers);
-                        //myMap.invalidate();
                         break;
                 }
                 break;
@@ -516,24 +477,20 @@ public class MapScreen extends AppCompatActivity {
                     case "A":
                         Spinner_D2_Array = getResources().getStringArray(
                                 R.array.dtw_gate_a_numbers);
-                        //myMap.invalidate();
                         break;
                     case "B":
                         Spinner_D2_Array = getResources().getStringArray(
                                 R.array.dtw_gate_b_numbers);
-                        //myMap.invalidate();
                         break;
                     default:
                         // " C "
                         Spinner_D2_Array = getResources().getStringArray(
                                 R.array.dtw_gate_c_numbers);
-                        //myMap.invalidate();
                         break;
                 }
                 break;
             default:    // "IND" //
                 Spinner_D2_Array = getResources().getStringArray(R.array.ind_gate_numbers);
-                //myMap.invalidate();
                 break;
         }
 
@@ -542,7 +499,6 @@ public class MapScreen extends AppCompatActivity {
                 Spinner_D2_Array);
         Spinner_D2.setAdapter(Spinner_D2_Adapter);
         Spinner_D2.setOnItemSelectedListener(new Spinner_D2_Listener());
-        //myMap.invalidate();
         return Spinner_D2;
 
     }
@@ -560,27 +516,17 @@ public class MapScreen extends AppCompatActivity {
             SQLiteOpenHelper DatabaseHelper = new DatabaseHelper(this);
             SQLiteDatabase db = DatabaseHelper.getReadableDatabase(); // open database
 
-            float atl_hallway = 190;
-            float dtw_hallway = 295;
+            float atl_hallway = 190 * SCALE_FACTOR;
+            float dtw_hallway = 295 * SCALE_FACTOR;
             float a_x = 100;
             float a_y = 100;
-            float d_x = 300;
-            float d_y = 300;
+            float d_x = 900;
+            float d_y = 900;
 
-           /* //move through the terminal from first gate to hallway
-            path_a.moveTo(1, 1);
-            path_a.lineTo(100, 100);
-            path_a.close();
-
-            //move through the hallway to next terminal
-            path_b.moveTo(100, 100);
-            path_b.lineTo(200, 150);
-            path_b.close();
-
-            //move through the terminal to the second gate
-            path_c.moveTo(200, 150);
-            path_c.lineTo(2, 2);
-            path_c.close();*/
+            float point_ax = 93  * SCALE_FACTOR;
+            float point_ay = 222 * SCALE_FACTOR;
+            float point_bx = 230 * SCALE_FACTOR;
+            float point_by = 357 * SCALE_FACTOR;
 
             Cursor cursor_a = db.query("COORDINATES", // open cursor
                     new String[]{"x_coord", "y_coord"},
@@ -590,8 +536,8 @@ public class MapScreen extends AppCompatActivity {
 
             try {
                 if (cursor_a.moveToFirst()) {
-                    d_x = cursor_a.getFloat(0);
-                    d_y = cursor_a.getFloat(1);
+                    d_x = cursor_a.getFloat(0) * SCALE_FACTOR;
+                    d_y = cursor_a.getFloat(1) * SCALE_FACTOR;
                 }
             } catch (Exception e) {
                 // exception handling
@@ -608,8 +554,8 @@ public class MapScreen extends AppCompatActivity {
                     null, null, null);
             try {
                 if (cursor_d.moveToFirst()) {
-                    d_x = cursor_d.getFloat(0);
-                    d_y = cursor_d.getFloat(1);
+                    d_x = cursor_d.getFloat(0) * SCALE_FACTOR;
+                    d_y = cursor_d.getFloat(1) * SCALE_FACTOR;
                 }
 
             } catch (Exception e) {
@@ -669,32 +615,32 @@ public class MapScreen extends AppCompatActivity {
             } else if (value.equals("IND") && ((a_x + a_y) < (d_x + d_y))) {
                 //move through the terminal from first gate to hallway
                 path_a.moveTo(a_x, a_y);
-                path_a.lineTo(93, 222);
+                path_a.lineTo(point_ax, point_ay);
                 path_a.close();
 
                 //move through the hallway to next terminal
-                path_b.moveTo(93, 222);
-                path_b.lineTo(230, 357);
+                path_b.moveTo(point_ax, point_ay);
+                path_b.lineTo(point_bx, point_by);
                 path_b.close();
 
                 //move through the terminal to the second gate
-                path_c.moveTo(230, 357);
+                path_c.moveTo(point_bx, point_by);
                 path_c.lineTo(d_x, d_y);
                 path_c.close();
             } else //(value.equals("IND") && ((a_x + a_y) > (d_x + d_y)))
             {
                 //move through the terminal from first gate to hallway
                 path_a.moveTo(a_x, a_y);
-                path_a.lineTo(230, 357);
+                path_a.lineTo(point_bx, point_by);
                 path_a.close();
 
                 //move through the hallway to next terminal
-                path_b.moveTo(230, 357);
-                path_b.lineTo(93, 222);
+                path_b.moveTo(point_bx, point_by);
+                path_b.lineTo(point_ax, point_ay);
                 path_b.close();
 
                 //move through the terminal to the second gate
-                path_c.moveTo(93, 222);
+                path_c.moveTo(point_ax, point_ay);
                 path_c.lineTo(d_x, d_y);
                 path_c.close();
             }
@@ -713,68 +659,13 @@ public class MapScreen extends AppCompatActivity {
 
     protected void onDraw(Canvas canvas) {
 
-        //Initialize Map
-        ImageView myMap = (ImageView) findViewById(R.id.map);
-
-        //set paint that the line will be drawn with
-        paint.setStyle(Paint.Style.STROKE);
-        paint.setStrokeWidth(18f);
-        paint.setColor(Color.RED);
-/*
-        Paint transparentPaint = new Paint();
-        transparentPaint.setColor(getResources().getColor(android.R.color.transparent));
-        transparentPaint.setXfermode(new PorterDuffXfermode(PorterDuff.Mode.CLEAR));
-        transparentPaint.setAntiAlias(true);*/
-
         //use local variables as parameters to set paths
-        setPaths(Spinner_A1_Choice, Spinner_A2_Choice, Spinner_D1_Choice, Spinner_D2_Choice);
+        //setPaths(Spinner_A1_Choice, Spinner_A2_Choice, Spinner_D1_Choice, Spinner_D2_Choice);
 
-        //set values of the selected items in each spinner to local variables
-//        String ax_test = "A";
-//        String ay_test = "1";
-//        String dx_test = "B";
-//        String dy_test = "2";
-//        setPaths(ax_test, ay_test, dx_test, dy_test);
-
-        //Draw the path onto the canvas using paint
-//        canvas.drawPath(path_a, paint);
-//        canvas.drawPath(path_b, paint);
-//        canvas.drawPath(path_c, paint);
-
-        //Create a new image bitmap and attach a brand new canvas to it
-        Bitmap tempBitmap = Bitmap.createBitmap(myMap.getWidth(),
-                myMap.getHeight(), Bitmap.Config.ARGB_8888);
-        tempBitmap.setHasAlpha(true);
-
-        //Draw the image bitmap into the canvas
-        tempCanvas = new Canvas(tempBitmap);
-
-//        tempCanvas.drawBitmap(myMap.getDrawingCache(), 0, 0, null);
-//        tempCanvas.drawBitmap(BitmapFactory.decodeResource(getResources(), R.drawable.atl_map), 0, 0, null);
-
-        Drawable myDrawable = getResources().getDrawable(R.drawable.atl_map);
-        Bitmap atlMap = ((BitmapDrawable) myDrawable).getBitmap();
-
-
-        //create everything else you want into the canvas (the path)
-        tempCanvas.drawColor(Color.TRANSPARENT);
-        tempCanvas.drawPath(path_a, paint);
-        tempCanvas.drawPath(path_b, paint);
-        tempCanvas.drawPath(path_c, paint);
-
-        //draw it
-        tempCanvas.drawBitmap(atlMap, 0, 0, null);
-
-        BitmapDrawable atlMapDrawable = new BitmapDrawable(getResources(), tempBitmap);
-
-        //Attach the canvas to the ImageView
-        myMap.setImageDrawable(atlMapDrawable);
-
-        myMap.invalidate();
-
-        myMap.invalidateDrawable(atlMapDrawable);
+        createBitmap();
     }
 
+}
 
 //    protected void onResume(ImageView myMap) {
 //        super.onResume();
@@ -784,6 +675,51 @@ public class MapScreen extends AppCompatActivity {
 //
 //    }
 
-}
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+// Create Listener for all Spinners //
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
+    /*public class All_Spinner_Listener implements
+            AdapterView.OnItemSelectedListener {
 
+        public void onItemSelected(AdapterView<?> Spinner_Adapter_View,
+                                   View v, int position, long row) {
+
+            //get id to specify for different spinners
+            int id = v.getId();
+
+            if (id == R.id.spinner_a1)
+            {
+                Spinner_A1_Choice = Spinner_Adapter_View
+                        .getItemAtPosition(position).toString();
+                findViewById(R.id.main).invalidate();
+                Create_A2_Spinner(Spinner_A1_Choice);
+            }
+            else if (id == R.id.spinner_a2)
+            {
+                Spinner_A2_Choice = Spinner_Adapter_View
+                        .getItemAtPosition(position).toString();
+                findViewById(R.id.main).invalidate();
+            }
+            else if (id == R.id.spinner_d1)
+            {
+                Spinner_D1_Choice = Spinner_Adapter_View
+                        .getItemAtPosition(position).toString();
+                findViewById(R.id.main).invalidate();
+                Create_D2_Spinner(Spinner_D1_Choice);
+            }
+            else if (id == R.id.spinner_d2)
+            {
+                Spinner_D2_Choice = Spinner_Adapter_View
+                        .getItemAtPosition(position).toString();
+                findViewById(R.id.main).invalidate();
+            }
+
+            //finally draw using the spinner choices
+            setPaths(Spinner_A1_Choice, Spinner_A2_Choice, Spinner_D1_Choice, Spinner_D2_Choice);
+            onDraw(tempCanvas);
+        }
+        public void onNothingSelected(AdapterView<?> arg0) {
+        }
+
+    }*/

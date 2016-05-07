@@ -85,26 +85,9 @@
         android:contentDescription="@string/app_name"
         android:maxHeight="300dp"
         android:maxWidth="600dp"
-        android:src="@drawable/atl_map" />
-    <!--style="@style/myImageView"-->
+        android:src="@drawable/atl_map"
+        android:adjustViewBounds="true"/>
 
-    <!--<ImageView
-        android:layout_width="175dp"
-        android:layout_height="175dp"
-        android:src="@drawable/airplane1"
-        android:alpha="0.6"
-        android:layout_alignParentBottom="true"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true"/>
-
-    <ImageView
-        android:layout_width="175dp"
-        android:layout_height="175dp"
-        android:src="@drawable/airplane"
-        android:alpha="0.6"
-        android:layout_alignParentBottom="true"
-        android:layout_alignParentRight="true"
-        android:layout_alignParentEnd="true"/>-->
 
     <ImageView
         android:id="@+id/airplane_arriving"
