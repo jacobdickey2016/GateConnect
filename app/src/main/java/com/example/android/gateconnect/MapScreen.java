@@ -52,15 +52,17 @@ public class MapScreen extends AppCompatActivity {
     final float SCALE_FACTOR = 4;
 
     //create strings
-//    String Spinner_A1_Choice = "A";
-//    String Spinner_A2_Choice = "1";
-//    String Spinner_D1_Choice = "A";
-//    String Spinner_D2_Choice = "15";
+    String Spinner_A1_Choice = "A";
+    String Spinner_A2_Choice = "3";
+    String Spinner_D1_Choice = "A";
+    String Spinner_D2_Choice = "3";
 
+/*
     String Spinner_A1_Choice;
     String Spinner_A2_Choice;
     String Spinner_D1_Choice;
     String Spinner_D2_Choice;
+*/
 
     //create bitmaps
     Bitmap tempBitmap;
@@ -213,11 +215,7 @@ public class MapScreen extends AppCompatActivity {
                     .getItemAtPosition(position).toString();
             findViewById(R.id.map).invalidate();
             Create_A2_Spinner(Spinner_A1_Choice);
-            if(Spinner_A1_Choice != null && Spinner_A2_Choice != null &&
-                    Spinner_D1_Choice != null && Spinner_D2_Choice != null) {
-                setPaths(Spinner_A1_Choice, Spinner_A2_Choice, Spinner_D1_Choice, Spinner_D2_Choice);
-                onDraw(tempCanvas);
-            }
+            onDraw(tempCanvas);
         }
 
         public void onNothingSelected(AdapterView<?> arg0) {
@@ -234,12 +232,7 @@ public class MapScreen extends AppCompatActivity {
                                    View v, int position, long row) {
             Spinner_A2_Choice = Spinner_A2_Adapter_View
                     .getItemAtPosition(position).toString();
-            //use local variables as parameters to set paths
-            if(Spinner_A1_Choice != null && Spinner_A2_Choice != null &&
-                    Spinner_D1_Choice != null && Spinner_D2_Choice != null) {
-                setPaths(Spinner_A1_Choice, Spinner_A2_Choice, Spinner_D1_Choice, Spinner_D2_Choice);
-                onDraw(tempCanvas);
-            }
+            onDraw(tempCanvas);
             findViewById(R.id.map).invalidate();
 
         }
@@ -260,11 +253,7 @@ public class MapScreen extends AppCompatActivity {
                     .getItemAtPosition(position).toString();
             findViewById(R.id.map).invalidate();
             Create_D2_Spinner(Spinner_D1_Choice);
-            if(Spinner_A1_Choice != null && Spinner_A2_Choice != null &&
-                    Spinner_D1_Choice != null && Spinner_D2_Choice != null) {
-                setPaths(Spinner_A1_Choice, Spinner_A2_Choice, Spinner_D1_Choice, Spinner_D2_Choice);
-                onDraw(tempCanvas);
-            }
+            onDraw(tempCanvas);
         }
 
         public void onNothingSelected(AdapterView<?> arg0) {
@@ -280,12 +269,7 @@ public class MapScreen extends AppCompatActivity {
                                    View v, int position, long row) {
             Spinner_D2_Choice = Spinner_D2_Adapter_View
                     .getItemAtPosition(position).toString();
-            //use local variables as parameters to set paths
-            if(Spinner_A1_Choice != null && Spinner_A2_Choice != null &&
-                    Spinner_D1_Choice != null && Spinner_D2_Choice != null) {
-                setPaths(Spinner_A1_Choice, Spinner_A2_Choice, Spinner_D1_Choice, Spinner_D2_Choice);
-                onDraw(tempCanvas);
-            }
+            onDraw(tempCanvas);
             findViewById(R.id.map).invalidate();
 
         }
@@ -686,11 +670,7 @@ public class MapScreen extends AppCompatActivity {
         //use local variables as parameters to set paths
         setPaths(Spinner_A1_Choice, Spinner_A2_Choice, Spinner_D1_Choice, Spinner_D2_Choice);
 
-        if(canvas == null)
-            createBitmap();
-        //Initialize Map
-//        ImageView myMap = (ImageView) findViewById(R.id.map);
-//        myMap.invalidate();
+        createBitmap();
 
     }
 
