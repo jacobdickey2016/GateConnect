@@ -655,7 +655,6 @@ public class MapScreen extends AppCompatActivity {
     // On Draw //
     /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-    //// TODO: 5/7/16 do something with this canvas... right?
     protected void onDraw(Canvas canvas) {
 
         //use local variables as parameters to set paths
