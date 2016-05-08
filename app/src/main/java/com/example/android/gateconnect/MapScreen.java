@@ -64,9 +64,6 @@ public class MapScreen extends AppCompatActivity {
     //create canvas
     Canvas tempCanvas;
 
-    // gets value from spinner in previous activity
-    String value = getIntent().getStringExtra("data");
-
     /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     // On Create //
     /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -75,6 +72,9 @@ public class MapScreen extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_map_screen);
+
+        // gets value from spinner in previous activity
+        String value = getIntent().getStringExtra("data");
 
         //Initialize Map
         ImageView myMap = (ImageView) findViewById(R.id.map);
@@ -129,6 +129,9 @@ public class MapScreen extends AppCompatActivity {
         //String imageType = options.outMimeType;
         //options.inJustDecodeBounds = true;
         //options.inMutable = true;
+
+        // gets value from spinner in previous activity
+        String value = getIntent().getStringExtra("data");
 
         //Initialize Map
         ImageView myMap = (ImageView) findViewById(R.id.map);
@@ -518,10 +521,10 @@ public class MapScreen extends AppCompatActivity {
 
             float atl_hallway = 190 * SCALE_FACTOR;
             float dtw_hallway = 295 * SCALE_FACTOR;
-            float a_x = 100;
-            float a_y = 100;
-            float d_x = 900;
-            float d_y = 900;
+            float a_x = 0;
+            float a_y = 0;
+            float d_x = 0;
+            float d_y = 0;
 
             float point_ax = 93  * SCALE_FACTOR;
             float point_ay = 222 * SCALE_FACTOR;
@@ -566,7 +569,7 @@ public class MapScreen extends AppCompatActivity {
                 }
             }
 
-
+            //if the selected gates are in the same terminal
             if (value.equals("ATL") && a1_choice.equals(d1_choice)) {
                 //move through the terminal from first gate to hallway
                 path_a.moveTo(a_x, a_y);
@@ -587,7 +590,8 @@ public class MapScreen extends AppCompatActivity {
                 path_c.moveTo(d_x, atl_hallway);
                 path_c.lineTo(d_x, d_y);
                 path_c.close();
-            } else if (value.equals("DTW") && a1_choice.equals(d1_choice)) {
+            } //if the selected gates are in the same terminal
+            else if (value.equals("DTW") && a1_choice.equals(d1_choice)) {
                 //move through the terminal from first gate to hallway
                 path_a.moveTo(a_x, a_y);
                 path_a.lineTo(d_x, d_y);
@@ -607,7 +611,8 @@ public class MapScreen extends AppCompatActivity {
                 path_c.moveTo(d_x, dtw_hallway);
                 path_c.lineTo(d_x, d_y);
                 path_c.close();
-            } else if (value.equals("IND") && a1_choice.equals(d1_choice)) {
+            } //if the selected gates are in the same terminal
+            else if (value.equals("IND") && a1_choice.equals(d1_choice)) {
                 //move through the terminal from first gate to hallway
                 path_a.moveTo(a_x, a_y);
                 path_a.lineTo(d_x, d_y);
@@ -657,12 +662,19 @@ public class MapScreen extends AppCompatActivity {
     // On Draw //
     /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
+    //// TODO: 5/7/16 do something with this canvas... right?
     protected void onDraw(Canvas canvas) {
 
         //use local variables as parameters to set paths
         //setPaths(Spinner_A1_Choice, Spinner_A2_Choice, Spinner_D1_Choice, Spinner_D2_Choice);
 
-        createBitmap();
+        if(canvas == null)
+            createBitmap();
+
+        //Initialize Map
+//        ImageView myMap = (ImageView) findViewById(R.id.map);
+//        myMap.invalidate();
+
     }
 
 }
