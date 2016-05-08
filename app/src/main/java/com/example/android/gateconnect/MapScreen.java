@@ -94,13 +94,13 @@ public class MapScreen extends AppCompatActivity {
         //Change the Map to whichever airport was selected
         switch (value) {
             case "ATL":
-                Picasso.with(this).load(R.drawable.atl_map).into(myMap);
+                Picasso.with(this).load(R.drawable.map_atl).into(myMap);
                 break;
             case "DTW":
-                Picasso.with(this).load(R.drawable.dtw_map).into(myMap);
+                Picasso.with(this).load(R.drawable.map_dtw).into(myMap);
                 break;
             default:
-                Picasso.with(this).load(R.drawable.ind_map).into(myMap);
+                Picasso.with(this).load(R.drawable.map_ind).into(myMap);
                 break;
         }
 
@@ -147,13 +147,13 @@ public class MapScreen extends AppCompatActivity {
 
         switch (value) {
             case "ATL":
-                myDrawable = getResources().getDrawable(R.drawable.atl_map);
+                myDrawable = getResources().getDrawable(R.drawable.map_atl);
                 break;
             case "DTW":
-                myDrawable = getResources().getDrawable(R.drawable.dtw_map);
+                myDrawable = getResources().getDrawable(R.drawable.map_dtw);
                 break;
             default: // case "IND"
-                myDrawable = getResources().getDrawable(R.drawable.ind_map);
+                myDrawable = getResources().getDrawable(R.drawable.map_ind);
                 break;
         }
 

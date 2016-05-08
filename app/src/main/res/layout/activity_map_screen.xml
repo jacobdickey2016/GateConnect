@@ -23,7 +23,7 @@
         android:layout_marginTop="-20dp"
         android:alpha="0.8"
         android:contentDescription="@string/app_name"
-        android:src="@drawable/clouds_transparent" />
+        android:src="@drawable/cloud_1" />
 
     <!--Cloud behind airport name-->
 
@@ -33,7 +33,7 @@
         android:layout_height="150dp"
         android:layout_marginTop="-20dp"
         android:contentDescription="@string/app_name"
-        android:src="@drawable/cloud_6" />
+        android:src="@drawable/cloud_2" />
 
     <LinearLayout
         android:id="@+id/top_bar"
@@ -55,7 +55,7 @@
     </LinearLayout>
 
     <ImageView
-        android:id="@+id/spinner_background"
+        android:id="@+id/background_spinner"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
@@ -63,16 +63,16 @@
         android:layout_alignParentStart="true"
         android:layout_marginBottom="-125dp"
         android:contentDescription="@string/app_name"
-        android:src="@drawable/spinner_background" />
+        android:src="@drawable/background_spinner" />
 
     <ImageView
-        android:id="@+id/map_background"
+        android:id="@+id/background_map"
         android:layout_width="match_parent"
         android:layout_height="405dp"
         android:layout_alignTop="@+id/top_bar"
         android:layout_marginTop="40dp"
         android:contentDescription="@string/app_name"
-        android:src="@drawable/map_background" />
+        android:src="@drawable/background_map" />
 
     <ImageView
         android:id="@+id/map"
@@ -85,7 +85,7 @@
         android:contentDescription="@string/app_name"
         android:maxHeight="300dp"
         android:maxWidth="600dp"
-        android:src="@drawable/atl_map"
+        android:src="@drawable/map_atl"
         android:adjustViewBounds="true"/>
 
 
@@ -114,16 +114,16 @@
         android:src="@drawable/airplane_departing" />
 
     <ImageView
-        android:id="@+id/greybar"
+        android:id="@+id/background_gate_title"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignBottom="@+id/map_background"
+        android:layout_alignBottom="@+id/background_map"
         android:layout_alignParentBottom="false"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true"
         android:layout_marginBottom="-56dp"
         android:layout_marginTop="15dp"
-        android:src="@drawable/greybar"
+        android:src="@drawable/background_gate_title"
         android:contentDescription="@string/app_name" />
 
     <LinearLayout
