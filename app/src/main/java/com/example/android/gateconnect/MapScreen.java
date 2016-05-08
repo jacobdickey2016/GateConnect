@@ -139,6 +139,7 @@ public class MapScreen extends AppCompatActivity {
         paint.setStrokeWidth(18f);
         paint.setColor(Color.RED);
 
+/*
         int myMapWidth = myMap.getWidth();
         int myMapHeight = myMap.getHeight();
 
@@ -146,6 +147,7 @@ public class MapScreen extends AppCompatActivity {
             myMapWidth = myMap.getMaxWidth();
             myMapHeight = myMap.getMaxHeight();
         }
+*/
 
         Drawable myDrawable;
 
