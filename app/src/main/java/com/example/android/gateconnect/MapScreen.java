@@ -52,14 +52,19 @@ public class MapScreen extends AppCompatActivity {
     final float SCALE_FACTOR = 4;
 
     //create strings
-    String Spinner_A1_Choice = "A";
-    String Spinner_A2_Choice = "1";
-    String Spinner_D1_Choice = "A";
-    String Spinner_D2_Choice = "15";
+//    String Spinner_A1_Choice = "A";
+//    String Spinner_A2_Choice = "1";
+//    String Spinner_D1_Choice = "A";
+//    String Spinner_D2_Choice = "15";
+
+    String Spinner_A1_Choice;
+    String Spinner_A2_Choice;
+    String Spinner_D1_Choice;
+    String Spinner_D2_Choice;
 
     //create bitmaps
     Bitmap tempBitmap;
-    BitmapDrawable atlMapDrawable;
+    BitmapDrawable mapDrawable;
 
     //create canvas
     Canvas tempCanvas;
@@ -123,18 +128,16 @@ public class MapScreen extends AppCompatActivity {
     // THIS ALLOWS THE MAP IMAGE TO BE DRAWN ON AND IT NOT AFFECT THE OTHER VIEWS ON THE SCREEN //
     public void createBitmap() {
 
-        //BitmapFactory.Options options = new BitmapFactory.Options();
-        //int imageHeight = options.outHeight;
-        //int imageWidth = options.outWidth;
-        //String imageType = options.outMimeType;
-        //options.inJustDecodeBounds = true;
-        //options.inMutable = true;
-
         // gets value from spinner in previous activity
         String value = getIntent().getStringExtra("data");
 
         //Initialize Map
         ImageView myMap = (ImageView) findViewById(R.id.map);
+
+        //set paint that the line will be drawn with
+        paint.setStyle(Paint.Style.STROKE);
+        paint.setStrokeWidth(18f);
+        paint.setColor(Color.RED);
 
         int myMapWidth = myMap.getWidth();
         int myMapHeight = myMap.getHeight();
@@ -143,22 +146,6 @@ public class MapScreen extends AppCompatActivity {
             myMapWidth = myMap.getMaxWidth();
             myMapHeight = myMap.getMaxHeight();
         }
-
-        //set paint that the line will be drawn with
-        paint.setStyle(Paint.Style.STROKE);
-        paint.setStrokeWidth(18f);
-        paint.setColor(Color.RED);
-
-        //Create a new image bitmap and attach a brand new canvas to it
-        tempBitmap = Bitmap.createBitmap(myMapWidth,
-                myMapHeight, Bitmap.Config.ARGB_8888);
-        tempBitmap.setHasAlpha(true);
-
-        //Draw the image bitmap into the canvas
-        tempCanvas = new Canvas(tempBitmap);
-
-//        tempCanvas.drawBitmap(myMap.getDrawingCache(), 0, 0, null);
-//        tempCanvas.drawBitmap(BitmapFactory.decodeResource(getResources(), R.drawable.atl_map), 0, 0, null);
 
         Drawable myDrawable;
 
@@ -175,7 +162,16 @@ public class MapScreen extends AppCompatActivity {
         }
 
         assert (myDrawable) != null;
-        Bitmap atlMap = ((BitmapDrawable) myDrawable).getBitmap();
+
+        //Create a new image bitmap and attach a brand new canvas to it
+        tempBitmap = Bitmap.createBitmap(myDrawable.getIntrinsicWidth(),
+                myDrawable.getIntrinsicHeight(), Bitmap.Config.ARGB_8888);
+        tempBitmap.setHasAlpha(true);
+
+        Bitmap mapBitmap = ((BitmapDrawable) myDrawable).getBitmap();
+
+        //Draw the image bitmap into the canvas
+        tempCanvas = new Canvas(tempBitmap);
 
         //create everything else you want into the canvas (the path)
         tempCanvas.drawColor(Color.TRANSPARENT);
@@ -183,17 +179,20 @@ public class MapScreen extends AppCompatActivity {
         tempCanvas.drawPath(path_b, paint);
         tempCanvas.drawPath(path_c, paint);
 
-        //draw it
-        tempCanvas.drawBitmap(atlMap, 0, 0, null);
-
         //Attach the canvas to the ImageView
-        // TODO: 5/7/16  THIS IS WHAT CAUSES THE LINE TO APPEAR AND FOR THE IMAGE TO BE RESIZED
-        atlMapDrawable = new BitmapDrawable(getResources(), tempBitmap);
-        myMap.setImageDrawable(atlMapDrawable);
+        mapDrawable = new BitmapDrawable(getResources(), tempBitmap);
+        myMap.setImageDrawable(mapDrawable);
+
+        //draw it
+        tempCanvas.drawBitmap(mapBitmap, 0, 0, null);
+
+//        tempBitmap.recycle();
+//        mapBitmap.recycle();
+//        mapDrawable.draw(tempCanvas);
 
         myMap.invalidate();
 
-        myMap.invalidateDrawable(atlMapDrawable);
+        myMap.invalidateDrawable(mapDrawable);
     }
 
     /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -212,6 +211,11 @@ public class MapScreen extends AppCompatActivity {
                     .getItemAtPosition(position).toString();
             findViewById(R.id.map).invalidate();
             Create_A2_Spinner(Spinner_A1_Choice);
+            if(Spinner_A1_Choice != null && Spinner_A2_Choice != null &&
+                    Spinner_D1_Choice != null && Spinner_D2_Choice != null) {
+                setPaths(Spinner_A1_Choice, Spinner_A2_Choice, Spinner_D1_Choice, Spinner_D2_Choice);
+                onDraw(tempCanvas);
+            }
         }
 
         public void onNothingSelected(AdapterView<?> arg0) {
@@ -229,9 +233,13 @@ public class MapScreen extends AppCompatActivity {
             Spinner_A2_Choice = Spinner_A2_Adapter_View
                     .getItemAtPosition(position).toString();
             //use local variables as parameters to set paths
-            setPaths(Spinner_A1_Choice, Spinner_A2_Choice, Spinner_D1_Choice, Spinner_D2_Choice);
+            if(Spinner_A1_Choice != null && Spinner_A2_Choice != null &&
+                    Spinner_D1_Choice != null && Spinner_D2_Choice != null) {
+                setPaths(Spinner_A1_Choice, Spinner_A2_Choice, Spinner_D1_Choice, Spinner_D2_Choice);
+                onDraw(tempCanvas);
+            }
             findViewById(R.id.map).invalidate();
-            onDraw(tempCanvas);
+
         }
 
         public void onNothingSelected(AdapterView<?> arg0) {
@@ -250,7 +258,11 @@ public class MapScreen extends AppCompatActivity {
                     .getItemAtPosition(position).toString();
             findViewById(R.id.map).invalidate();
             Create_D2_Spinner(Spinner_D1_Choice);
-
+            if(Spinner_A1_Choice != null && Spinner_A2_Choice != null &&
+                    Spinner_D1_Choice != null && Spinner_D2_Choice != null) {
+                setPaths(Spinner_A1_Choice, Spinner_A2_Choice, Spinner_D1_Choice, Spinner_D2_Choice);
+                onDraw(tempCanvas);
+            }
         }
 
         public void onNothingSelected(AdapterView<?> arg0) {
@@ -267,9 +279,13 @@ public class MapScreen extends AppCompatActivity {
             Spinner_D2_Choice = Spinner_D2_Adapter_View
                     .getItemAtPosition(position).toString();
             //use local variables as parameters to set paths
-            setPaths(Spinner_A1_Choice, Spinner_A2_Choice, Spinner_D1_Choice, Spinner_D2_Choice);
+            if(Spinner_A1_Choice != null && Spinner_A2_Choice != null &&
+                    Spinner_D1_Choice != null && Spinner_D2_Choice != null) {
+                setPaths(Spinner_A1_Choice, Spinner_A2_Choice, Spinner_D1_Choice, Spinner_D2_Choice);
+                onDraw(tempCanvas);
+            }
             findViewById(R.id.map).invalidate();
-            onDraw(tempCanvas);
+
         }
 
         public void onNothingSelected(AdapterView<?> arg0) {
@@ -666,11 +682,10 @@ public class MapScreen extends AppCompatActivity {
     protected void onDraw(Canvas canvas) {
 
         //use local variables as parameters to set paths
-        //setPaths(Spinner_A1_Choice, Spinner_A2_Choice, Spinner_D1_Choice, Spinner_D2_Choice);
+        setPaths(Spinner_A1_Choice, Spinner_A2_Choice, Spinner_D1_Choice, Spinner_D2_Choice);
 
         if(canvas == null)
             createBitmap();
-
         //Initialize Map
 //        ImageView myMap = (ImageView) findViewById(R.id.map);
 //        myMap.invalidate();
