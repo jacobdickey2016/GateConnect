@@ -57,13 +57,6 @@ public class MapScreen extends AppCompatActivity {
     String Spinner_D1_Choice = "A";
     String Spinner_D2_Choice = "3";
 
-/*
-    String Spinner_A1_Choice;
-    String Spinner_A2_Choice;
-    String Spinner_D1_Choice;
-    String Spinner_D2_Choice;
-*/
-
     //create bitmaps
     Bitmap tempBitmap;
     BitmapDrawable mapDrawable;
@@ -88,8 +81,8 @@ public class MapScreen extends AppCompatActivity {
 
         // im not sure what picasso does, make bitmap smaller?
         //...error was with other bitmap, not this one...
-        //keeping this line because it doesnt cause issues
-        Picasso.with(this).load(R.drawable.atl_map).into(myMap);
+        //keeping this line because it doesn't break anything
+        //Picasso.with(this).load(R.drawable.atl_map).into(myMap);
 
         //updates the map with the correct paths
         findViewById(R.id.main).invalidate();
@@ -101,13 +94,13 @@ public class MapScreen extends AppCompatActivity {
         //Change the Map to whichever airport was selected
         switch (value) {
             case "ATL":
-                myMap.setImageResource(R.drawable.atl_map);
+                Picasso.with(this).load(R.drawable.atl_map).into(myMap);
                 break;
             case "DTW":
-                myMap.setImageResource(R.drawable.dtw_map);
+                Picasso.with(this).load(R.drawable.dtw_map).into(myMap);
                 break;
             default:
-                myMap.setImageResource(R.drawable.ind_map);
+                Picasso.with(this).load(R.drawable.ind_map).into(myMap);
                 break;
         }
 
@@ -150,7 +143,6 @@ public class MapScreen extends AppCompatActivity {
             myMapHeight = myMap.getMaxHeight();
         }
 */
-
         Drawable myDrawable;
 
         switch (value) {
@@ -190,9 +182,7 @@ public class MapScreen extends AppCompatActivity {
         //draw it
         tempCanvas.drawBitmap(mapBitmap, 0, 0, null);
 
-//        tempBitmap.recycle();
-//        mapBitmap.recycle();
-//        mapDrawable.draw(tempCanvas);
+        mapDrawable.draw(tempCanvas);
 
         myMap.invalidate();
 
@@ -232,6 +222,7 @@ public class MapScreen extends AppCompatActivity {
                                    View v, int position, long row) {
             Spinner_A2_Choice = Spinner_A2_Adapter_View
                     .getItemAtPosition(position).toString();
+            findViewById(R.id.map).invalidate();
             onDraw(tempCanvas);
             findViewById(R.id.map).invalidate();
 
@@ -269,9 +260,8 @@ public class MapScreen extends AppCompatActivity {
                                    View v, int position, long row) {
             Spinner_D2_Choice = Spinner_D2_Adapter_View
                     .getItemAtPosition(position).toString();
-            onDraw(tempCanvas);
             findViewById(R.id.map).invalidate();
-
+            onDraw(tempCanvas);
         }
 
         public void onNothingSelected(AdapterView<?> arg0) {
@@ -521,12 +511,13 @@ public class MapScreen extends AppCompatActivity {
             SQLiteOpenHelper DatabaseHelper = new DatabaseHelper(this);
             SQLiteDatabase db = DatabaseHelper.getReadableDatabase(); // open database
 
-            float atl_hallway = 190 * SCALE_FACTOR;
-            float dtw_hallway = 295 * SCALE_FACTOR;
             float a_x = 0;
             float a_y = 0;
             float d_x = 0;
             float d_y = 0;
+
+            float atl_hallway = 190 * SCALE_FACTOR;
+            float dtw_hallway = 295 * SCALE_FACTOR;
 
             float point_ax = 93  * SCALE_FACTOR;
             float point_ay = 222 * SCALE_FACTOR;
@@ -541,8 +532,8 @@ public class MapScreen extends AppCompatActivity {
 
             try {
                 if (cursor_a.moveToFirst()) {
-                    d_x = cursor_a.getFloat(0) * SCALE_FACTOR;
-                    d_y = cursor_a.getFloat(1) * SCALE_FACTOR;
+                    a_x = cursor_a.getFloat(0) * SCALE_FACTOR;
+                    a_y = cursor_a.getFloat(1) * SCALE_FACTOR;
                 }
             } catch (Exception e) {
                 // exception handling
