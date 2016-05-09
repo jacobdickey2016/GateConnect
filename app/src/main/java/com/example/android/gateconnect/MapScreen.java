@@ -553,8 +553,6 @@ public class MapScreen extends AppCompatActivity {
             //if the selected gates are in the same terminal
             if (value.equals("ATL") && a1_choice.equals(d1_choice)) {
                 //move through the terminal from first gate to gate
-//                path_a.moveTo(0, 0);
-//                path_a.lineTo(2400, 1600);
                 path_a.moveTo(a_x, a_y);
                 path_a.lineTo(d_x, d_y);
                 path_a.close();
@@ -600,7 +598,16 @@ public class MapScreen extends AppCompatActivity {
                 path_c.moveTo(hallway_dtw, d_y);
                 path_c.lineTo(d_x, d_y);
                 path_c.close();
-            } //if the selected gates are both in terminal A
+            } //if the selected gates are both in terminal A and it DOESN'T cross point_ax, point_ay
+            else if (value.equals("IND") && a1_choice.equals(d1_choice) && a1_choice.equals("A") &&
+                    (a2_choice.equals("3") || a2_choice.equals("4") || a2_choice.equals("5")) &&
+                    (d2_choice.equals("3") || d2_choice.equals("4") || d2_choice.equals("5"))){
+                path_a.moveTo(a_x, a_y);
+                path_a.lineTo(d_x, d_y);
+                path_a.close();
+                path_b.close();
+                path_c.close();
+            } //if the selected gates are both in terminal A and it DOES cross point_ax, point_ay
             else if (value.equals("IND") && a1_choice.equals(d1_choice) && a1_choice.equals("A")) {
                 //move through the terminal from first gate to hallway
                 path_a.moveTo(a_x, a_y);
@@ -613,7 +620,16 @@ public class MapScreen extends AppCompatActivity {
                 path_b.close();
 
                 path_c.close();
-            } //if the selected gates are both in terminal B
+            } //if the selected gates are both in terminal B and it DOESN'T cross point_bx, point_by
+            else if (value.equals("IND") && a1_choice.equals(d1_choice) && a1_choice.equals("B") &&
+                    (a2_choice.equals("3") || a2_choice.equals("4") || a2_choice.equals("5")) &&
+                    (d2_choice.equals("3") || d2_choice.equals("4") || d2_choice.equals("5"))) {
+                path_a.moveTo(a_x, a_y);
+                path_a.lineTo(d_x, d_y);
+                path_a.close();
+                path_b.close();
+                path_c.close();
+            }//if the selected gates are both in terminal B and it DOES cross point_bx, point_by
             else if (value.equals("IND") && a1_choice.equals(d1_choice) && a1_choice.equals("B")) {
                 //move through the terminal from first gate to hallway
                 path_a.moveTo(a_x, a_y);
