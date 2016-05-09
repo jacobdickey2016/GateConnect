@@ -45,10 +45,10 @@ public class MapScreen extends AppCompatActivity {
     //create paint
     Paint paint = new Paint();
 
-    //create paths
-    Path path_a = new Path();
-    Path path_b = new Path();
-    Path path_c = new Path();
+    //initialize paths
+    Path path_a;
+    Path path_b;
+    Path path_c;
 
     //create strings
     String Spinner_A1_Choice = "A";
@@ -57,10 +57,14 @@ public class MapScreen extends AppCompatActivity {
     String Spinner_D2_Choice = "3";
 
     //create bitmaps
+    Bitmap tempBitmap = null;
     BitmapDrawable mapDrawable;
 
     //create canvas
     Canvas tempCanvas;
+
+    //create onDraw counter
+    int counter = 0;
 
     /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     // On Create //
@@ -150,17 +154,13 @@ public class MapScreen extends AppCompatActivity {
 
         assert (myDrawable) != null;
 
+
         //Create a new image bitmap and attach a brand new canvas to it
-        Bitmap tempBitmap = Bitmap.createBitmap(myDrawable.getIntrinsicWidth(),
+        tempBitmap = Bitmap.createBitmap(myDrawable.getIntrinsicWidth(),
                 myDrawable.getIntrinsicHeight(), Bitmap.Config.ARGB_8888);
         tempBitmap.setHasAlpha(true);
 
         Bitmap mapBitmap = ((BitmapDrawable) myDrawable).getBitmap();
-
-        if(tempCanvas != null) {
-            tempCanvas.drawColor(0, PorterDuff.Mode.CLEAR);
-            tempBitmap.eraseColor(Color.TRANSPARENT);
-        }
 
         //Draw the image bitmap into the canvas
         tempCanvas = new Canvas(tempBitmap);
@@ -185,6 +185,8 @@ public class MapScreen extends AppCompatActivity {
         myMap.invalidateDrawable(mapDrawable);
 
         findViewById(R.id.activity_map_screen).invalidate();
+
+        counter++;
     }
 
     /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -566,6 +568,11 @@ public class MapScreen extends AppCompatActivity {
                     cursor_d.close();
                 }
             }
+
+            //create paths
+            path_a = new Path();
+            path_b = new Path();
+            path_c = new Path();
 
             //if the selected gates are in the same terminal
             if (value.equals("ATL") && a1_choice.equals(d1_choice)) {
