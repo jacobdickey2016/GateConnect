@@ -60,8 +60,8 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         final int ATL_HALLWAY_WIDTH = 75;
         final int ATL_HALLWAY_HEIGHT = 20;
 
-        final int DTW_A_HALLWAY_HEIGHT = 17;
-        final int DTW_B_HALLWAY_HEIGHT = 12;
+        final int DTW_A_HALLWAY_HEIGHT = 17 * 2;
+        final int DTW_B_HALLWAY_HEIGHT = 12 * 2;
 
         final int IND_A_HALL_X = 13 * SCALE_FACTOR;
         final int IND_A_HALL_Y = 17 * SCALE_FACTOR;
