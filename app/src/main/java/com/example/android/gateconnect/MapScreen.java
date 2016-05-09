@@ -618,7 +618,6 @@ public class MapScreen extends AppCompatActivity {
                 path_b.moveTo(point_ax, point_ay);
                 path_b.lineTo(d_x, d_y);
                 path_b.close();
-
                 path_c.close();
             } //if the selected gates are both in terminal B and it DOESN'T cross point_bx, point_by
             else if (value.equals("IND") && a1_choice.equals(d1_choice) && a1_choice.equals("B") &&
