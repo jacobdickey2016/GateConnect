@@ -57,7 +57,6 @@ public class MapScreen extends AppCompatActivity {
     String Spinner_D2_Choice = "3";
 
     //create bitmaps
-    Bitmap tempBitmap;
     BitmapDrawable mapDrawable;
 
     //create canvas
@@ -128,14 +127,12 @@ public class MapScreen extends AppCompatActivity {
         //Initialize Map
         ImageView myMap = (ImageView) findViewById(R.id.map);
 
+        findViewById(R.id.activity_map_screen).invalidate();
+
         //set paint that the line will be drawn with
         paint.setStyle(Paint.Style.STROKE);
         paint.setStrokeWidth(18f);
         paint.setColor(Color.RED);
-
-        if(tempCanvas != null) {
-            tempCanvas.drawColor(0, PorterDuff.Mode.CLEAR);
-        }
 
         Drawable myDrawable;
 
@@ -154,11 +151,16 @@ public class MapScreen extends AppCompatActivity {
         assert (myDrawable) != null;
 
         //Create a new image bitmap and attach a brand new canvas to it
-        tempBitmap = Bitmap.createBitmap(myDrawable.getIntrinsicWidth(),
+        Bitmap tempBitmap = Bitmap.createBitmap(myDrawable.getIntrinsicWidth(),
                 myDrawable.getIntrinsicHeight(), Bitmap.Config.ARGB_8888);
         tempBitmap.setHasAlpha(true);
 
         Bitmap mapBitmap = ((BitmapDrawable) myDrawable).getBitmap();
+
+        if(tempCanvas != null) {
+            tempCanvas.drawColor(0, PorterDuff.Mode.CLEAR);
+            tempBitmap.eraseColor(Color.TRANSPARENT);
+        }
 
         //Draw the image bitmap into the canvas
         tempCanvas = new Canvas(tempBitmap);
@@ -181,6 +183,8 @@ public class MapScreen extends AppCompatActivity {
         myMap.invalidate();
 
         myMap.invalidateDrawable(mapDrawable);
+
+        findViewById(R.id.activity_map_screen).invalidate();
     }
 
     /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -518,7 +522,7 @@ public class MapScreen extends AppCompatActivity {
             float d_y = 0;
 
             float atl_hallway = 190 * 4;
-            float dtw_hallway = 295 * 4;
+            float dtw_hallway = 295 * 2;
 
             float point_ax = 93  * 4;
             float point_ay = 222 * 4;
