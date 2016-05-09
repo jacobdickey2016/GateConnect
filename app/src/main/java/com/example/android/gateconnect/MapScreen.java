@@ -15,6 +15,7 @@ import android.graphics.Path;
 //import android.graphics.PixelFormat;
 //import android.graphics.PorterDuff;
 //import android.graphics.PorterDuffXfermode;
+import android.graphics.PorterDuff;
 import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
 import android.support.v7.app.AppCompatActivity;
@@ -25,6 +26,7 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ImageView;
+import android.widget.RelativeLayout;
 import android.widget.Spinner;
 import android.widget.SpinnerAdapter;
 import android.widget.TextView;
@@ -85,7 +87,7 @@ public class MapScreen extends AppCompatActivity {
         //Picasso.with(this).load(R.drawable.atl_map).into(myMap);
 
         //updates the map with the correct paths
-        findViewById(R.id.main).invalidate();
+        findViewById(R.id.activity_map_screen).invalidate();
 
         //Change the Title to whichever airport was selected
         TextView tTextView = (TextView) findViewById(R.id.title_text);
@@ -134,15 +136,10 @@ public class MapScreen extends AppCompatActivity {
         paint.setStrokeWidth(18f);
         paint.setColor(Color.RED);
 
-/*
-        int myMapWidth = myMap.getWidth();
-        int myMapHeight = myMap.getHeight();
-
-        if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.JELLY_BEAN) {
-            myMapWidth = myMap.getMaxWidth();
-            myMapHeight = myMap.getMaxHeight();
+        if(tempCanvas != null) {
+            tempCanvas.drawColor(0, PorterDuff.Mode.CLEAR);
         }
-*/
+
         Drawable myDrawable;
 
         switch (value) {
@@ -206,6 +203,9 @@ public class MapScreen extends AppCompatActivity {
             findViewById(R.id.map).invalidate();
             Create_A2_Spinner(Spinner_A1_Choice);
             onDraw(tempCanvas);
+            findViewById(R.id.map).invalidate();
+            findViewById(R.id.activity_map_screen).invalidate();
+
         }
 
         public void onNothingSelected(AdapterView<?> arg0) {
@@ -225,7 +225,7 @@ public class MapScreen extends AppCompatActivity {
             findViewById(R.id.map).invalidate();
             onDraw(tempCanvas);
             findViewById(R.id.map).invalidate();
-
+            findViewById(R.id.activity_map_screen).invalidate();
         }
 
         public void onNothingSelected(AdapterView<?> arg0) {
@@ -245,6 +245,8 @@ public class MapScreen extends AppCompatActivity {
             findViewById(R.id.map).invalidate();
             Create_D2_Spinner(Spinner_D1_Choice);
             onDraw(tempCanvas);
+            findViewById(R.id.map).invalidate();
+            findViewById(R.id.activity_map_screen).invalidate();
         }
 
         public void onNothingSelected(AdapterView<?> arg0) {
@@ -262,6 +264,8 @@ public class MapScreen extends AppCompatActivity {
                     .getItemAtPosition(position).toString();
             findViewById(R.id.map).invalidate();
             onDraw(tempCanvas);
+            findViewById(R.id.map).invalidate();
+            findViewById(R.id.activity_map_screen).invalidate();
         }
 
         public void onNothingSelected(AdapterView<?> arg0) {
@@ -564,10 +568,14 @@ public class MapScreen extends AppCompatActivity {
 
             //if the selected gates are in the same terminal
             if (value.equals("ATL") && a1_choice.equals(d1_choice)) {
-                //move through the terminal from first gate to hallway
+                //move through the terminal from first gate to gate
+//                path_a.moveTo(0, 0);
+//                path_a.lineTo(2400, 1600);
                 path_a.moveTo(a_x, a_y);
                 path_a.lineTo(d_x, d_y);
                 path_a.close();
+                path_b.close();
+                path_c.close();
             } else if (value.equals("ATL")) {
                 //move through the terminal from first gate to hallway
                 path_a.moveTo(a_x, a_y);
@@ -585,10 +593,12 @@ public class MapScreen extends AppCompatActivity {
                 path_c.close();
             } //if the selected gates are in the same terminal
             else if (value.equals("DTW") && a1_choice.equals(d1_choice)) {
-                //move through the terminal from first gate to hallway
+                //move through the terminal from first gate to gate
                 path_a.moveTo(a_x, a_y);
                 path_a.lineTo(d_x, d_y);
                 path_a.close();
+                path_b.close();
+                path_c.close();
             } else if (value.equals("DTW")) {
                 //move through the terminal from first gate to hallway
                 path_a.moveTo(a_x, a_y);
@@ -610,6 +620,8 @@ public class MapScreen extends AppCompatActivity {
                 path_a.moveTo(a_x, a_y);
                 path_a.lineTo(d_x, d_y);
                 path_a.close();
+                path_b.close();
+                path_c.close();
             } else if (value.equals("IND") && ((a_x + a_y) < (d_x + d_y))) {
                 //move through the terminal from first gate to hallway
                 path_a.moveTo(a_x, a_y);
@@ -661,6 +673,9 @@ public class MapScreen extends AppCompatActivity {
         setPaths(Spinner_A1_Choice, Spinner_A2_Choice, Spinner_D1_Choice, Spinner_D2_Choice);
 
         createBitmap();
+
+        findViewById(R.id.map).invalidate();
+        findViewById(R.id.activity_map_screen).invalidate();
 
     }
 
