@@ -10,12 +10,12 @@ import android.database.sqlite.SQLiteDatabase;
  */
 public class DatabaseHelper extends SQLiteOpenHelper {
 
-    private static DatabaseHelper sInstance;
-
     //name of the database
     private static final String DB_NAME = "COORDINATES";
+
     //version of the database
     private static final int DB_VERSION = 1;
+
     //name of columns
     public static final String _ID = "_id";
     public static final String AIRPORT_NAME = "airport_name";
@@ -23,17 +23,6 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     public static final String GATE_NUMBER = "gate_number";
     public static final String X_COORD = "x_coord";
     public static final String Y_COORD = "y_coord";
-
-    public static synchronized DatabaseHelper getInstance(Context context) {
-
-        // Use the application context, which will ensure that you
-        // don't accidentally leak an Activity's context.
-        // See this article for more information: http://bit.ly/6LRzfx
-        if (sInstance == null) {
-            sInstance = new DatabaseHelper(context.getApplicationContext());
-        }
-        return sInstance;
-    }
 
     DatabaseHelper(Context context) {
         super(context, DB_NAME, null, DB_VERSION);

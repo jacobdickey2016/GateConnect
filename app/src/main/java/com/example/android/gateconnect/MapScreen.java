@@ -524,7 +524,8 @@ public class MapScreen extends AppCompatActivity {
             float d_y = 0;
 
             float atl_hallway = 190 * 4;
-            float dtw_hallway = 295 * 2;
+            float dtw_hallway_x = (284 * 4) + 40;
+            //float dtw_hallway_y = 295 * 2;
 
             float point_ax = 93  * 4;
             float point_ay = 222 * 4;
@@ -600,7 +601,9 @@ public class MapScreen extends AppCompatActivity {
                 path_c.lineTo(d_x, d_y);
                 path_c.close();
             } //if the selected gates are in the same terminal
-            else if (value.equals("DTW") && a1_choice.equals(d1_choice)) {
+            else if (value.equals("DTW") && a1_choice.equals(d1_choice) ||
+                     value.equals("DTW") && a1_choice.equals("C") && d1_choice.equals("B") ||
+                     value.equals("DTW") && a1_choice.equals("B") && d1_choice.equals("C")) {
                 //move through the terminal from first gate to gate
                 path_a.moveTo(a_x, a_y);
                 path_a.lineTo(d_x, d_y);
@@ -610,16 +613,16 @@ public class MapScreen extends AppCompatActivity {
             } else if (value.equals("DTW")) {
                 //move through the terminal from first gate to hallway
                 path_a.moveTo(a_x, a_y);
-                path_a.lineTo(a_x, dtw_hallway);
+                path_a.lineTo(dtw_hallway_x, a_y);
                 path_a.close();
 
                 //move through the hallway to next terminal
-                path_b.moveTo(a_x, dtw_hallway);
-                path_b.lineTo(d_x, dtw_hallway);
+                path_b.moveTo(dtw_hallway_x, a_y);
+                path_b.lineTo(dtw_hallway_x, d_y);
                 path_b.close();
 
                 //move through the terminal to the second gate
-                path_c.moveTo(d_x, dtw_hallway);
+                path_c.moveTo(dtw_hallway_x, d_y);
                 path_c.lineTo(d_x, d_y);
                 path_c.close();
             } //if the selected gates are in the same terminal
