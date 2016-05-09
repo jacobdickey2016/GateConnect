@@ -50,9 +50,6 @@ public class MapScreen extends AppCompatActivity {
     Path path_b = new Path();
     Path path_c = new Path();
 
-    //this is to scale what is in the database it fit the imageView right
-    final float SCALE_FACTOR = 4;
-
     //create strings
     String Spinner_A1_Choice = "A";
     String Spinner_A2_Choice = "3";
@@ -520,13 +517,13 @@ public class MapScreen extends AppCompatActivity {
             float d_x = 0;
             float d_y = 0;
 
-            float atl_hallway = 190 * SCALE_FACTOR;
-            float dtw_hallway = 295 * SCALE_FACTOR;
+            float atl_hallway = 190 * 4;
+            float dtw_hallway = 295 * 4;
 
-            float point_ax = 93  * SCALE_FACTOR;
-            float point_ay = 222 * SCALE_FACTOR;
-            float point_bx = 230 * SCALE_FACTOR;
-            float point_by = 357 * SCALE_FACTOR;
+            float point_ax = 93  * 4;
+            float point_ay = 222 * 4;
+            float point_bx = 230 * 4;
+            float point_by = 357 * 4;
 
             Cursor cursor_a = db.query("COORDINATES", // open cursor
                     new String[]{"x_coord", "y_coord"},
@@ -536,8 +533,8 @@ public class MapScreen extends AppCompatActivity {
 
             try {
                 if (cursor_a.moveToFirst()) {
-                    a_x = cursor_a.getFloat(0) * SCALE_FACTOR;
-                    a_y = cursor_a.getFloat(1) * SCALE_FACTOR;
+                    a_x = cursor_a.getFloat(0);
+                    a_y = cursor_a.getFloat(1);
                 }
             } catch (Exception e) {
                 // exception handling
@@ -554,8 +551,8 @@ public class MapScreen extends AppCompatActivity {
                     null, null, null);
             try {
                 if (cursor_d.moveToFirst()) {
-                    d_x = cursor_d.getFloat(0) * SCALE_FACTOR;
-                    d_y = cursor_d.getFloat(1) * SCALE_FACTOR;
+                    d_x = cursor_d.getFloat(0);
+                    d_y = cursor_d.getFloat(1);
                 }
 
             } catch (Exception e) {
