@@ -41,23 +41,21 @@ public class DatabaseHelper extends SQLiteOpenHelper {
                 + X_COORD + " INTEGER, "
                 + Y_COORD + " INTEGER );");
 
-        //INSERT automated values into database "COORDINATES" using insertCoordinate method
-
         //this is to scale what is in the database it fit the imageView right
         final int SCALE_FACTOR = 4;
 
         final int ATL_HALLWAY_WIDTH = 75;
         final int ATL_HALLWAY_HEIGHT = 20;
 
-        final int DTW_A_HALLWAY_HEIGHT = 17 * 2;
-        final int DTW_B_HALLWAY_HEIGHT = 12 * 2;
+        final int DTW_A_HALLWAY_HEIGHT = 17 * SCALE_FACTOR;
+        final int DTW_B_HALLWAY_HEIGHT = 12 * SCALE_FACTOR;
 
         final int IND_A_HALL_X = 13 * SCALE_FACTOR;
         final int IND_A_HALL_Y = 17 * SCALE_FACTOR;
         final int IND_B_HALL_X = 18 * SCALE_FACTOR;
         final int IND_B_HALL_Y = 17 * SCALE_FACTOR;
 
-            // //  //  //  //  //  //  //  //  //  //  //  //  //  //   //
+        //INSERT automated values into database "COORDINATES" using insertCoordinate method
 
             // ATL T //  (8)
             int ATL_TX = 195 * SCALE_FACTOR;

@@ -5,28 +5,18 @@ import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteException;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.graphics.Bitmap;
-//import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
 import android.graphics.Color;
-//import android.graphics.Matrix;
 import android.graphics.Paint;
 import android.graphics.Path;
-//import android.graphics.drawable.BitmapDrawable;
-//import android.graphics.PixelFormat;
-//import android.graphics.PorterDuff;
-//import android.graphics.PorterDuffXfermode;
-import android.graphics.PorterDuff;
 import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-//import android.util.Log;
 import android.view.View;
-//import android.view.Window;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ImageView;
-import android.widget.RelativeLayout;
 import android.widget.Spinner;
 import android.widget.SpinnerAdapter;
 import android.widget.TextView;
@@ -63,9 +53,6 @@ public class MapScreen extends AppCompatActivity {
     //create canvas
     Canvas tempCanvas;
 
-    //create onDraw counter
-    int counter = 0;
-
     /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     // On Create //
     /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -80,11 +67,6 @@ public class MapScreen extends AppCompatActivity {
 
         //Initialize Map
         ImageView myMap = (ImageView) findViewById(R.id.map);
-
-        // im not sure what picasso does, make bitmap smaller?
-        //...error was with other bitmap, not this one...
-        //keeping this line because it doesn't break anything
-        //Picasso.with(this).load(R.drawable.atl_map).into(myMap);
 
         //updates the map with the correct paths
         findViewById(R.id.activity_map_screen).invalidate();
@@ -110,11 +92,6 @@ public class MapScreen extends AppCompatActivity {
         // A2 and D2 options are dependent on A1 and D1 selections respectively
         Create_Spinner_A1();
         Create_Spinner_D1();
-
-        //creates the bitmap over the image to be drawn on
-        //createBitmap();
-
-        //myMap.invalidateDrawable(bpd);
 
     }
 
@@ -186,7 +163,6 @@ public class MapScreen extends AppCompatActivity {
 
         findViewById(R.id.activity_map_screen).invalidate();
 
-        counter++;
     }
 
     /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -523,14 +499,13 @@ public class MapScreen extends AppCompatActivity {
             float d_x = 0;
             float d_y = 0;
 
-            float atl_hallway = 190 * 4;
-            float dtw_hallway_x = (284 * 4) + 40;
-            //float dtw_hallway_y = 295 * 2;
+            float hallway_atl = 190 * 4;
+            float hallway_dtw = (284 * 4) + 40;
 
-            float point_ax = 93  * 4;
-            float point_ay = 222 * 4;
-            float point_bx = 230 * 4;
-            float point_by = 357 * 4;
+            float point_ax = 230 * 4;
+            float point_ay = 357 * 4;
+            float point_bx = 93  * 4;
+            float point_by = 222 * 4;
 
             Cursor cursor_a = db.query("COORDINATES", // open cursor
                     new String[]{"x_coord", "y_coord"},
@@ -588,19 +563,19 @@ public class MapScreen extends AppCompatActivity {
             } else if (value.equals("ATL")) {
                 //move through the terminal from first gate to hallway
                 path_a.moveTo(a_x, a_y);
-                path_a.lineTo(a_x, atl_hallway);
+                path_a.lineTo(a_x, hallway_atl);
                 path_a.close();
 
                 //move through the hallway to next terminal
-                path_b.moveTo(a_x, atl_hallway);
-                path_b.lineTo(d_x, atl_hallway);
+                path_b.moveTo(a_x, hallway_atl);
+                path_b.lineTo(d_x, hallway_atl);
                 path_b.close();
 
                 //move through the terminal to the second gate
-                path_c.moveTo(d_x, atl_hallway);
+                path_c.moveTo(d_x, hallway_atl);
                 path_c.lineTo(d_x, d_y);
                 path_c.close();
-            } //if the selected gates are in the same terminal
+            } //if the selected gates are in the same terminal or between terminals B & C
             else if (value.equals("DTW") && a1_choice.equals(d1_choice) ||
                      value.equals("DTW") && a1_choice.equals("C") && d1_choice.equals("B") ||
                      value.equals("DTW") && a1_choice.equals("B") && d1_choice.equals("C")) {
@@ -613,27 +588,46 @@ public class MapScreen extends AppCompatActivity {
             } else if (value.equals("DTW")) {
                 //move through the terminal from first gate to hallway
                 path_a.moveTo(a_x, a_y);
-                path_a.lineTo(dtw_hallway_x, a_y);
+                path_a.lineTo(hallway_dtw, a_y);
                 path_a.close();
 
                 //move through the hallway to next terminal
-                path_b.moveTo(dtw_hallway_x, a_y);
-                path_b.lineTo(dtw_hallway_x, d_y);
+                path_b.moveTo(hallway_dtw, a_y);
+                path_b.lineTo(hallway_dtw, d_y);
                 path_b.close();
 
                 //move through the terminal to the second gate
-                path_c.moveTo(dtw_hallway_x, d_y);
+                path_c.moveTo(hallway_dtw, d_y);
                 path_c.lineTo(d_x, d_y);
                 path_c.close();
-            } //if the selected gates are in the same terminal
-            else if (value.equals("IND") && a1_choice.equals(d1_choice)) {
+            } //if the selected gates are both in terminal A
+            else if (value.equals("IND") && a1_choice.equals(d1_choice) && a1_choice.equals("A")) {
                 //move through the terminal from first gate to hallway
                 path_a.moveTo(a_x, a_y);
-                path_a.lineTo(d_x, d_y);
+                path_a.lineTo(point_ax, point_ay);
                 path_a.close();
+
+                //move through the hallway to next gate
+                path_b.moveTo(point_ax, point_ay);
+                path_b.lineTo(d_x, d_y);
                 path_b.close();
+
                 path_c.close();
-            } else if (value.equals("IND") && ((a_x + a_y) < (d_x + d_y))) {
+            } //if the selected gates are both in terminal B
+            else if (value.equals("IND") && a1_choice.equals(d1_choice) && a1_choice.equals("B")) {
+                //move through the terminal from first gate to hallway
+                path_a.moveTo(a_x, a_y);
+                path_a.lineTo(point_bx, point_by);
+                path_a.close();
+
+                //move through the hallway to gate
+                path_b.moveTo(point_bx, point_by);
+                path_b.lineTo(d_x, d_y);
+                path_b.close();
+
+                path_c.close();
+            } // if you are going from terminal A to B
+            else if (value.equals("IND") && ((a_x + a_y) > (d_x + d_y))) {
                 //move through the terminal from first gate to hallway
                 path_a.moveTo(a_x, a_y);
                 path_a.lineTo(point_ax, point_ay);
@@ -648,7 +642,8 @@ public class MapScreen extends AppCompatActivity {
                 path_c.moveTo(point_bx, point_by);
                 path_c.lineTo(d_x, d_y);
                 path_c.close();
-            } else //(value.equals("IND") && ((a_x + a_y) > (d_x + d_y)))
+            } // if you are going from terminal B to A
+            else //(value.equals("IND") && ((a_x + a_y) < (d_x + d_y)))
             {
                 //move through the terminal from first gate to hallway
                 path_a.moveTo(a_x, a_y);
@@ -691,60 +686,3 @@ public class MapScreen extends AppCompatActivity {
     }
 
 }
-
-//    protected void onResume(ImageView myMap) {
-//        super.onResume();
-//        setContentView(R.layout.activity_map_screen);
-//
-//        myMap.invalidate();
-//
-//    }
-
-/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-// Create Listener for all Spinners //
-/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-
-    /*public class All_Spinner_Listener implements
-            AdapterView.OnItemSelectedListener {
-
-        public void onItemSelected(AdapterView<?> Spinner_Adapter_View,
-                                   View v, int position, long row) {
-
-            //get id to specify for different spinners
-            int id = v.getId();
-
-            if (id == R.id.spinner_a1)
-            {
-                Spinner_A1_Choice = Spinner_Adapter_View
-                        .getItemAtPosition(position).toString();
-                findViewById(R.id.main).invalidate();
-                Create_A2_Spinner(Spinner_A1_Choice);
-            }
-            else if (id == R.id.spinner_a2)
-            {
-                Spinner_A2_Choice = Spinner_Adapter_View
-                        .getItemAtPosition(position).toString();
-                findViewById(R.id.main).invalidate();
-            }
-            else if (id == R.id.spinner_d1)
-            {
-                Spinner_D1_Choice = Spinner_Adapter_View
-                        .getItemAtPosition(position).toString();
-                findViewById(R.id.main).invalidate();
-                Create_D2_Spinner(Spinner_D1_Choice);
-            }
-            else if (id == R.id.spinner_d2)
-            {
-                Spinner_D2_Choice = Spinner_Adapter_View
-                        .getItemAtPosition(position).toString();
-                findViewById(R.id.main).invalidate();
-            }
-
-            //finally draw using the spinner choices
-            setPaths(Spinner_A1_Choice, Spinner_A2_Choice, Spinner_D1_Choice, Spinner_D2_Choice);
-            onDraw(tempCanvas);
-        }
-        public void onNothingSelected(AdapterView<?> arg0) {
-        }
-
-    }*/
